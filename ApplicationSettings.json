@@ -1,0 +1,136 @@
+
+{
+    "properties": {
+        "currentDirectory": "/Users/bernard/Documents/HV/Kompanigrejer/Warhorse Logistics/Prototyp",
+        "reportDirectory": "/Users/bernard",
+        "exportDirectory": "/Users/bernard"
+    },
+    "windows": {
+        "EditItemView": {
+            "x": 120,
+            "y": 93,
+            "w": 619,
+            "h": 260,
+            "v": false
+        },
+        "DesktopView": {
+            "x": 95,
+            "y": 80,
+            "w": 811,
+            "h": 748,
+            "v": true
+        },
+        "InstanceMaintenanceView": {
+            "x": 249,
+            "y": 286,
+            "w": 619,
+            "h": 260,
+            "v": false
+        },
+        "InventoryHoldingView": {
+            "x": 16,
+            "y": 13,
+            "w": 1074,
+            "h": 238,
+            "v": false
+        },
+        "InstancesView": {
+            "x": 225,
+            "y": 298,
+            "w": 619,
+            "h": 260,
+            "v": false
+        },
+        "LoggerView": {
+            "x": 44,
+            "y": 96,
+            "w": 953,
+            "h": 451,
+            "v": false
+        },
+        "MasterInventoryView": {
+            "x": 120,
+            "y": 93,
+            "w": 1063,
+            "h": 873,
+            "v": false
+        },
+        "ImportWizardView": {
+            "x": 21,
+            "y": 33,
+            "w": 778,
+            "h": 264,
+            "v": false
+        },
+        "ActualInventoryView": {
+            "x": 3,
+            "y": 12,
+            "w": 1002,
+            "h": 237,
+            "v": false
+        },
+        "EditActualInventoryView": {
+            "x": 204,
+            "y": 245,
+            "w": 584,
+            "h": 168,
+            "v": false
+        },
+        "SelectItemView": {
+            "x": 414,
+            "y": 286,
+            "w": 369,
+            "h": 383,
+            "v": false
+        },
+        "ItemApplicationView": {
+            "x": 158,
+            "y": 197,
+            "w": 886,
+            "h": 386,
+            "v": false
+        },
+        "ItemMaintenanceView": {
+            "x": 75,
+            "y": 22,
+            "w": 456,
+            "h": 492,
+            "v": true
+        },
+        "InventoryView": {
+            "x": 90,
+            "y": 24,
+            "w": 999,
+            "h": 243,
+            "v": true
+        },
+        "SearchView": {
+            "x": 21,
+            "y": 13,
+            "w": 984,
+            "h": 236,
+            "v": false
+        },
+        "StockOnHandView": {
+            "x": 19,
+            "y": 15,
+            "w": 944,
+            "h": 297,
+            "v": false
+        },
+        "EditInstanceView": {
+            "x": 201,
+            "y": 193,
+            "w": 521,
+            "h": 250,
+            "v": false
+        },
+        "ItemsView": {
+            "x": 100,
+            "y": 49,
+            "w": 795,
+            "h": 507,
+            "v": true
+        }
+    }
+}

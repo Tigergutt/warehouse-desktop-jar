@@ -1,0 +1,96 @@
+#
+# Creating the database
+#
+DROP DATABASE IF EXISTS warehouse;
+CREATE DATABASE warehouse;
+USE warehouse
+
+#
+# Create the default database user and set privileges.
+#
+CREATE USER IF NOT EXISTS 'warhorse'@'localhost' IDENTIFIED BY 'peacekeeper';
+GRANT ALL PRIVILEGES ON warehouse.* TO 'warhorse'@'localhost';
+
+#
+# Create table for Organizational Units.
+#
+CREATE TABLE organizational_units (
+id INT NOT NULL, 
+callsign CHAR(2) NOT NULL,  
+name CHAR(30) NOT NULL, 
+level INT NOT NULL, 
+superior_unit_id CHAR(40),  
+PRIMARY KEY (id)
+);
+
+#
+# Create table for Items.
+#
+CREATE TABLE items ( 
+id INT NOT NULL, 
+number CHAR(16) NOT NULL, 
+name CHAR(50) NOT NULL, 
+packaging CHAR(16) DEFAULT '' NOT NULL, 
+description CHAR(128) DEFAULT '' NOT NULL, 
+PRIMARY KEY (id)
+);
+
+#
+# Create table for Stock Locations 
+#
+CREATE TABLE stock_locations ( 
+id INT NOT NULL, 
+section CHAR(10) NOT NULL, 
+slot CHAR(10) NOT NULL, 
+description CHAR(128) DEFAULT '' NOT NULL, 
+PRIMARY KEY (id)
+);
+
+#
+# Create table for actual Inventory (quantity at specific stock location).
+#
+CREATE TABLE actual_inventory ( 
+id INT NOT NULL, 
+item_id INT NOT NULL, 
+stock_location_id CHAR(40) NOT NULL, 
+quantity INT DEFAULT '1' NOT NULL, 
+identity CHAR(16) DEFAULT '' NOT NULL,  
+annotation CHAR(50) DEFAULT '' NOT NULL, 
+last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+PRIMARY KEY (id)
+);
+
+#
+# Create table for
+#
+CREATE TABLE master_inventory ( 
+id INT NOT NULL, 
+item_id INT NOT NULL, 
+source CHAR(16) DEFAULT '' NOT NULL,  
+stock_point CHAR(16) DEFAULT '' NOT NULL, 
+quantity INT DEFAULT '1' NOT NULL, 
+identity CHAR(16) DEFAULT '' NOT NULL,  
+annotation CHAR(50) DEFAULT '' NOT NULL, 
+last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+PRIMARY KEY (id)
+);
+
+#
+# Create table for Holding (defining owner of a stock location).
+#
+CREATE TABLE holdings (
+unit_id INT NOT NULL,
+stock_location_id INT NOT NULL, 
+PRIMARY KEY (unit_id, stock_location_id)
+);
+
+#
+# Create table for Article Application.
+#
+CREATE TABLE item_application (
+unit_id INT NOT NULL,
+item_id INT NOT NULL,
+category CHAR(50) DEFAULT 'RU'  NOT NULL,
+quantity INT DEFAULT '1' NOT NULL, 
+PRIMARY KEY (unit_id, item_id, category)
+);
