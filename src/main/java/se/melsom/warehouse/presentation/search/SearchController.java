@@ -23,18 +23,32 @@ import se.melsom.warehouse.presentation.ViewController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Search controller.
+ */
 public class SearchController extends ViewController implements ModelEventListener, ActionListener {
 	private static Logger logger = Logger.getLogger(SearchController.class);
-	public static final String SEARCH_ACTION = "SearchAction";
-	public static final String GENERATE_REPORT_ACTION = "GenerateReport";
+    /**
+     * The constant SEARCH_ACTION.
+     */
+    public static final String SEARCH_ACTION = "SearchAction";
+    /**
+     * The constant GENERATE_REPORT_ACTION.
+     */
+    public static final String GENERATE_REPORT_ACTION = "GenerateReport";
 	private ApplicationController controller;
 	private InventoryAccounting inventoryAccounting;
 	private SearchView view;
 	private SearchResultTableModel tableModel;
 	private String searchKey = "";
 	private Map<String, Command> actionCommands = new HashMap<>();
-	
-	public SearchController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Search controller.
+     *
+     * @param controller the controller
+     */
+    public SearchController(ApplicationController controller) {
 		this.controller = controller;
 
 		inventoryAccounting = controller.getInventoryAccounting();
@@ -59,21 +73,41 @@ public class SearchController extends ViewController implements ModelEventListen
 
 		controller.setSearchViewMenuItemChecked(settings.isVisible());
 	}
-	
 
-	public String getSearchKey() {
+
+    /**
+     * Gets search key.
+     *
+     * @return the search key
+     */
+    public String getSearchKey() {
 		return searchKey;
 	}
 
-	public Vector<ActualInventory> getInventory() {
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
+    public Vector<ActualInventory> getInventory() {
 		return tableModel.getInventory();
 	}
-	
-	public String[] getTableColumnNames() {
+
+    /**
+     * Get table column names string [ ].
+     *
+     * @return the string [ ]
+     */
+    public String[] getTableColumnNames() {
 		return SearchResultTableModel.columnNames;
 	}
 
-	public JInternalFrame getInternalFrame() {
+    /**
+     * Gets internal frame.
+     *
+     * @return the internal frame
+     */
+    public JInternalFrame getInternalFrame() {
 		return view;
 	}
 
@@ -82,7 +116,10 @@ public class SearchController extends ViewController implements ModelEventListen
 		return view;
 	}
 
-	public void showView() {
+    /**
+     * Show view.
+     */
+    public void showView() {
 		logger.trace("showView()");
 		if (view.isVisible()) {
 			logger.trace("View is visible.");
@@ -111,7 +148,10 @@ public class SearchController extends ViewController implements ModelEventListen
 		tableModel.setInventory(inventory);
 	}
 
-	public void generateReport() {
+    /**
+     * Generate report.
+     */
+    public void generateReport() {
 	}
 
 	@Override
@@ -170,11 +210,22 @@ public class SearchController extends ViewController implements ModelEventListen
 		PersistentSettings.singleton().setWindowVisible(getWindowName(), false);	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return SearchView.class.getSimpleName();
 	}
 
-	public void addActionCommand(String action, Command command) {
+    /**
+     * Add action command.
+     *
+     * @param action  the action
+     * @param command the command
+     */
+    public void addActionCommand(String action, Command command) {
 		actionCommands.put(action, command);
 	} 
 	

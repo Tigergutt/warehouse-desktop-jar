@@ -11,15 +11,26 @@ import javax.swing.table.TableColumnModel;
 
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The type Sorted table.
+ */
 @SuppressWarnings("serial")
 public class SortedTable extends JTable {
 	private TableHeaderRenderer headerRenderer;
 	private Map<Integer, TableCellRenderer> cellRenders = new HashMap<>();
 
-	public SortedTable() {
+    /**
+     * Instantiates a new Sorted table.
+     */
+    public SortedTable() {
 	}
 
-	public SortedTable(SortedTableModel tableModel) {
+    /**
+     * Instantiates a new Sorted table.
+     *
+     * @param tableModel the table model
+     */
+    public SortedTable(SortedTableModel tableModel) {
 		super(tableModel);
 		headerRenderer = new TableHeaderRenderer(getFont(), tableModel.isSortable());
 		tableModel.setHeaderRenderer(headerRenderer);
@@ -35,8 +46,14 @@ public class SortedTable extends JTable {
 			columnModel.getColumn(columnIndex).setPreferredWidth(tableModel.getColumnWidth(columnIndex));
 		}
 	}
-	
-	public void addCellRenderer(int columnIndex, TableCellRenderer renderer) {
+
+    /**
+     * Add cell renderer.
+     *
+     * @param columnIndex the column index
+     * @param renderer    the renderer
+     */
+    public void addCellRenderer(int columnIndex, TableCellRenderer renderer) {
 		cellRenders.put(columnIndex, renderer);
 	}
 		

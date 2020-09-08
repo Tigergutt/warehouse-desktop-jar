@@ -9,8 +9,20 @@ import com.healthmarketscience.sqlbuilder.UpdateQuery;
 import se.melsom.warehouse.database.WarehouseSchema;
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The Organizational units sql (select, insert, update, delete).
+ */
 public class OrganizationalUnitsSql {
-	public static String select(int byUnitId, String byCallSign, String byName, int bySuperiorUnitId) {
+    /**
+     * Generates SQL-query for finding Organizational Units by unit id, call sign, unit name, and/or superior unit id.
+     *
+     * @param byUnitId         unit id or null
+     * @param byCallSign       call sign or null
+     * @param byName           unit name or null
+     * @param bySuperiorUnitId superior unit id or null
+     * @return SQL-query
+     */
+    public static String select(int byUnitId, String byCallSign, String byName, int bySuperiorUnitId) {
 		SelectQuery query = new SelectQuery();
 		
 		query.addAllTableColumns(WarehouseSchema.units);
@@ -36,7 +48,13 @@ public class OrganizationalUnitsSql {
 		return query.toString();
 	}
 
-	public static String insert(OrganizationalUnitDAO dao) {
+    /**
+     * Insert string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String insert(OrganizationalUnitDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.units);		
 		
 		query.addColumn(WarehouseSchema.units_id, dao.getId());
@@ -50,7 +68,13 @@ public class OrganizationalUnitsSql {
 		return query.toString();
 	}
 
-	public static String update(OrganizationalUnitDAO dao) {
+    /**
+     * Update string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String update(OrganizationalUnitDAO dao) {
 		UpdateQuery query = new UpdateQuery(WarehouseSchema.units);	
 		
 		query.addSetClause(WarehouseSchema.units_callsign, dao.getCallsign());
@@ -65,7 +89,13 @@ public class OrganizationalUnitsSql {
 		return query.toString();
 	}
 
-	public static String delete(OrganizationalUnitDAO dao) {
+    /**
+     * Delete string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String delete(OrganizationalUnitDAO dao) {
 		DeleteQuery query = new DeleteQuery(WarehouseSchema.units);	
 		
 		query.addCondition(BinaryCondition.equalTo(WarehouseSchema.units_id, dao.getId()));

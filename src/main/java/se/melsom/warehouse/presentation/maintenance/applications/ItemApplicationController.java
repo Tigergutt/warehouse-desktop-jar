@@ -31,16 +31,40 @@ import se.melsom.warehouse.presentation.common.edit.EditItemApplicationControlle
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Item application controller.
+ */
 public class ItemApplicationController extends ViewController implements TableModelListener, TreeSelectionListener {
 	private static Logger logger = Logger.getLogger(ItemApplicationController.class);
 
-	public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
-	public static final String TREE_ACTION = "TreeAction";
-	public static final String TABLE_ACTION = "TableAction";
-	public static final String ACCUMULATE_ACTION = "AccAction";
-	public static final String INSERT_ACTION = "InsertAction";
-	public static final String EDIT_ACTION = "EditAction";
-	public static final String REMOVE_ACTION = "RemoveAction";
+    /**
+     * The constant EXTENDED_EDIT_ACTION.
+     */
+    public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
+    /**
+     * The constant TREE_ACTION.
+     */
+    public static final String TREE_ACTION = "TreeAction";
+    /**
+     * The constant TABLE_ACTION.
+     */
+    public static final String TABLE_ACTION = "TableAction";
+    /**
+     * The constant ACCUMULATE_ACTION.
+     */
+    public static final String ACCUMULATE_ACTION = "AccAction";
+    /**
+     * The constant INSERT_ACTION.
+     */
+    public static final String INSERT_ACTION = "InsertAction";
+    /**
+     * The constant EDIT_ACTION.
+     */
+    public static final String EDIT_ACTION = "EditAction";
+    /**
+     * The constant REMOVE_ACTION.
+     */
+    public static final String REMOVE_ACTION = "RemoveAction";
 
 	private ApplicationController controller;
 	private InventoryAccounting inventoryAccounting;
@@ -48,8 +72,13 @@ public class ItemApplicationController extends ViewController implements TableMo
 	private MutableTreeNode rootNode;
 	private ItemApplicationsTableModel tableModel;
 	private ItemApplicationView view;
-	
-	public ItemApplicationController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Item application controller.
+     *
+     * @param controller the controller
+     */
+    public ItemApplicationController(ApplicationController controller) {
 		logger.debug("Executing constructor.");
 		this.controller = controller;
 		
@@ -225,7 +254,12 @@ public class ItemApplicationController extends ViewController implements TableMo
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return ItemApplicationView.class.getSimpleName();
 	}
 	

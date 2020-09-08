@@ -2,6 +2,9 @@ package se.melsom.warehouse.model.entity.inventory;
 
 import se.melsom.warehouse.model.entity.Item;
 
+/**
+ * The type Inventory.
+ */
 public abstract class Inventory {
 	private int id;
 	private Item item;
@@ -10,73 +13,166 @@ public abstract class Inventory {
 	private String annotation = "";
 	private String timestamp = "";
 
-	public Inventory() {
+    /**
+     * Instantiates a new Inventory.
+     */
+    public Inventory() {
 	}
 
-	public int getId() {
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
 
-	public Item getItem() {
+    /**
+     * Gets item.
+     *
+     * @return the item
+     */
+    public Item getItem() {
 		return item;
 	}
 
-	public void setItem(Item item) {
+    /**
+     * Sets item.
+     *
+     * @param item the item
+     */
+    public void setItem(Item item) {
 		this.item = item;
 	}
 
-	public String getIdentity() {
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
 
-	public int getQuantity() {
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	public String getAnnotation() {
+    /**
+     * Gets annotation.
+     *
+     * @return the annotation
+     */
+    public String getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(String annotation) {
+    /**
+     * Sets annotation.
+     *
+     * @param annotation the annotation
+     */
+    public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
 
-	public String getTimestamp() {
+    /**
+     * Gets timestamp.
+     *
+     * @return the timestamp
+     */
+    public String getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+    /**
+     * Sets timestamp.
+     *
+     * @param timestamp the timestamp
+     */
+    public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
-	
-	public int compareByItemNumber(Inventory other) {
+
+    /**
+     * Compare by item number int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByItemNumber(Inventory other) {
 		return getItem().getNumber().compareTo(other.getItem().getNumber());
 	}
-	
-	public int compareByItemName(Inventory other) {
+
+    /**
+     * Compare by item name int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByItemName(Inventory other) {
 		return getItem().getName().compareTo(other.getItem().getName());
 	}
-	public int compareByIdentity(Inventory other) {
+
+    /**
+     * Compare by identity int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByIdentity(Inventory other) {
 		return getIdentity().compareTo(other.getIdentity());
 	}
 
-	public int compareByTimestamp(Inventory other) {
+    /**
+     * Compare by timestamp int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByTimestamp(Inventory other) {
 		return getTimestamp().compareTo(other.getTimestamp());
 	}
 
-	public abstract boolean isValid();
+    /**
+     * Is valid boolean.
+     *
+     * @return the boolean
+     */
+    public abstract boolean isValid();
 	
 	@Override
 	public boolean equals(Object obj) {

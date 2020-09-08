@@ -20,6 +20,9 @@ import org.apache.log4j.Logger;
 import se.melsom.warehouse.presentation.common.table.SortedTable;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Item maintenance view.
+ */
 @SuppressWarnings("serial")
 public class ItemMaintenanceView extends JInternalFrame {
 	private static Logger logger = Logger.getLogger(ItemMaintenanceView.class);
@@ -31,7 +34,13 @@ public class ItemMaintenanceView extends JInternalFrame {
 	private JButton insertButton;
 	private JButton removeButton;
 
-	public ItemMaintenanceView(ItemMaintenanceController controller, SortedTableModel tableModel) {
+    /**
+     * Instantiates a new Item maintenance view.
+     *
+     * @param controller the controller
+     * @param tableModel the table model
+     */
+    public ItemMaintenanceView(ItemMaintenanceController controller, SortedTableModel tableModel) {
 		setIconifiable(true);
 		addComponentListener(controller);
 		setClosable(true);
@@ -42,85 +51,176 @@ public class ItemMaintenanceView extends JInternalFrame {
 	}
 
 
-	// Extended edit checkbox access methods
+    /**
+     * Is extended edit enabled boolean.
+     *
+     * @return the boolean
+     */
+// Extended edit checkbox access methods
 	public boolean isExtendedEditEnabled() {
 		return extendedEditCheckBox.isSelected();
 	}
 
-	public void setExtendedEditChecked(boolean isEnabled) {
+    /**
+     * Sets extended edit checked.
+     *
+     * @param isEnabled the is enabled
+     */
+    public void setExtendedEditChecked(boolean isEnabled) {
 		extendedEditCheckBox.setSelected(isEnabled);
 	}
 
-	public void setExtendedEditButtonAction(String name, ActionListener listener) {
+    /**
+     * Sets extended edit button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setExtendedEditButtonAction(String name, ActionListener listener) {
 		extendedEditCheckBox.setActionCommand(name);
 		extendedEditCheckBox.addActionListener(listener);
 	}
 
-	// Generate report button access methods
+    /**
+     * Sets generate report action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+// Generate report button access methods
 	void setGenerateReportAction(String name, ActionListener listener) {
 		generateReportButton.setActionCommand(name);
 		generateReportButton.addActionListener(listener);
 	}
 
-	void setGenerateButtonEnabled(boolean value) {
+    /**
+     * Sets generate button enabled.
+     *
+     * @param value the value
+     */
+    void setGenerateButtonEnabled(boolean value) {
 		logger.trace("Set generate report button enabled=" + value);
 		generateReportButton.setEnabled(value);
 	}
 
-	// Inventory table access methods
+    /**
+     * Sets selected item action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+// Inventory table access methods
 	void setSelectedItemAction(String name, ListSelectionListener listener) {
 		itemsTable.setName(name);
 		itemsTable.getSelectionModel().addListSelectionListener(listener);;		
 	}
 
-	public int getSelectedProductTableRow() {
+    /**
+     * Gets selected product table row.
+     *
+     * @return the selected product table row
+     */
+    public int getSelectedProductTableRow() {
 		return itemsTable.getSelectedRow();
 	}
 
-	public int getSelectedArticleTableColumn() {
+    /**
+     * Gets selected article table column.
+     *
+     * @return the selected article table column
+     */
+    public int getSelectedArticleTableColumn() {
 		return itemsTable.getSelectedColumn();
 	}
 
-	// Product table access methods
+    /**
+     * Gets selected item row.
+     *
+     * @return the selected item row
+     */
+// Product table access methods
 	public int getSelectedItemRow() {
 		return itemsTable.getSelectedRow();
 	}
 
-	public void setSelectedItemRow(int rowIndex) {
+    /**
+     * Sets selected item row.
+     *
+     * @param rowIndex the row index
+     */
+    public void setSelectedItemRow(int rowIndex) {
 		itemsTable.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
 		itemsTable.scrollRectToVisible(new Rectangle(itemsTable.getCellRect(rowIndex, 0, true)));
 	}
 
-	public int getSelectedArticleColumn() {
+    /**
+     * Gets selected article column.
+     *
+     * @return the selected article column
+     */
+    public int getSelectedArticleColumn() {
 		return itemsTable.getSelectedColumn();
 	}
 
-	//
+    /**
+     * Sets edit button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+//
 	public void setEditButtonEnabled(boolean isEnabled) {
 		editButton.setEnabled(isEnabled);
 	}
-	
-	public void setEditButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets edit button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setEditButtonAction(String name, ActionListener listener) {
 		editButton.setActionCommand(name);
 		editButton.addActionListener(listener);
 	}
 
-	//
+    /**
+     * Sets insert button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+//
 	public void setInsertButtonEnabled(boolean isEnabled) {
 		insertButton.setEnabled(isEnabled);
 	}
-	
-	public void setInsertButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets insert button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setInsertButtonAction(String name, ActionListener listener) {
 		insertButton.setActionCommand(name);
 		insertButton.addActionListener(listener);
 	}
 
-	//
+    /**
+     * Sets remove button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+//
 	public void setRemoveButtonEnabled(boolean isEnabled) {
 		removeButton.setEnabled(isEnabled);
 	}
-	
-	public void setRemoveButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets remove button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setRemoveButtonAction(String name, ActionListener listener) {
 		removeButton.setActionCommand(name);
 		removeButton.addActionListener(listener);
 	}

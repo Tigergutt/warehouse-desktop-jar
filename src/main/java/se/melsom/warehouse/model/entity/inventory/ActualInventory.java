@@ -2,18 +2,37 @@ package se.melsom.warehouse.model.entity.inventory;
 
 import se.melsom.warehouse.model.entity.StockLocation;
 
+/**
+ * The type Actual inventory.
+ */
 public class ActualInventory extends Inventory {
 	private StockLocation location;
 
-	public StockLocation getLocation() {
+    /**
+     * Gets location.
+     *
+     * @return the location
+     */
+    public StockLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(StockLocation location) {
+    /**
+     * Sets location.
+     *
+     * @param location the location
+     */
+    public void setLocation(StockLocation location) {
 		this.location = location;
 	}
 
-	public int compareByLocation(ActualInventory other) {
+    /**
+     * Compare by location int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByLocation(ActualInventory other) {
 		return getLocation().getLocationLabel().compareTo(other.getLocation().getLocationLabel());
 	}
 	

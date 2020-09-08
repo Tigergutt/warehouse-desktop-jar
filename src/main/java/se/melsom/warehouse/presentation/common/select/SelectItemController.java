@@ -19,19 +19,40 @@ import se.melsom.warehouse.presentation.ViewController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Select item controller.
+ */
 public class SelectItemController extends ViewController {
 	private static Logger logger = Logger.getLogger(SelectItemController.class);
-	
-	public static final String SEARCH_FIELD_ACTION_COMMAND = "ItNumAction";
-	public static final String SELECTED_ITEM_ACTION_COMMAND = "ItSelAction";
-	public static final String ACCEPT_ACTION_COMMAND = "AcceptAction";
-	public static final String CANCEL_ACTION_COMMAND = "CancelAction";
+
+    /**
+     * The constant SEARCH_FIELD_ACTION_COMMAND.
+     */
+    public static final String SEARCH_FIELD_ACTION_COMMAND = "ItNumAction";
+    /**
+     * The constant SELECTED_ITEM_ACTION_COMMAND.
+     */
+    public static final String SELECTED_ITEM_ACTION_COMMAND = "ItSelAction";
+    /**
+     * The constant ACCEPT_ACTION_COMMAND.
+     */
+    public static final String ACCEPT_ACTION_COMMAND = "AcceptAction";
+    /**
+     * The constant CANCEL_ACTION_COMMAND.
+     */
+    public static final String CANCEL_ACTION_COMMAND = "CancelAction";
 	
 	private SelectItemTableModel tableModel;
 	private SelectItemView view;
 	private Item selectedItem;
 
-	public SelectItemController(InventoryAccounting inventoryAccounting, JFrame parent) {
+    /**
+     * Instantiates a new Select item controller.
+     *
+     * @param inventoryAccounting the inventory accounting
+     * @param parent              the parent
+     */
+    public SelectItemController(InventoryAccounting inventoryAccounting, JFrame parent) {
 		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());
 		
 		if (settings == null) {
@@ -53,8 +74,14 @@ public class SelectItemController extends ViewController {
 		view.setAcceptButtonListener(ACCEPT_ACTION_COMMAND, this);
 		view.setAcceptButtonEnabled(false);
 	}
-	
-	public Item selectItem(Vector<Item> items) {
+
+    /**
+     * Select item item.
+     *
+     * @param items the items
+     * @return the item
+     */
+    public Item selectItem(Vector<Item> items) {
 		selectedItem = null;
 		logger.debug("Popping the view.");
 		tableModel.setItemList(items);
@@ -148,7 +175,12 @@ public class SelectItemController extends ViewController {
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return SelectItemView.class.getSimpleName();
 	}
 }

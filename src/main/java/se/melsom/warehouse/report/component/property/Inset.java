@@ -1,27 +1,56 @@
 package se.melsom.warehouse.report.component.property;
 
+/**
+ * The type Inset.
+ */
 public class Inset {
 	private float width;
 	private Position position;
 
-	public Inset(float width, Position position) {
+    /**
+     * Instantiates a new Inset.
+     *
+     * @param width    the width
+     * @param position the position
+     */
+    public Inset(float width, Position position) {
 		this.width = width;
 		this.position = position;
 	}
 
-	public float getWidth() {
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
+    public float getWidth() {
 		return width;
 	}
 
-	public void setWidth(float width) {
+    /**
+     * Sets width.
+     *
+     * @param width the width
+     */
+    public void setWidth(float width) {
 		this.width = width;
 	}
 
-	public Position getPosition() {
+    /**
+     * Gets position.
+     *
+     * @return the position
+     */
+    public Position getPosition() {
 		return position;
 	}
 
-	public void setPosition(Position position) {
+    /**
+     * Sets position.
+     *
+     * @param position the position
+     */
+    public void setPosition(Position position) {
 		this.position = position;
 	}
 

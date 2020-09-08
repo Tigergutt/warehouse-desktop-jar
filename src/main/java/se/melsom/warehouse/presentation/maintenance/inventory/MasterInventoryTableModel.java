@@ -11,11 +11,17 @@ import org.apache.log4j.Logger;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.inventory.MasterInventory;
 
+/**
+ * The type Master inventory table model.
+ */
 @SuppressWarnings("serial")
 public class MasterInventoryTableModel extends AbstractTableModel  {
 	private static Logger logger = Logger.getLogger(MasterInventoryTableModel.class);
-	
-	public static final String[] columnNames = { 
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { 
 			EntityName.INVENTORY_SOURCE,
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME,
@@ -25,8 +31,11 @@ public class MasterInventoryTableModel extends AbstractTableModel  {
 			EntityName.INVENTORY_LAST_UPDATED_TIMESTAMP,
 			EntityName.INVENTORY_ANNOTATION 
 	};
-	
-	public static final int[] columnWidts = { 
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 
 			50,
 			120, 
 			250, 
@@ -36,8 +45,11 @@ public class MasterInventoryTableModel extends AbstractTableModel  {
 			100,
 			300
 	};
-	
-	public static final Class<?>[] columnClass = {
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class, 
@@ -49,18 +61,32 @@ public class MasterInventoryTableModel extends AbstractTableModel  {
 	};
 
 	private Vector<MasterInventory> instanceList = new Vector<>();
-	
-	public MasterInventoryTableModel() {
+
+    /**
+     * Instantiates a new Master inventory table model.
+     */
+    public MasterInventoryTableModel() {
 		if (columnNames.length != columnWidts.length || columnNames.length != columnClass.length) {
 			logger.warn("Array dimension mismatch.");
 		}
 	}
-	
-	public Vector<MasterInventory> getInstances() {
+
+    /**
+     * Gets instances.
+     *
+     * @return the instances
+     */
+    public Vector<MasterInventory> getInstances() {
 		return instanceList;
 	}
-	
-	public MasterInventory getInstance(int instanceIndex) {
+
+    /**
+     * Gets instance.
+     *
+     * @param instanceIndex the instance index
+     * @return the instance
+     */
+    public MasterInventory getInstance(int instanceIndex) {
 		if (instanceIndex >= 0 && instanceIndex < instanceList.size()) {
 			return instanceList.get(instanceIndex);
 		}
@@ -68,15 +94,28 @@ public class MasterInventoryTableModel extends AbstractTableModel  {
 		return null;
 	}
 
-	public int insert(MasterInventory anInstance) {
+    /**
+     * Insert int.
+     *
+     * @param anInstance the an instance
+     * @return the int
+     */
+    public int insert(MasterInventory anInstance) {
 		instanceList.addElement(anInstance);
 		sortInstanceList();
 		fireTableDataChanged();
 		
 		return getIndex(anInstance);
 	}
-	
-	public int update(MasterInventory anInstance, int atIndex) {
+
+    /**
+     * Update int.
+     *
+     * @param anInstance the an instance
+     * @param atIndex    the at index
+     * @return the int
+     */
+    public int update(MasterInventory anInstance, int atIndex) {
 		instanceList.remove(atIndex);
 		instanceList.addElement(anInstance);
 		sortInstanceList();
@@ -84,8 +123,14 @@ public class MasterInventoryTableModel extends AbstractTableModel  {
 		
 		return getIndex(anInstance);
 	}
-	
-	public MasterInventory remove(int atIndex) {
+
+    /**
+     * Remove master inventory.
+     *
+     * @param atIndex the at index
+     * @return the master inventory
+     */
+    public MasterInventory remove(int atIndex) {
 		MasterInventory instance = instanceList.remove(atIndex);
 
 		sortInstanceList();
@@ -93,8 +138,13 @@ public class MasterInventoryTableModel extends AbstractTableModel  {
 
 		return instance;
 	}
-	
-	public void setInstances(Vector<MasterInventory> instances) {
+
+    /**
+     * Sets instances.
+     *
+     * @param instances the instances
+     */
+    public void setInstances(Vector<MasterInventory> instances) {
 		logger.debug("Product list updated");
 		instanceList.clear();
 		instanceList.addAll(instances);

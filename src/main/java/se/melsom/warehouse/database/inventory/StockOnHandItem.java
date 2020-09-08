@@ -1,5 +1,8 @@
 package se.melsom.warehouse.database.inventory;
 
+/**
+ * The type Stock on hand item.
+ */
 @Deprecated
 public class StockOnHandItem {
 	private String number;
@@ -10,59 +13,129 @@ public class StockOnHandItem {
 	private String identity;
 	private String annotation;
 
-	public String getNumber() {
+    /**
+     * Gets number.
+     *
+     * @return the number
+     */
+    public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(String number) {
+    /**
+     * Sets number.
+     *
+     * @param number the number
+     */
+    public void setNumber(String number) {
 		this.number = number;
 	}
 
-	public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getPackaging() {
+    /**
+     * Gets packaging.
+     *
+     * @return the packaging
+     */
+    public String getPackaging() {
 		return packaging;
 	}
 
-	public void setPackaging(String packaging) {
+    /**
+     * Sets packaging.
+     *
+     * @param packaging the packaging
+     */
+    public void setPackaging(String packaging) {
 		this.packaging = packaging;
 	}
 
-	public int getNominalQuantity() {
+    /**
+     * Gets nominal quantity.
+     *
+     * @return the nominal quantity
+     */
+    public int getNominalQuantity() {
 		return nominalQuantity;
 	}
 
-	public void setNominalQuantity(int nominalQuantity) {
+    /**
+     * Sets nominal quantity.
+     *
+     * @param nominalQuantity the nominal quantity
+     */
+    public void setNominalQuantity(int nominalQuantity) {
 		this.nominalQuantity = nominalQuantity;
 	}
 
-	public int getActualQuantity() {
+    /**
+     * Gets actual quantity.
+     *
+     * @return the actual quantity
+     */
+    public int getActualQuantity() {
 		return actualQuantity;
 	}
 
-	public void setActualQuantity(int actualQuantity) {
+    /**
+     * Sets actual quantity.
+     *
+     * @param actualQuantity the actual quantity
+     */
+    public void setActualQuantity(int actualQuantity) {
 		this.actualQuantity = actualQuantity;
 	}
 
-	public String getIdentity() {
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
 
-	public String getAnnotation() {
+    /**
+     * Gets annotation.
+     *
+     * @return the annotation
+     */
+    public String getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(String annotation) {
+    /**
+     * Sets annotation.
+     *
+     * @param annotation the annotation
+     */
+    public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
 

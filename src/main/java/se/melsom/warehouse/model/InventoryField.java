@@ -1,14 +1,41 @@
 package se.melsom.warehouse.model;
 
+/**
+ * The enum Inventory field.
+ */
 public enum InventoryField {
-	SOURCE("Källa", ""),
-	NOMINAL_QUANTITY("Antal", ""),
-	ACTUAL_QUANTITY("Invent.", ""),
-	IDENTITY("Individ", ""),
-	ANNOTATION("Anteckning", ""),
-	LAST_UPDATED_TIMESTAMP("Senast ändrad", ""),
-	STOCK_POINT("Lagerställe", ""),
-	STOCK_ON_HAND("Lagersaldo", "");
+    /**
+     * Source inventory field.
+     */
+    SOURCE("Källa", ""),
+    /**
+     * Nominal quantity inventory field.
+     */
+    NOMINAL_QUANTITY("Antal", ""),
+    /**
+     * Actual quantity inventory field.
+     */
+    ACTUAL_QUANTITY("Invent.", ""),
+    /**
+     * Identity inventory field.
+     */
+    IDENTITY("Individ", ""),
+    /**
+     * Annotation inventory field.
+     */
+    ANNOTATION("Anteckning", ""),
+    /**
+     * Last updated timestamp inventory field.
+     */
+    LAST_UPDATED_TIMESTAMP("Senast ändrad", ""),
+    /**
+     * Stock point inventory field.
+     */
+    STOCK_POINT("Lagerställe", ""),
+    /**
+     * Stock on hand inventory field.
+     */
+    STOCK_ON_HAND("Lagersaldo", "");
 
 	private String name;
 	private String description;
@@ -17,12 +44,22 @@ public enum InventoryField {
 		this.name = name;
 		this.description = description;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public String getDescription() {
+
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
 }

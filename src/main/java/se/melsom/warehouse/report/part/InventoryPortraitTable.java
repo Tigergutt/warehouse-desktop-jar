@@ -13,6 +13,9 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Position;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 
+/**
+ * The type Inventory portrait table.
+ */
 public class InventoryPortraitTable extends Table {
 	private static Logger logger = Logger.getLogger(InventoryLandscapeTable.class);
 
@@ -23,7 +26,14 @@ public class InventoryPortraitTable extends Table {
 	private static final float[] CELL_WIDTH = { 20, 30, 80, 15, 30 };
 	private static final Alignment[] CELL_ALIGNMENT = { Alignment.LEFT, Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT, Alignment.RIGHT };
 
-	public InventoryPortraitTable(float x, float y, int rowCount) {
+    /**
+     * Instantiates a new Inventory portrait table.
+     *
+     * @param x        the x
+     * @param y        the y
+     * @param rowCount the row count
+     */
+    public InventoryPortraitTable(float x, float y, int rowCount) {
 		super(x, y);
 		float rowY = y;
 		
@@ -67,8 +77,14 @@ public class InventoryPortraitTable extends Table {
 		
 		setLines(FRAME_LINE_WIDTH);
 	}
-	
-	public void setRowValues(int rowIndex, ActualInventory item) {
+
+    /**
+     * Sets row values.
+     *
+     * @param rowIndex the row index
+     * @param item     the item
+     */
+    public void setRowValues(int rowIndex, ActualInventory item) {
 		setRowValues(rowIndex, 
 				item.getLocation().getLocationLabel(),
 				item.getItem().getNumber(), 
@@ -76,8 +92,14 @@ public class InventoryPortraitTable extends Table {
 				"" + item.getQuantity(),
 				item.getIdentity());
 	}
-	
-	public void setRowValues(int rowIndex, String... values) {
+
+    /**
+     * Sets row values.
+     *
+     * @param rowIndex the row index
+     * @param values   the values
+     */
+    public void setRowValues(int rowIndex, String... values) {
 		Component row = getComponents().get(rowIndex);
 
 		for (int columnIndex = 0; columnIndex < values.length; columnIndex++) {
@@ -91,8 +113,14 @@ public class InventoryPortraitTable extends Table {
 			textBox.setText(values[columnIndex] == null ? "" : values[columnIndex]);
 		}
 	}
-	
-	public void setRowValues(int rowIndex, Vector<String> values) {
+
+    /**
+     * Sets row values.
+     *
+     * @param rowIndex the row index
+     * @param values   the values
+     */
+    public void setRowValues(int rowIndex, Vector<String> values) {
 		Component row = getComponents().get(rowIndex);
 
 		for (int columnIndex = 0; columnIndex < values.size(); columnIndex++) {

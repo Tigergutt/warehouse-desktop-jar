@@ -12,11 +12,19 @@ import se.melsom.warehouse.presentation.importer.ImportWizardController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.Property;
 
+/**
+ * The Import stock locations command.
+ */
 public class ImportStockLocations extends Command {
 	private static Logger logger = Logger.getLogger(ImportStockLocations.class);
 	private ApplicationController controller;
-	
-	public ImportStockLocations(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Import stock locations.
+     *
+     * @param controller the controller
+     */
+    public ImportStockLocations(ApplicationController controller) {
 		this.controller = controller;
 	}
 

@@ -21,6 +21,9 @@ import javax.json.stream.JsonGenerator;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The type Persistent settings.
+ */
 public class PersistentSettings {
 	private Logger logger = Logger.getLogger(this.getClass());
 	
@@ -33,12 +36,22 @@ public class PersistentSettings {
 	
 	private PersistentSettings() {		
 	}
-	
-	public static PersistentSettings singleton() {
+
+    /**
+     * Singleton persistent settings.
+     *
+     * @return the persistent settings
+     */
+    public static PersistentSettings singleton() {
 		return singleton;
 	}
-	
-	public void loadData(String path) {
+
+    /**
+     * Load data.
+     *
+     * @param path the path
+     */
+    public void loadData(String path) {
 		logger.debug("Load application settings from: " + path);
 		InputStream input = null;
 		
@@ -96,13 +109,26 @@ public class PersistentSettings {
 
 		setDirty(false);
 	}
-	
-	public Property getProperty(String name) {
+
+    /**
+     * Gets property.
+     *
+     * @param name the name
+     * @return the property
+     */
+    public Property getProperty(String name) {
 		return propertyMap.get(name);
 	}
-	
 
-	public Property getProperty(String name, String defaultValue) {
+
+    /**
+     * Gets property.
+     *
+     * @param name         the name
+     * @param defaultValue the default value
+     * @return the property
+     */
+    public Property getProperty(String name, String defaultValue) {
 		Property property = getProperty(name);
 		
 		if (property == null) {
@@ -114,7 +140,14 @@ public class PersistentSettings {
 		return property;
 	}
 
-	public Property getProperty(String name, int defaultValue) {
+    /**
+     * Gets property.
+     *
+     * @param name         the name
+     * @param defaultValue the default value
+     * @return the property
+     */
+    public Property getProperty(String name, int defaultValue) {
 		Property property = getProperty(name);
 		
 		if (property == null) {
@@ -126,51 +159,103 @@ public class PersistentSettings {
 		return property;
 	}
 
-	public void addProperty(Property property) {
+    /**
+     * Add property.
+     *
+     * @param property the property
+     */
+    public void addProperty(Property property) {
 		propertyMap.put(property.getName(), property);
 		property.setParent(this);
 		setDirty(true);
 	}
-	
-	public WindowSettings getWindowSettings(String name) {
+
+    /**
+     * Gets window settings.
+     *
+     * @param name the name
+     * @return the window settings
+     */
+    public WindowSettings getWindowSettings(String name) {
 		return windowSettingsMap.get(name);
 	}
-	
-	public void addWindowSettings(WindowSettings windowSettings) {
+
+    /**
+     * Add window settings.
+     *
+     * @param windowSettings the window settings
+     */
+    public void addWindowSettings(WindowSettings windowSettings) {
 		windowSettingsMap.put(windowSettings.getName(), windowSettings);
 		windowSettings.setParent(this);
 		setDirty(true);
 	}
-	
-	public void setWindowLocation(String name, int x, int y) {
+
+    /**
+     * Sets window location.
+     *
+     * @param name the name
+     * @param x    the x
+     * @param y    the y
+     */
+    public void setWindowLocation(String name, int x, int y) {
 		if (windowSettingsMap.containsKey(name)) {
 			windowSettingsMap.get(name).setX(x);
 			windowSettingsMap.get(name).setY(y);
 		}
 	}
-	
-	public void setWindowDimension(String name, int width, int height) {
+
+    /**
+     * Sets window dimension.
+     *
+     * @param name   the name
+     * @param width  the width
+     * @param height the height
+     */
+    public void setWindowDimension(String name, int width, int height) {
 		if (windowSettingsMap.containsKey(name)) {
 			windowSettingsMap.get(name).setWidth(width);
 			windowSettingsMap.get(name).setHeight(height);
 		}
 	}
-	
-	public void setWindowVisible(String name, boolean isVisible) {
+
+    /**
+     * Sets window visible.
+     *
+     * @param name      the name
+     * @param isVisible the is visible
+     */
+    public void setWindowVisible(String name, boolean isVisible) {
 		if (windowSettingsMap.containsKey(name)) {
 			windowSettingsMap.get(name).setVisible(isVisible);
 		}
 	}
 
-	public boolean isDirty() {
+    /**
+     * Is dirty boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isDirty() {
 		return isDirty;
 	}
-	
-	public void setDirty(boolean dirty) {
+
+    /**
+     * Sets dirty.
+     *
+     * @param dirty the dirty
+     */
+    public void setDirty(boolean dirty) {
 		this.isDirty = dirty;
 	}
 
-	public void saveData(String path) throws FileNotFoundException {
+    /**
+     * Save data.
+     *
+     * @param path the path
+     * @throws FileNotFoundException the file not found exception
+     */
+    public void saveData(String path) throws FileNotFoundException {
 		logger.debug("Save application settings to: " + path);		
 		Map<String, Object> configs = new HashMap<>();
         configs.put(JsonGenerator.PRETTY_PRINTING, true);

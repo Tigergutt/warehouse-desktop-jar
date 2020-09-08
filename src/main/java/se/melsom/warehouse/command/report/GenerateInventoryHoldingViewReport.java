@@ -13,12 +13,21 @@ import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.report.inventory.InventoryHoldingViewReport;
 import se.melsom.warehouse.report.inventory.InventoryPage;
 
+/**
+ * The Generate inventory holding view report command.
+ */
 public class GenerateInventoryHoldingViewReport extends GenerateReportCommand {
 	private static Logger logger = Logger.getLogger(GenerateInventoryHoldingViewReport.class);
 	private ApplicationController controller;
 	private InventoryHoldingController inventoryController;
-	
-	public GenerateInventoryHoldingViewReport(ApplicationController controller, InventoryHoldingController inventoryController) {
+
+    /**
+     * Instantiates a new Generate inventory holding view report.
+     *
+     * @param controller          the controller
+     * @param inventoryController the inventory controller
+     */
+    public GenerateInventoryHoldingViewReport(ApplicationController controller, InventoryHoldingController inventoryController) {
 		this.controller = controller;
 		this.inventoryController = inventoryController;
 	}

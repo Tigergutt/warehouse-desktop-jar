@@ -1,5 +1,8 @@
 package se.melsom.warehouse.database.inventory;
 
+/**
+ * The type Stock on hand dao.
+ */
 @Deprecated
 public class StockOnHandDAO {
 	private String itemId;
@@ -8,43 +11,93 @@ public class StockOnHandDAO {
 	private String identity;
 	private String annotation;
 
-	public String getItemId() {
+    /**
+     * Gets item id.
+     *
+     * @return the item id
+     */
+    public String getItemId() {
 		return itemId;
 	}
 
-	public void setItemtId(String itemId) {
+    /**
+     * Sets itemt id.
+     *
+     * @param itemId the item id
+     */
+    public void setItemtId(String itemId) {
 		this.itemId = itemId;
 	}
 
-	public int getNominalQuantity() {
+    /**
+     * Gets nominal quantity.
+     *
+     * @return the nominal quantity
+     */
+    public int getNominalQuantity() {
 		return nominalQuantity;
 	}
 
-	public void setNominalQuantity(int quantity) {
+    /**
+     * Sets nominal quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setNominalQuantity(int quantity) {
 		this.nominalQuantity = quantity;
 	}
-	
-	public int getActualQuantity() {
+
+    /**
+     * Gets actual quantity.
+     *
+     * @return the actual quantity
+     */
+    public int getActualQuantity() {
 		return actualQuantity;
 	}
 
-	public void setActualQuantity(int quantity) {
+    /**
+     * Sets actual quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setActualQuantity(int quantity) {
 		this.actualQuantity = quantity;
 	}
-	
-	public String getIdentity() {
+
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
 
-	public String getAnnotation() {
+    /**
+     * Gets annotation.
+     *
+     * @return the annotation
+     */
+    public String getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(String annotation) {
+    /**
+     * Sets annotation.
+     *
+     * @param annotation the annotation
+     */
+    public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
 

@@ -18,14 +18,23 @@ import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Select item view.
+ */
 @SuppressWarnings("serial")
 public class SelectItemView extends JDialog {
 	private JTextField searchField;
 	private SortedTable itemTable;
 	private JButton cancelButton;
 	private JButton acceptButton;
-	
-	public SelectItemView(SortedTableModel tableModel, JFrame parent) {
+
+    /**
+     * Instantiates a new Select item view.
+     *
+     * @param tableModel the table model
+     * @param parent     the parent
+     */
+    public SelectItemView(SortedTableModel tableModel, JFrame parent) {
 		super(parent, true);
 		setTitle("Völj en artikel");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -67,22 +76,44 @@ public class SelectItemView extends JDialog {
 		buttonPanel.add(cancelButton);
 	}
 
-	public void setSearchFieldListener(String actionCommand, ViewController actionListener) {
+    /**
+     * Sets search field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setSearchFieldListener(String actionCommand, ViewController actionListener) {
 		searchField.setActionCommand(actionCommand);
 		searchField.addActionListener(actionListener);
 		searchField.addKeyListener(actionListener);
 	}
 
-	public void setItemTableListener(String actionCommand, ListSelectionListener actionListener) {
+    /**
+     * Sets item table listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setItemTableListener(String actionCommand, ListSelectionListener actionListener) {
 		itemTable.setName(actionCommand);
 		itemTable.getSelectionModel().addListSelectionListener(actionListener);
 	}
-	
-	public int getSelectedTableRowIndex() {
+
+    /**
+     * Gets selected table row index.
+     *
+     * @return the selected table row index
+     */
+    public int getSelectedTableRowIndex() {
 		return itemTable.getSelectedRow();
 	}
-	
-	public void setSelectedItemRowIndex(int rowIndex) {
+
+    /**
+     * Sets selected item row index.
+     *
+     * @param rowIndex the row index
+     */
+    public void setSelectedItemRowIndex(int rowIndex) {
 		itemTable.getSelectionModel().clearSelection();
 		
 		if (rowIndex >= 0 && rowIndex < itemTable.getRowCount()) {
@@ -90,18 +121,35 @@ public class SelectItemView extends JDialog {
 			itemTable.scrollRectToVisible(new Rectangle(itemTable.getCellRect(rowIndex, 0, true)));
 		}
 	}
-	
-	public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets cancel button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
 		cancelButton.setActionCommand(actionCommand);
 		cancelButton.addActionListener(actionListener);
 	}
 
-	public void setAcceptButtonListener(String actionCommand, ActionListener actionListener) {
+    /**
+     * Sets accept button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setAcceptButtonListener(String actionCommand, ActionListener actionListener) {
 		acceptButton.setActionCommand(actionCommand);
 		acceptButton.addActionListener(actionListener);
 	}
 
-	public void setAcceptButtonEnabled(boolean b) {
+    /**
+     * Sets accept button enabled.
+     *
+     * @param b the b
+     */
+    public void setAcceptButtonEnabled(boolean b) {
 		acceptButton.setEnabled(b);
 	}
 }

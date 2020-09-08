@@ -4,6 +4,9 @@ import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.report.component.TextBox;
 import se.melsom.warehouse.report.part.InventoryLandscapeTable;
 
+/**
+ * The type Stock location page.
+ */
 public abstract class StockLocationPage extends Page {
 	private static final float HEADER_FIELD_X = 130;
 	private static final float HEADER_FIELD_Y = 10;	
@@ -12,7 +15,13 @@ public abstract class StockLocationPage extends Page {
 	private static final float DATE_TEXT_HEIGHT = 7;
 
 
-	public StockLocationPage(String reportName, String date) {
+    /**
+     * Instantiates a new Stock location page.
+     *
+     * @param reportName the report name
+     * @param date       the date
+     */
+    public StockLocationPage(String reportName, String date) {
 		super(Orientation.LANDSCAPE);		
 		
 		TextBox reportTitle = new TextBox(HEADER_FIELD_X, HEADER_FIELD_Y, 
@@ -27,13 +36,38 @@ public abstract class StockLocationPage extends Page {
 		super.addComponent(reportDate);
 	}
 
-	public abstract void setLocation(String designator);
-	
-	public abstract void setCycleCountingDate(String date);
-	
-	public abstract InventoryLandscapeTable getTable();
-	
-	public abstract int getRowCapacity();
+    /**
+     * Sets location.
+     *
+     * @param designator the designator
+     */
+    public abstract void setLocation(String designator);
 
-	public abstract void setHoldingUnit(String holdingUnit);
+    /**
+     * Sets cycle counting date.
+     *
+     * @param date the date
+     */
+    public abstract void setCycleCountingDate(String date);
+
+    /**
+     * Gets table.
+     *
+     * @return the table
+     */
+    public abstract InventoryLandscapeTable getTable();
+
+    /**
+     * Gets row capacity.
+     *
+     * @return the row capacity
+     */
+    public abstract int getRowCapacity();
+
+    /**
+     * Sets holding unit.
+     *
+     * @param holdingUnit the holding unit
+     */
+    public abstract void setHoldingUnit(String holdingUnit);
 }

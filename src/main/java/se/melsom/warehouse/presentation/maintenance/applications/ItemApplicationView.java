@@ -22,6 +22,9 @@ import se.melsom.warehouse.presentation.common.table.SortedTable;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 import javax.swing.JSplitPane;
 
+/**
+ * The type Item application view.
+ */
 @SuppressWarnings("serial")
 public class ItemApplicationView  extends JDialog  {
 	private JTree tree;
@@ -34,7 +37,15 @@ public class ItemApplicationView  extends JDialog  {
 	private JPanel controlPanel;
 	private JSplitPane splitPane;
 
-	public ItemApplicationView(JFrame parent, ComponentListener componentListener, TreeModel treeModel, SortedTableModel tableModel) {		
+    /**
+     * Instantiates a new Item application view.
+     *
+     * @param parent            the parent
+     * @param componentListener the component listener
+     * @param treeModel         the tree model
+     * @param tableModel        the table model
+     */
+    public ItemApplicationView(JFrame parent, ComponentListener componentListener, TreeModel treeModel, SortedTableModel tableModel) {		
 		super(parent, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
@@ -70,70 +81,146 @@ public class ItemApplicationView  extends JDialog  {
 		buttonPanel.add(insertButton);
 	}
 
-	// Tree
+    /**
+     * Gets selected tree node.
+     *
+     * @return the selected tree node
+     */
+// Tree
 	TreeNode getSelectedTreeNode() {
 		return (TreeNode) tree.getLastSelectedPathComponent();
 	}
 
-	void setSelectedTreeNode(TreeNode aNode) {
+    /**
+     * Sets selected tree node.
+     *
+     * @param aNode the a node
+     */
+    void setSelectedTreeNode(TreeNode aNode) {
 	}
-	
-	void setTreeAction(String name, TreeSelectionListener listener) {
+
+    /**
+     * Sets tree action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setTreeAction(String name, TreeSelectionListener listener) {
 		tree.setName(name);
 		tree.getSelectionModel().addTreeSelectionListener(listener);
 	}
 
-	// Table
+    /**
+     * Gets selected table row.
+     *
+     * @return the selected table row
+     */
+// Table
 	int getSelectedTableRow() {
 		return table.getSelectedRow();
 	}
 
-	void setSelectedTableRow(int rowIndex) {
+    /**
+     * Sets selected table row.
+     *
+     * @param rowIndex the row index
+     */
+    void setSelectedTableRow(int rowIndex) {
 		table.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
 		table.scrollRectToVisible(new Rectangle(table.getCellRect(rowIndex, 0, true)));
 	}
-	
-	void setTableAction(String name, ListSelectionListener listener) {
+
+    /**
+     * Sets table action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setTableAction(String name, ListSelectionListener listener) {
 		table.setName(name);
 		table.getSelectionModel().addListSelectionListener(listener);
 	}
 
-	// Accumulate check box
+    /**
+     * Is accumulated boolean.
+     *
+     * @return the boolean
+     */
+// Accumulate check box
 	public boolean isAccumulated() {
 		return accumulateCheckBox.isSelected();
 	}
-	
-	public void setAccumulateAction(String name, ActionListener listener) {
+
+    /**
+     * Sets accumulate action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setAccumulateAction(String name, ActionListener listener) {
 		accumulateCheckBox.setActionCommand(name);
 		accumulateCheckBox.addActionListener(listener);
 	}
 
-	// Remove button
+    /**
+     * Sets remove button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+// Remove button
 	public void setRemoveButtonEnabled(boolean isEnabled) {
 		removeButton.setEnabled(isEnabled);
 	}
-	
-	public void setRemoveButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets remove button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setRemoveButtonAction(String name, ActionListener listener) {
 		removeButton.setActionCommand(name);
 		removeButton.addActionListener(listener);
 	}
 
-	// Edit button
+    /**
+     * Sets edit button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+// Edit button
 	void setEditButtonEnabled(boolean isEnabled) {
 		editButton.setEnabled(isEnabled);
 	}
-	
-	void setEditButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets edit button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setEditButtonAction(String name, ActionListener listener) {
 		editButton.setActionCommand(name);
 		editButton.addActionListener(listener);
 	}
 
-	// Insert button
+    /**
+     * Sets insert button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+// Insert button
 	void setInsertButtonEnabled(boolean isEnabled) {
 		insertButton.setEnabled(isEnabled);
 	}
-	
-	void setInsertButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets insert button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setInsertButtonAction(String name, ActionListener listener) {
 		insertButton.setActionCommand(name);
 		insertButton.addActionListener(listener);
 	}

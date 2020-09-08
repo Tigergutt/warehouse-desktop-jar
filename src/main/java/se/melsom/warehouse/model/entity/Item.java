@@ -1,5 +1,8 @@
 package se.melsom.warehouse.model.entity;
 
+/**
+ * The type Item.
+ */
 public class Item implements Comparable<Item> {
 	private int id;
 	private String number;
@@ -7,7 +10,12 @@ public class Item implements Comparable<Item> {
 	private String packaging;
 	private String description;
 
-	public Item(int id) {
+    /**
+     * Instantiates a new Item.
+     *
+     * @param id the id
+     */
+    public Item(int id) {
 		this.id = id;
 		this.number = "";
 		this.name = "";
@@ -15,7 +23,15 @@ public class Item implements Comparable<Item> {
 		this.description = "";
 	}
 
-	public Item(int id, String number, String name, String packaging) {
+    /**
+     * Instantiates a new Item.
+     *
+     * @param id        the id
+     * @param number    the number
+     * @param name      the name
+     * @param packaging the packaging
+     */
+    public Item(int id, String number, String name, String packaging) {
 		this.id = id;
 		this.number = number;
 		this.name = name;
@@ -23,7 +39,12 @@ public class Item implements Comparable<Item> {
 		this.description = "";
 	}
 
-	public boolean isValid() {
+    /**
+     * Is valid boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isValid() {
 		if (number == null || number.length() == 0) {
 			return false;
 		}
@@ -39,43 +60,93 @@ public class Item implements Comparable<Item> {
 		return true;
 	}
 
-	public int getId() {
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
+
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
-	
-	public String getNumber() {
+
+    /**
+     * Gets number.
+     *
+     * @return the number
+     */
+    public String getNumber() {
 		return number;
 	}
-	
-	public void setNumber(String value) {
+
+    /**
+     * Sets number.
+     *
+     * @param value the value
+     */
+    public void setNumber(String value) {
 		number = value;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public void setName(String value) {
+
+    /**
+     * Sets name.
+     *
+     * @param value the value
+     */
+    public void setName(String value) {
 		name = value;
 	}
-	
-	public String getPackaging() {
+
+    /**
+     * Gets packaging.
+     *
+     * @return the packaging
+     */
+    public String getPackaging() {
 		return packaging;
 	}
-	
-	public void setPackaging(String value) {
+
+    /**
+     * Sets packaging.
+     *
+     * @param value the value
+     */
+    public void setPackaging(String value) {
 		packaging = value;
 	}
 
-	public String getDescription() {
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
+    public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -87,12 +158,24 @@ public class Item implements Comparable<Item> {
 		
 		return number.compareTo(other.number);
 	}
-	
-	public int compareByItemNumber(Item other) {
+
+    /**
+     * Compare by item number int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByItemNumber(Item other) {
 		return number.compareTo(other.number);
 	}
 
-	public int compareByItemName(Item other) {
+    /**
+     * Compare by item name int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByItemName(Item other) {
 		return name.compareTo(other.name);
 	}
 

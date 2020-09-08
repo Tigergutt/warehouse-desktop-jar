@@ -8,22 +8,40 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.Item;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Select item table model.
+ */
 @SuppressWarnings("serial")
 public class SelectItemTableModel extends SortedTableModel {
 	private static Logger logger = Logger.getLogger(SelectItemTableModel.class);
-	
-	public static final String[] columnNames = { EntityName.ITEM_NUMBER, EntityName.ITEM_NAME, };
-	
-	public static final int[] columnWidts = { 120, 230 };
-	
-	public static final boolean[] isSortableArray = { true, true };
-	
-	public static final Class<?>[] columnClass = { String.class, String.class};
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { EntityName.ITEM_NUMBER, EntityName.ITEM_NAME, };
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 120, 230 };
+
+    /**
+     * The constant isSortableArray.
+     */
+    public static final boolean[] isSortableArray = { true, true };
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = { String.class, String.class};
 	
 	private Vector<Item> itemList = new Vector<>();
 	private Vector<Item> originalItemList = new Vector<>();
-	
-	public SelectItemTableModel() {
+
+    /**
+     * Instantiates a new Select item table model.
+     */
+    public SelectItemTableModel() {
 		if (columnNames.length != columnWidts.length || 
 				columnNames.length != columnClass.length ||
 				columnNames.length != isSortableArray.length) {
@@ -31,15 +49,26 @@ public class SelectItemTableModel extends SortedTableModel {
 		}
 	}
 
-	public Item get(int index) {
+    /**
+     * Get item.
+     *
+     * @param index the index
+     * @return the item
+     */
+    public Item get(int index) {
 		if (index >= 0 && index < itemList.size()) {
 			return itemList.get(index);
 		}
 		
 		return null;
 	}
-	
-	public void setItemList(Vector<Item> items) {
+
+    /**
+     * Sets item list.
+     *
+     * @param items the items
+     */
+    public void setItemList(Vector<Item> items) {
 		itemList.clear();
 		itemList.addAll(items);
 		fireTableDataChanged();
@@ -49,7 +78,12 @@ public class SelectItemTableModel extends SortedTableModel {
 	}
 
 
-	public void searchFor(String searchKey) {
+    /**
+     * Search for.
+     *
+     * @param searchKey the search key
+     */
+    public void searchFor(String searchKey) {
 		itemList.clear();
 		
 		for (Item item : originalItemList) {

@@ -32,17 +32,44 @@ import se.melsom.warehouse.presentation.common.edit.EditActualInventoryControlle
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Actual inventory controller.
+ */
 public class ActualInventoryController extends ViewController implements ModelEventListener, TableModelListener, ActionListener, ListSelectionListener {
 	private static Logger logger = Logger.getLogger(ActualInventoryController.class);
 
-	public static final String SECTION_SELECTED_ACTION = "SectionSelected";
-	public static final String SLOT_SELECTED_ACTION = "SlotSelected";
-	public static final String GENERATE_REPORT_ACTION = "GenerateReport";
-	public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
-	public static final String TABLE_ROW_ACTION = "RowSelected";
-	public static final String EDIT_INVENTORY_ACTION = "EditInventory";
-	public static final String INSERT_INVENTORY_ACTION = "AddInventory";
-	public static final String REMOVE_INVENTORY_ACTION = "DeleteInventory";
+    /**
+     * The constant SECTION_SELECTED_ACTION.
+     */
+    public static final String SECTION_SELECTED_ACTION = "SectionSelected";
+    /**
+     * The constant SLOT_SELECTED_ACTION.
+     */
+    public static final String SLOT_SELECTED_ACTION = "SlotSelected";
+    /**
+     * The constant GENERATE_REPORT_ACTION.
+     */
+    public static final String GENERATE_REPORT_ACTION = "GenerateReport";
+    /**
+     * The constant EXTENDED_EDIT_ACTION.
+     */
+    public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
+    /**
+     * The constant TABLE_ROW_ACTION.
+     */
+    public static final String TABLE_ROW_ACTION = "RowSelected";
+    /**
+     * The constant EDIT_INVENTORY_ACTION.
+     */
+    public static final String EDIT_INVENTORY_ACTION = "EditInventory";
+    /**
+     * The constant INSERT_INVENTORY_ACTION.
+     */
+    public static final String INSERT_INVENTORY_ACTION = "AddInventory";
+    /**
+     * The constant REMOVE_INVENTORY_ACTION.
+     */
+    public static final String REMOVE_INVENTORY_ACTION = "DeleteInventory";
 
 	private ApplicationController controller;
 	
@@ -53,8 +80,13 @@ public class ActualInventoryController extends ViewController implements ModelEv
 	private ActualInventoryView view;
 	private Map<String, Command> actionCommands = new HashMap<>();	
 	private StockLocation currentLocation = null;
-	
-	public ActualInventoryController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Actual inventory controller.
+     *
+     * @param controller the controller
+     */
+    public ActualInventoryController(ApplicationController controller) {
 		this.controller = controller;
 
 		inventoryAccounting = controller.getInventoryAccounting();
@@ -90,20 +122,40 @@ public class ActualInventoryController extends ViewController implements ModelEv
 
 		controller.setInventoryViewMenuItemChecked(settings.isVisible());
 	}
-	
-	public String getSelectedSection() {
+
+    /**
+     * Gets selected section.
+     *
+     * @return the selected section
+     */
+    public String getSelectedSection() {
 		return view.getSelectedSectionItem();
 	}
 
-	public String getSelectedSlot() {
+    /**
+     * Gets selected slot.
+     *
+     * @return the selected slot
+     */
+    public String getSelectedSlot() {
 		return view.getSelectedSlotItem();
 	}
 
-	public Vector<ActualInventory> getInventory() {
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
+    public Vector<ActualInventory> getInventory() {
 		return tableModel.getInventory();
 	}
 
-	public String[] getTableColumnNames() {
+    /**
+     * Get table column names string [ ].
+     *
+     * @return the string [ ]
+     */
+    public String[] getTableColumnNames() {
 		return ActualInventoryTableModel.columnNames;
 	}
 
@@ -117,8 +169,13 @@ public class ActualInventoryController extends ViewController implements ModelEv
 		
 		view.setSectionSelectorItems(locationSections);	
 	}
-	
-	public void removeInventory(int atIndex) {
+
+    /**
+     * Remove inventory.
+     *
+     * @param atIndex the at index
+     */
+    public void removeInventory(int atIndex) {
 		if (atIndex < 0) {
 			return;
 		}
@@ -175,7 +232,12 @@ public class ActualInventoryController extends ViewController implements ModelEv
 		logger.warn("Unhandled event at row=" + e.getFirstRow() + ",column=" + e.getColumn());
 	}
 
-	public JInternalFrame getInternalFrame() {
+    /**
+     * Gets internal frame.
+     *
+     * @return the internal frame
+     */
+    public JInternalFrame getInternalFrame() {
 		return view;
 	}
 
@@ -184,7 +246,10 @@ public class ActualInventoryController extends ViewController implements ModelEv
 		return view;
 	}
 
-	public void showView() {
+    /**
+     * Show view.
+     */
+    public void showView() {
 		logger.debug("showView()");
 		if (view.isVisible()) {
 			if (view.isIcon()) {
@@ -261,7 +326,13 @@ public class ActualInventoryController extends ViewController implements ModelEv
 		return ActualInventoryView.class.getSimpleName();
 	}
 
-	public void addActionCommand(String action, Command command) {
+    /**
+     * Add action command.
+     *
+     * @param action  the action
+     * @param command the command
+     */
+    public void addActionCommand(String action, Command command) {
 		actionCommands.put(action, command);
 	} 
 	

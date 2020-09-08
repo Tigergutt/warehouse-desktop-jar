@@ -24,6 +24,9 @@ import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.model.entity.inventory.MasterInventory;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 
+/**
+ * The type Inventory accounting.
+ */
 public class InventoryAccounting {
 	private static Logger logger = Logger.getLogger(InventoryAccounting.class);
 	
@@ -34,8 +37,14 @@ public class InventoryAccounting {
 	private LocationMasterFile locationMasterFile;
 	private UnitsMasterFile unitsMasterFile;
 	private Vector<Holding> holdings = new Vector<>();
-	
-	public InventoryAccounting(WarehouseDatabase database, ModelEventBroker eventBroker) {
+
+    /**
+     * Instantiates a new Inventory accounting.
+     *
+     * @param database    the database
+     * @param eventBroker the event broker
+     */
+    public InventoryAccounting(WarehouseDatabase database, ModelEventBroker eventBroker) {
 		this.database = database;
 		this.eventBroker = eventBroker;
 		
@@ -43,16 +52,31 @@ public class InventoryAccounting {
 		locationMasterFile = new LocationMasterFile(database, eventBroker);
 		unitsMasterFile = new UnitsMasterFile(database, eventBroker);
 	}
-	
-	public int getNextActualInventoryId() {
+
+    /**
+     * Gets next actual inventory id.
+     *
+     * @return the next actual inventory id
+     */
+    public int getNextActualInventoryId() {
 		return database.getNumberOfActualInventory();
 	}
 
-	public int getNextMasterInventoryId() {
+    /**
+     * Gets next master inventory id.
+     *
+     * @return the next master inventory id
+     */
+    public int getNextMasterInventoryId() {
 		return database.getNumberOfMasterInventory();
 	}
 
-	public Collection<String> getPackagings() {
+    /**
+     * Gets packagings.
+     *
+     * @return the packagings
+     */
+    public Collection<String> getPackagings() {
 		Set<String> packagings = new TreeSet<>();
 		
 		for (Packaging packaging : Packaging.values()) {			
@@ -62,7 +86,10 @@ public class InventoryAccounting {
 		return packagings;
 	}
 
-	public void sync() {
+    /**
+     * Sync.
+     */
+    public void sync() {
 		itemMasterFile.retreiveItemList();
 		locationMasterFile.retreiveLocationList();
 		unitsMasterFile.retreiveUnitList();
@@ -94,13 +121,25 @@ public class InventoryAccounting {
 		}
 	}
 
-	public boolean isUnitReferenced(int unitId) {
+    /**
+     * Is unit referenced boolean.
+     *
+     * @param unitId the unit id
+     * @return the boolean
+     */
+    public boolean isUnitReferenced(int unitId) {
 		// FIXME:
 		return false;
 //		return database.selectInventory(null, null, id, null).size() > 0;		
 	}
 
-	public boolean isLocationReferenced(int locationId) {
+    /**
+     * Is location referenced boolean.
+     *
+     * @param locationId the location id
+     * @return the boolean
+     */
+    public boolean isLocationReferenced(int locationId) {
 		// FIXME:
 //		if (database.selectInventory(null, null, null, id).size() > 0) {
 //			return true;
@@ -113,23 +152,50 @@ public class InventoryAccounting {
 		return false;		
 	}
 
-	public ItemMasterFile getItemMasterFile() {
+    /**
+     * Gets item master file.
+     *
+     * @return the item master file
+     */
+    public ItemMasterFile getItemMasterFile() {
 		return itemMasterFile;
 	}
 
-	public LocationMasterFile getLocationMasterFile() {
+    /**
+     * Gets location master file.
+     *
+     * @return the location master file
+     */
+    public LocationMasterFile getLocationMasterFile() {
 		return locationMasterFile;
 	}
 
-	public UnitsMasterFile getUnitsMasterFile() {
+    /**
+     * Gets units master file.
+     *
+     * @return the units master file
+     */
+    public UnitsMasterFile getUnitsMasterFile() {
 		return unitsMasterFile;
 	}
 
-	public Vector<StockOnHand> getStockOnHandList() {
+    /**
+     * Gets stock on hand list.
+     *
+     * @return the stock on hand list
+     */
+    public Vector<StockOnHand> getStockOnHandList() {
 		return database.selectStockOnHandItems();
 	}
-	
-	public Vector<ItemApplication> getItemApplications(OrganizationalUnit forUnit, Vector<ApplicationCategory> ofCategories) {
+
+    /**
+     * Gets item applications.
+     *
+     * @param forUnit      the for unit
+     * @param ofCategories the of categories
+     * @return the item applications
+     */
+    public Vector<ItemApplication> getItemApplications(OrganizationalUnit forUnit, Vector<ApplicationCategory> ofCategories) {
 		Vector<ItemApplication> result = new Vector<>();
 		
 		for (ItemApplicationDAO dao : database.selectItemApplications(forUnit.getId())) {
@@ -157,8 +223,14 @@ public class InventoryAccounting {
 		
 		return result;
 	}
-	
-	public Vector<ActualInventory> getActualInventory(String wildcardSearchKey) {
+
+    /**
+     * Gets actual inventory.
+     *
+     * @param wildcardSearchKey the wildcard search key
+     * @return the actual inventory
+     */
+    public Vector<ActualInventory> getActualInventory(String wildcardSearchKey) {
 		Vector<ActualInventory> inventoryList = new Vector<>();
 		
 		for (ActualInventoryDAO dao : database.selectActualInventory(wildcardSearchKey)) {
@@ -191,8 +263,15 @@ public class InventoryAccounting {
 		
 		return inventoryList;
 	}
-	
-	public Vector<ActualInventory> getActualInventory(String section, String slot) {
+
+    /**
+     * Gets actual inventory.
+     *
+     * @param section the section
+     * @param slot    the slot
+     * @return the actual inventory
+     */
+    public Vector<ActualInventory> getActualInventory(String section, String slot) {
 		Vector<ActualInventory> inventoryList = new Vector<>();
 		
 		for (ActualInventoryDAO dao : database.selectActualInventory(null, null, section, slot)) {
@@ -215,7 +294,14 @@ public class InventoryAccounting {
 		return inventoryList;
 	}
 
-	public Vector<MasterInventory> getMasterInventory(int itemId, String identity) {
+    /**
+     * Gets master inventory.
+     *
+     * @param itemId   the item id
+     * @param identity the identity
+     * @return the master inventory
+     */
+    public Vector<MasterInventory> getMasterInventory(int itemId, String identity) {
 		Vector<MasterInventory> inventoryList = new Vector<>();
 		
 		for (MasterInventoryDAO dao : database.selectMasterInventory(itemId, identity)) {
@@ -237,7 +323,13 @@ public class InventoryAccounting {
 		return inventoryList;
 	}
 
-	public boolean addInventory(MasterInventory newInventory) {
+    /**
+     * Add inventory boolean.
+     *
+     * @param newInventory the new inventory
+     * @return the boolean
+     */
+    public boolean addInventory(MasterInventory newInventory) {
 		logger.debug("Adding inventory=" + newInventory);
 		database.insertInventory(newInventory);
 		
@@ -246,19 +338,35 @@ public class InventoryAccounting {
 		return true;
 	}
 
-	public void updateInventory(MasterInventory inventory) {
+    /**
+     * Update inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void updateInventory(MasterInventory inventory) {
 		database.updateInventory(inventory);
 		
 		notifyObservers(new ModelEvent(EventType.INVENTORY_UPDATED));
 	}
 
-	public void removeInventory(MasterInventory inventory) {
+    /**
+     * Remove inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void removeInventory(MasterInventory inventory) {
 		database.deleteInventory(inventory);
 		
 		notifyObservers(new ModelEvent(EventType.INVENTORY_UPDATED));
 	}
 
-	public boolean addInventory(ActualInventory newInventory) {
+    /**
+     * Add inventory boolean.
+     *
+     * @param newInventory the new inventory
+     * @return the boolean
+     */
+    public boolean addInventory(ActualInventory newInventory) {
 		String withNumber = newInventory.getItem().getNumber();
 		String withName = newInventory.getItem().getName();
 		String withinSection = newInventory.getLocation().getSection();
@@ -303,24 +411,45 @@ public class InventoryAccounting {
 		
 		return true;
 	}
-	
-	public void updateInventory(ActualInventory inventory) {
+
+    /**
+     * Update inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void updateInventory(ActualInventory inventory) {
 		database.updateInventory(inventory);
 		
 		notifyObservers(new ModelEvent(EventType.INVENTORY_UPDATED));
 	}
 
-	public void removeInventory(ActualInventory inventory) {
+    /**
+     * Remove inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void removeInventory(ActualInventory inventory) {
 		database.deleteInventory(inventory);
 		
 		notifyObservers(new ModelEvent(EventType.INVENTORY_UPDATED));
 	}
-	
-	public Vector<Holding> getHoldings() {
+
+    /**
+     * Gets holdings.
+     *
+     * @return the holdings
+     */
+    public Vector<Holding> getHoldings() {
 		return holdings;
 	}
-	
-	public Vector<Holding> getHoldings(int forUnitId) {
+
+    /**
+     * Gets holdings.
+     *
+     * @param forUnitId the for unit id
+     * @return the holdings
+     */
+    public Vector<Holding> getHoldings(int forUnitId) {
 		Vector<Holding> result = new Vector<>();
 		
 		for (Holding holding : holdings) {
@@ -332,7 +461,13 @@ public class InventoryAccounting {
 		return result;
 	}
 
-	public boolean addHolding(Holding newHolding) {
+    /**
+     * Add holding boolean.
+     *
+     * @param newHolding the new holding
+     * @return the boolean
+     */
+    public boolean addHolding(Holding newHolding) {
 		if (newHolding.getLocation() == null) {
 			logger.error("No location defined for new holding=" + newHolding);
 			return false;
@@ -374,17 +509,32 @@ public class InventoryAccounting {
 		
 		return false;
 	}
-	
 
-	public void addApplication(ItemApplication application) {
+
+    /**
+     * Add application.
+     *
+     * @param application the application
+     */
+    public void addApplication(ItemApplication application) {
 		database.insertItemApplication(application);
 	}
 
-	public void updateApplication(ItemApplication application) {
+    /**
+     * Update application.
+     *
+     * @param application the application
+     */
+    public void updateApplication(ItemApplication application) {
 		database.updateItemApplication(application);
 	}
-	
-	public void removeApplication(ItemApplication application) {
+
+    /**
+     * Remove application.
+     *
+     * @param application the application
+     */
+    public void removeApplication(ItemApplication application) {
 		database.deleteItemApplication(application);
 	}
 

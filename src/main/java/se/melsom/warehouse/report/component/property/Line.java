@@ -1,37 +1,77 @@
 package se.melsom.warehouse.report.component.property;
 
+/**
+ * The type Line.
+ */
 public class Line {
 	private float width;
 	private Point from;
 	private Point to;
 
-	public Line(float width, Point from, Point to) {
+    /**
+     * Instantiates a new Line.
+     *
+     * @param width the width
+     * @param from  the from
+     * @param to    the to
+     */
+    public Line(float width, Point from, Point to) {
 		this.width = width;
 		this.from = from;
 		this.to = to;
 	}
 
-	public float getWidth() {
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
+    public float getWidth() {
 		return width;
 	}
 
-	public void setWidth(float width) {
+    /**
+     * Sets width.
+     *
+     * @param width the width
+     */
+    public void setWidth(float width) {
 		this.width = width;
 	}
 
-	public Point getFrom() {
+    /**
+     * Gets from.
+     *
+     * @return the from
+     */
+    public Point getFrom() {
 		return from;
 	}
 
-	public void setFrom(Point from) {
+    /**
+     * Sets from.
+     *
+     * @param from the from
+     */
+    public void setFrom(Point from) {
 		this.from = from;
 	}
 
-	public Point getTo() {
+    /**
+     * Gets to.
+     *
+     * @return the to
+     */
+    public Point getTo() {
 		return to;
 	}
 
-	public void setTo(Point to) {
+    /**
+     * Sets to.
+     *
+     * @param to the to
+     */
+    public void setTo(Point to) {
 		this.to = to;
 	}
 }

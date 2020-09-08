@@ -3,6 +3,9 @@ package se.melsom.warehouse.database.item;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.Item;
 
+/**
+ * The Item data access object.
+ */
 public class ItemDAO {
 	private int id;
 	private String number;
@@ -10,62 +13,125 @@ public class ItemDAO {
 	private String packaging;
 	private String description;
 
-	public ItemDAO(Item anItem) {
+    /**
+     * Instantiates a new Item dao.
+     *
+     * @param anItem the an item
+     */
+    public ItemDAO(Item anItem) {
 		this.id = anItem.getId();
 		this.number = anItem.getNumber();
 		this.name = anItem.getName();
 		this.packaging = anItem.getPackaging();
 		this.description = anItem.getDescription();
 	}
-	
-	public ItemDAO() {
+
+    /**
+     * Instantiates a new Item dao.
+     */
+    public ItemDAO() {
 		this.id = EntityName.NULL_ID;
 		this.number = "";
 		this.name = "";
 		this.packaging = "";
 	}
 
-	public Item createItem() {
+    /**
+     * Create item item.
+     *
+     * @return the item
+     */
+    public Item createItem() {
 		return new Item(id, number, name, packaging);
 	}
-	
-	public int getId() {
+
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
+
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getNumber() {
+    /**
+     * Gets number.
+     *
+     * @return the number
+     */
+    public String getNumber() {
 		return number;
 	}
-	
-	public void setNumber(String value) {
+
+    /**
+     * Sets number.
+     *
+     * @param value the value
+     */
+    public void setNumber(String value) {
 		number = value;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public void setName(String value) {
+
+    /**
+     * Sets name.
+     *
+     * @param value the value
+     */
+    public void setName(String value) {
 		name = value;
 	}
-	
-	public String getPackaging() {
+
+    /**
+     * Gets packaging.
+     *
+     * @return the packaging
+     */
+    public String getPackaging() {
 		return packaging;
 	}
-	
-	public void setPackaging(String value) {
+
+    /**
+     * Sets packaging.
+     *
+     * @param value the value
+     */
+    public void setPackaging(String value) {
 		packaging = value;
 	}
 
-	public String getDescription() {
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
+    public void setDescription(String description) {
 		this.description = description;
 	}
 

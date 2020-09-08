@@ -33,17 +33,44 @@ import se.melsom.warehouse.presentation.common.edit.EditActualInventoryControlle
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Inventory holding controller.
+ */
 public class InventoryHoldingController extends ViewController implements ModelEventListener, TableModelListener, ActionListener, ListSelectionListener {
 	private static Logger logger = Logger.getLogger(InventoryHoldingController.class);
 
-	public static final String SUPERIOR_UNIT_SELECTED_ACTION = "SupUSel";
-	public static final String UNIT_SELECTED_ACTION = "USel";
-	public static final String GENERATE_REPORT_ACTION = "GenerateReport";
-	public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
-	public static final String TABLE_ROW_ACTION = "RowSelected";
-	public static final String EDIT_INVENTORY_ACTION = "EditInventory";
-	public static final String INSERT_INVENTORY_ACTION = "AddInventory";
-	public static final String REMOVE_INVENTORY_ACTION = "DeleteInventory";
+    /**
+     * The constant SUPERIOR_UNIT_SELECTED_ACTION.
+     */
+    public static final String SUPERIOR_UNIT_SELECTED_ACTION = "SupUSel";
+    /**
+     * The constant UNIT_SELECTED_ACTION.
+     */
+    public static final String UNIT_SELECTED_ACTION = "USel";
+    /**
+     * The constant GENERATE_REPORT_ACTION.
+     */
+    public static final String GENERATE_REPORT_ACTION = "GenerateReport";
+    /**
+     * The constant EXTENDED_EDIT_ACTION.
+     */
+    public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
+    /**
+     * The constant TABLE_ROW_ACTION.
+     */
+    public static final String TABLE_ROW_ACTION = "RowSelected";
+    /**
+     * The constant EDIT_INVENTORY_ACTION.
+     */
+    public static final String EDIT_INVENTORY_ACTION = "EditInventory";
+    /**
+     * The constant INSERT_INVENTORY_ACTION.
+     */
+    public static final String INSERT_INVENTORY_ACTION = "AddInventory";
+    /**
+     * The constant REMOVE_INVENTORY_ACTION.
+     */
+    public static final String REMOVE_INVENTORY_ACTION = "DeleteInventory";
 
 	private ApplicationController controller;
 	
@@ -54,8 +81,13 @@ public class InventoryHoldingController extends ViewController implements ModelE
 	private InventoryHoldingView view;
 	private Map<String, Command> actionCommands = new HashMap<>();	
 	private OrganizationalUnit selectedUnit = null;
-	
-	public InventoryHoldingController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Inventory holding controller.
+     *
+     * @param controller the controller
+     */
+    public InventoryHoldingController(ApplicationController controller) {
 		this.controller = controller;
 
 		inventoryAccounting = controller.getInventoryAccounting();
@@ -91,16 +123,31 @@ public class InventoryHoldingController extends ViewController implements ModelE
 
 		controller.setInventoryHoldingViewMenuItemChecked(settings.isVisible());
 	}
-	
-	public OrganizationalUnit getSelectedUnit() {
+
+    /**
+     * Gets selected unit.
+     *
+     * @return the selected unit
+     */
+    public OrganizationalUnit getSelectedUnit() {
 		return selectedUnit;
 	}
 
-	public Vector<ActualInventory> getInventory() {
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
+    public Vector<ActualInventory> getInventory() {
 		return tableModel.getInventory();
 	}
 
-	public String[] getTableColumnNames() {
+    /**
+     * Get table column names string [ ].
+     *
+     * @return the string [ ]
+     */
+    public String[] getTableColumnNames() {
 		return InventoryHoldingTableModel.columnNames;
 	}
 
@@ -114,8 +161,13 @@ public class InventoryHoldingController extends ViewController implements ModelE
 		
 		view.setSuperiorUnitSelectorItems(superiorUnits);	
 	}
-	
-	public void removeInventory(int atIndex) {
+
+    /**
+     * Remove inventory.
+     *
+     * @param atIndex the at index
+     */
+    public void removeInventory(int atIndex) {
 		if (atIndex < 0) {
 			return;
 		}
@@ -187,7 +239,12 @@ public class InventoryHoldingController extends ViewController implements ModelE
 		logger.warn("Unhandled event at row=" + e.getFirstRow() + ",column=" + e.getColumn());
 	}
 
-	public JInternalFrame getInternalFrame() {
+    /**
+     * Gets internal frame.
+     *
+     * @return the internal frame
+     */
+    public JInternalFrame getInternalFrame() {
 		return view;
 	}
 
@@ -196,7 +253,10 @@ public class InventoryHoldingController extends ViewController implements ModelE
 		return view;
 	}
 
-	public void showView() {
+    /**
+     * Show view.
+     */
+    public void showView() {
 		logger.debug("showView()");
 		if (view.isVisible()) {
 			if (view.isIcon()) {
@@ -269,7 +329,13 @@ public class InventoryHoldingController extends ViewController implements ModelE
 		return InventoryHoldingView.class.getSimpleName();
 	}
 
-	public void addActionCommand(String action, Command command) {
+    /**
+     * Add action command.
+     *
+     * @param action  the action
+     * @param command the command
+     */
+    public void addActionCommand(String action, Command command) {
 		actionCommands.put(action, command);
 	} 
 	

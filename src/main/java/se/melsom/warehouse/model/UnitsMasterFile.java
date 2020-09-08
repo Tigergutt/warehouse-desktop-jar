@@ -15,6 +15,9 @@ import se.melsom.warehouse.event.ModelEvent;
 import se.melsom.warehouse.event.ModelEventBroker;
 import se.melsom.warehouse.model.entity.OrganizationalUnit;
 
+/**
+ * The type Units master file.
+ */
 public class UnitsMasterFile {
 	private static Logger logger = Logger.getLogger(UnitsMasterFile.class);
 	
@@ -22,16 +25,32 @@ public class UnitsMasterFile {
 	private ModelEventBroker eventBroker;
 	private Map<Integer, OrganizationalUnit> unitList = new HashMap<>();
 
-	public UnitsMasterFile(WarehouseDatabase database, ModelEventBroker eventBroker) {
+    /**
+     * Instantiates a new Units master file.
+     *
+     * @param database    the database
+     * @param eventBroker the event broker
+     */
+    public UnitsMasterFile(WarehouseDatabase database, ModelEventBroker eventBroker) {
 		this.database = database;
 		this.eventBroker = eventBroker;
 	}
 
-	public int getNextUnitId() {
+    /**
+     * Gets next unit id.
+     *
+     * @return the next unit id
+     */
+    public int getNextUnitId() {
 		return unitList.size();
 	}
-	
-	public Vector<OrganizationalUnit> getUnits() {
+
+    /**
+     * Gets units.
+     *
+     * @return the units
+     */
+    public Vector<OrganizationalUnit> getUnits() {
 		Vector<OrganizationalUnit> units = new Vector<>();
 		
 		int level = 0;
@@ -58,8 +77,13 @@ public class UnitsMasterFile {
 		
 		return units;
 	}
-	
-	public Vector<OrganizationalUnit> getTopLevelUnits() {
+
+    /**
+     * Gets top level units.
+     *
+     * @return the top level units
+     */
+    public Vector<OrganizationalUnit> getTopLevelUnits() {
 		logger.debug("Get top level units");
 		Vector<OrganizationalUnit> units = new Vector<>();
 		OrganizationalUnit topUnit = null;
@@ -85,8 +109,14 @@ public class UnitsMasterFile {
 		logger.debug("Unit count=" + units.size());
 		return units;
 	}
-	
-	public Vector<OrganizationalUnit> getSubUnits(String superiorCallSign) {
+
+    /**
+     * Gets sub units.
+     *
+     * @param superiorCallSign the superior call sign
+     * @return the sub units
+     */
+    public Vector<OrganizationalUnit> getSubUnits(String superiorCallSign) {
 		Vector<OrganizationalUnit> units = new Vector<>();
 
 		for (OrganizationalUnit aUnit : unitList.values()) {
@@ -97,8 +127,14 @@ public class UnitsMasterFile {
 
 		return units;
 	}
-	
-	public OrganizationalUnit getUnit(int withId) {
+
+    /**
+     * Gets unit.
+     *
+     * @param withId the with id
+     * @return the unit
+     */
+    public OrganizationalUnit getUnit(int withId) {
 		OrganizationalUnit unit = unitList.get(withId);
 		
 		if (unit == null) {
@@ -107,8 +143,14 @@ public class UnitsMasterFile {
 		
 		return unit;
 	}
-	
-	public OrganizationalUnit getUnit(String withCallsign) {
+
+    /**
+     * Gets unit.
+     *
+     * @param withCallsign the with callsign
+     * @return the unit
+     */
+    public OrganizationalUnit getUnit(String withCallsign) {
 		for (OrganizationalUnit unit : unitList.values()) {
 			if (unit.getCallsign().equals(withCallsign)) {
 				return unit;
@@ -118,7 +160,13 @@ public class UnitsMasterFile {
 		return null;
 	}
 
-	public boolean addUnit(OrganizationalUnit newUnit) {
+    /**
+     * Add unit boolean.
+     *
+     * @param newUnit the new unit
+     * @return the boolean
+     */
+    public boolean addUnit(OrganizationalUnit newUnit) {
 		logger.trace("Add unit=" + newUnit);
 		if (getUnit(newUnit.getCallsign()) != null) {
 			logger.error("Could not add duplicate unit=" + newUnit);
@@ -146,21 +194,34 @@ public class UnitsMasterFile {
 		database.insertOrganizationalUnit(newUnit);
 		return true;
 	}
-	
-	public void updateUnit(OrganizationalUnit aUnit) {
+
+    /**
+     * Update unit.
+     *
+     * @param aUnit the a unit
+     */
+    public void updateUnit(OrganizationalUnit aUnit) {
 		logger.trace("Update unit=" + aUnit);
 		unitList.put(aUnit.getId(), aUnit);
 		database.updateOrganizationalUnit(aUnit);
 	}
 
-	public void removeUnit(OrganizationalUnit aUnit) {
+    /**
+     * Remove unit.
+     *
+     * @param aUnit the a unit
+     */
+    public void removeUnit(OrganizationalUnit aUnit) {
 		logger.trace("Remove unit=" + aUnit);
 		
 		unitList.remove(aUnit.getId());
 		database.deleteOrganizationalUnit(aUnit);
 	}
-	
-	void retreiveUnitList() {
+
+    /**
+     * Retreive unit list.
+     */
+    void retreiveUnitList() {
 		unitList.clear();
 		
 		logger.debug("Retreiving unit list.");

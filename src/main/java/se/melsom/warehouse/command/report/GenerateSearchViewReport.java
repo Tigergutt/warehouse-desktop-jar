@@ -10,12 +10,21 @@ import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.presentation.search.SearchController;
 import se.melsom.warehouse.report.inventory.SearchViewReport;
 
+/**
+ * The Generate search view report command.
+ */
 public class GenerateSearchViewReport extends GenerateReportCommand  {
 	private static Logger logger = Logger.getLogger(GenerateSearchViewReport.class);
 	private ApplicationController controller;
 	private SearchController searchController;
-	
-	public GenerateSearchViewReport(ApplicationController controller, SearchController searchController) {
+
+    /**
+     * Instantiates a new Generate search view report.
+     *
+     * @param controller       the controller
+     * @param searchController the search controller
+     */
+    public GenerateSearchViewReport(ApplicationController controller, SearchController searchController) {
 		this.controller = controller;
 		this.searchController = searchController;
 	}

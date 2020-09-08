@@ -23,6 +23,9 @@ import se.melsom.warehouse.presentation.common.select.SelectItemController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Edit actual inventory controller.
+ */
 public class EditActualInventoryController extends ViewController {
 	private static Logger logger = Logger.getLogger(EditActualInventoryController.class);
 	
@@ -42,7 +45,13 @@ public class EditActualInventoryController extends ViewController {
 	private ActualInventory theInventory;
 	private boolean isInitializingSelectors = false;
 
-	public EditActualInventoryController(InventoryAccounting inventoryAccounting, JFrame parent) {
+    /**
+     * Instantiates a new Edit actual inventory controller.
+     *
+     * @param inventoryAccounting the inventory accounting
+     * @param parent              the parent
+     */
+    public EditActualInventoryController(InventoryAccounting inventoryAccounting, JFrame parent) {
 		this.inventoryAccounting = inventoryAccounting;
 		this.parent = parent;
 		this.itemMasterFile = inventoryAccounting.getItemMasterFile();
@@ -81,8 +90,14 @@ public class EditActualInventoryController extends ViewController {
 		view.setSectionSelectorItems(locationSections);	
 		isInitializingSelectors = false;
 	}
-	
-	public ActualInventory editInventory(ActualInventory anInventory) {
+
+    /**
+     * Edit inventory actual inventory.
+     *
+     * @param anInventory the an inventory
+     * @return the actual inventory
+     */
+    public ActualInventory editInventory(ActualInventory anInventory) {
 		theInventory = anInventory;
 		
 		if (theInventory.getItem() != null) {
@@ -225,7 +240,12 @@ public class EditActualInventoryController extends ViewController {
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return EditActualInventoryView.class.getSimpleName();
 	}
 }

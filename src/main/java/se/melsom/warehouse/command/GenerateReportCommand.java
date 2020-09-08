@@ -15,10 +15,19 @@ import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.Property;
 
+/**
+ * The base class for report generation commands.
+ */
 public abstract class GenerateReportCommand extends Command {
 	private static Logger logger = Logger.getLogger(GenerateReportCommand.class);
-	
-	protected void save(Report report, JFrame parent) {
+
+    /**
+     * Save.
+     *
+     * @param report the report
+     * @param parent the parent
+     */
+    protected void save(Report report, JFrame parent) {
 		PdfReportRenderer renderer = new PdfReportRenderer();
 		
 		for (Page page : report.getPages()) {

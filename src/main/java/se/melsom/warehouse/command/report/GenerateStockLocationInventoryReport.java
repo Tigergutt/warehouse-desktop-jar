@@ -12,6 +12,9 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.Holding;
 import se.melsom.warehouse.report.inventory.StockLocationReport;
 
+/**
+ * The Generate stock location inventory report command.
+ */
 public class GenerateStockLocationInventoryReport  extends GenerateReportCommand  {
 	private static Logger logger = Logger.getLogger(GenerateStockLocationInventoryReport.class);
 	private ApplicationController controller;
@@ -19,8 +22,13 @@ public class GenerateStockLocationInventoryReport  extends GenerateReportCommand
 	private static String[] tableColumnNames = {
 		EntityName.ITEM_NUMBER, EntityName.ITEM_NAME, EntityName.INVENTORY_ACTUAL_QUANTITY
 	};
-	
-	public GenerateStockLocationInventoryReport(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Generate stock location inventory report.
+     *
+     * @param controller the controller
+     */
+    public GenerateStockLocationInventoryReport(ApplicationController controller) {
 		this.controller = controller;
 	}
 	

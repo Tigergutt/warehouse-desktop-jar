@@ -15,6 +15,9 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
+/**
+ * The type Actual inventory importer.
+ */
 public class ActualInventoryImporter extends Importer {
 	private static Logger logger = Logger.getLogger(ActualInventoryImporter.class);
 	private Vector<Item> importedItems = new Vector<>();
@@ -26,9 +29,14 @@ public class ActualInventoryImporter extends Importer {
 	private int itemActualQuantityIndex = -1;
 	private int itemAnnotationIndex = -1;
 	private int timestampIndex = -1;
-	
-	
-	public ActualInventoryImporter(InputTableModel tableModel) {
+
+
+    /**
+     * Instantiates a new Actual inventory importer.
+     *
+     * @param tableModel the table model
+     */
+    public ActualInventoryImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
 	

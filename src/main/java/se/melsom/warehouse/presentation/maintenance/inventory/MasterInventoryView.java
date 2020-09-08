@@ -23,6 +23,9 @@ import org.apache.log4j.Logger;
 
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The type Master inventory view.
+ */
 @SuppressWarnings("serial")
 public class MasterInventoryView extends JDialog {
 	private static Logger logger = Logger.getLogger(MasterInventoryView.class);
@@ -35,7 +38,14 @@ public class MasterInventoryView extends JDialog {
 	private JButton removeButton;
 	private JButton editButton;
 
-	public MasterInventoryView(JFrame parent, MasterInventoryController controller, TableModel tableModel) {
+    /**
+     * Instantiates a new Master inventory view.
+     *
+     * @param parent     the parent
+     * @param controller the controller
+     * @param tableModel the table model
+     */
+    public MasterInventoryView(JFrame parent, MasterInventoryController controller, TableModel tableModel) {
 		super(parent, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -47,61 +57,126 @@ public class MasterInventoryView extends JDialog {
 		initializeView(tableModel);
 	}
 
-	// Extended edit checkbox access methods
+    /**
+     * Is extended edit enabled boolean.
+     *
+     * @return the boolean
+     */
+// Extended edit checkbox access methods
 	boolean isExtendedEditEnabled() {
 		return extendedEditCheckBox.isSelected();
 	}
 
-	void setExtendedEditEnabled(boolean isEnabled) {
+    /**
+     * Sets extended edit enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+    void setExtendedEditEnabled(boolean isEnabled) {
 		extendedEditCheckBox.setSelected(isEnabled);
 	}
 
-	void setExtendedEditAction(String name, ActionListener listener) {
+    /**
+     * Sets extended edit action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setExtendedEditAction(String name, ActionListener listener) {
 		extendedEditCheckBox.setActionCommand(name);
 		extendedEditCheckBox.addActionListener(listener);
 	}
 
-	// Instance table
+    /**
+     * Gets selected table row.
+     *
+     * @return the selected table row
+     */
+// Instance table
 	int getSelectedTableRow() {
 		return instancesTable.getSelectedRow();
 	}
 
-	void setSelectedTableRow(int rowIndex) {
+    /**
+     * Sets selected table row.
+     *
+     * @param rowIndex the row index
+     */
+    void setSelectedTableRow(int rowIndex) {
 		instancesTable.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
 		instancesTable.scrollRectToVisible(new Rectangle(instancesTable.getCellRect(rowIndex, 0, true)));
 	}
-	
-	void setInstanceTableAction(String name, ListSelectionListener listener) {
+
+    /**
+     * Sets instance table action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setInstanceTableAction(String name, ListSelectionListener listener) {
 		instancesTable.setName(name);
 		instancesTable.getSelectionModel().addListSelectionListener(listener);
 	}
 
-	// Edit button
+    /**
+     * Sets edit button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+// Edit button
 	void setEditButtonEnabled(boolean isEnabled) {
 		editButton.setEnabled(isEnabled);
 	}
-	
-	void setEditButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets edit button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setEditButtonAction(String name, ActionListener listener) {
 		editButton.setActionCommand(name);
 		editButton.addActionListener(listener);
 	}
 
-	// Insert button
+    /**
+     * Sets insert button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+// Insert button
 	void setInsertButtonEnabled(boolean isEnabled) {
 		insertButton.setEnabled(isEnabled);
 	}
-	
-	void setInsertButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets insert button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setInsertButtonAction(String name, ActionListener listener) {
 		insertButton.setActionCommand(name);
 		insertButton.addActionListener(listener);
 	}
 
-	// Remove button
+    /**
+     * Sets remove button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+// Remove button
 	public void setRemoveButtonEnabled(boolean isEnabled) {
 		removeButton.setEnabled(isEnabled);
 	}
-	
-	public void setRemoveButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets remove button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setRemoveButtonAction(String name, ActionListener listener) {
 		removeButton.setActionCommand(name);
 		removeButton.addActionListener(listener);
 	}

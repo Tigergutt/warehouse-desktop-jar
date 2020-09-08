@@ -45,10 +45,9 @@ import se.melsom.warehouse.model.entity.inventory.MasterInventory;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 
 /**
- * This class ...
- * 
- * @author bernard
+ * This class implement functionality database access.
  *
+ * @author bernard
  */
 public class WarehouseDatabase {
 	private static Logger logger = Logger.getLogger(WarehouseDatabase.class);
@@ -66,27 +65,30 @@ public class WarehouseDatabase {
 	private WarehouseDatabase() {
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public static WarehouseDatabase singleton() {
+    /**
+     * Singleton warehouse database.
+     *
+     * @return warehouse database
+     */
+    public static WarehouseDatabase singleton() {
 		return singletonInstance;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isConnected() {
+
+    /**
+     * Is connected boolean.
+     *
+     * @return boolean
+     */
+    public boolean isConnected() {
 		return connection != null;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean connect() {
+
+    /**
+     * Connect boolean.
+     *
+     * @return boolean
+     */
+    public boolean connect() {
 		String connectionString = "";
 		
 		connectionString += "jdbc:mysql://localhost/";
@@ -102,12 +104,13 @@ public class WarehouseDatabase {
 		
 		return true;
 	}
-	
-	/**
-	 * 
-	 * @return Stock On Hand Vector
-	 */	
-	public Vector<StockOnHand> selectStockOnHandItems() {
+
+    /**
+     * Select stock on hand items vector.
+     *
+     * @return Stock On Hand Vector
+     */
+    public Vector<StockOnHand> selectStockOnHandItems() {
 		logger.debug("Select stock on hand data.");
 		SelectQuery query = new SelectQuery();
 /*
@@ -340,7 +343,12 @@ ORDER BY I.number,I.name,MI.identity
 //		return itemList;
 //	}
 
-	public Vector<StockLocationItem> selectStockLocationInventoryList() {
+    /**
+     * Select stock location inventory list vector.
+     *
+     * @return the vector
+     */
+    public Vector<StockLocationItem> selectStockLocationInventoryList() {
 		logger.debug("Select stock location inventory list.");
 		SelectQuery query = new SelectQuery();
 		
@@ -428,8 +436,13 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("Selected count=" + itemList.size());
 		return itemList;
 	}
-	
-	public int getNumberOfMasterInventory() {
+
+    /**
+     * Gets number of master inventory.
+     *
+     * @return the number of master inventory
+     */
+    public int getNumberOfMasterInventory() {
 		SelectQuery query = new SelectQuery();
 
 		query.addCustomColumns(FunctionCall.count().addColumnParams(WarehouseSchema.master_inventory_id));
@@ -466,20 +479,40 @@ ORDER BY I.number,I.name,MI.identity
 		return result;
 	}
 
-	public Vector<MasterInventoryDAO> selectMasterInventory(int itemId, String identity) {
+    /**
+     * Select master inventory vector.
+     *
+     * @param itemId   the item id
+     * @param identity the identity
+     * @return the vector
+     */
+    public Vector<MasterInventoryDAO> selectMasterInventory(int itemId, String identity) {
 		String sql = MasterInventorySql.select(itemId, identity);
 		
 		return executeSelectMasterInventory(sql);
 	}
-	
 
-	public Vector<ActualInventoryDAO> selectActualInventory(int itemId, int locationId, String identity) {
+
+    /**
+     * Select actual inventory vector.
+     *
+     * @param itemId     the item id
+     * @param locationId the location id
+     * @param identity   the identity
+     * @return the vector
+     */
+    public Vector<ActualInventoryDAO> selectActualInventory(int itemId, int locationId, String identity) {
 		String sql = ActualInventorySql.select(itemId, locationId, identity);
 		
 		return executeSelectActualInventory(sql);
 	}
-	
-	public int getNumberOfActualInventory() {
+
+    /**
+     * Gets number of actual inventory.
+     *
+     * @return the number of actual inventory
+     */
+    public int getNumberOfActualInventory() {
 		SelectQuery query = new SelectQuery();
 
 		query.addCustomColumns(FunctionCall.count().addColumnParams(WarehouseSchema.actual_inventory_id));
@@ -516,14 +549,29 @@ ORDER BY I.number,I.name,MI.identity
 		return result;
 	}
 
-	public Vector<ActualInventoryDAO> selectActualInventory(String wildcardSearchKey) {
+    /**
+     * Select actual inventory vector.
+     *
+     * @param wildcardSearchKey the wildcard search key
+     * @return the vector
+     */
+    public Vector<ActualInventoryDAO> selectActualInventory(String wildcardSearchKey) {
 		logger.debug("Select inventory matching='" + wildcardSearchKey + "'");
 		String sql = ActualInventorySql.select(wildcardSearchKey);
 		
 		return executeSelectActualInventory(sql);
 	}
 
-	public Vector<ActualInventoryDAO> selectActualInventory(String itemNumber, String itemName, String locationSection, String locationSlot) {
+    /**
+     * Select actual inventory vector.
+     *
+     * @param itemNumber      the item number
+     * @param itemName        the item name
+     * @param locationSection the location section
+     * @param locationSlot    the location slot
+     * @return the vector
+     */
+    public Vector<ActualInventoryDAO> selectActualInventory(String itemNumber, String itemName, String locationSection, String locationSlot) {
 		logger.debug("Select inventory number=" + itemNumber + ",name=" + itemName + ",section=" + locationSection + ",slot=" + locationSlot);
 		String sql = ActualInventorySql.select(itemNumber, itemName, locationSection, locationSlot);
 		
@@ -625,65 +673,92 @@ ORDER BY I.number,I.name,MI.identity
 		return dataAccessObjects;
 	}
 
-	/**
-	 * 
-	 * @param inventory
-	 */
-	public void insertInventory(ActualInventory inventory) { 
+    /**
+     * Insert inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void insertInventory(ActualInventory inventory) { 
 		ActualInventoryDAO dao = new ActualInventoryDAO(inventory);
 		
 		String sql = ActualInventorySql.insert(dao);
 
 		execute(sql);
-	}	
+	}
 
-	public void insertInventory(MasterInventory inventory) { 
+    /**
+     * Insert inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void insertInventory(MasterInventory inventory) { 
 		MasterInventoryDAO dao = new MasterInventoryDAO(inventory);
 		
 		String sql = MasterInventorySql.insert(dao);
 
 		execute(sql);
-	}	
+	}
 
-	/**
-	 * 
-	 * @param inventory
-	 */
-	public void updateInventory(ActualInventory inventory) {
+    /**
+     * Update inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void updateInventory(ActualInventory inventory) {
 		ActualInventoryDAO dao = new ActualInventoryDAO(inventory);
 		
 		String sql = ActualInventorySql.update(dao);
 
 		execute(sql);
-	}	
+	}
 
-	public void updateInventory(MasterInventory inventory) {
+    /**
+     * Update inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void updateInventory(MasterInventory inventory) {
 		MasterInventoryDAO dao = new MasterInventoryDAO(inventory);
 		
 		String sql = MasterInventorySql.update(dao);
 
 		execute(sql);
-	}	
-	/**
-	 * 
-	 * @param inventory
-	 */
-	public void deleteInventory(ActualInventory inventory) {
+	}
+
+    /**
+     * Delete inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void deleteInventory(ActualInventory inventory) {
 		ActualInventoryDAO dao = new ActualInventoryDAO(inventory);
 		
 		String sql = ActualInventorySql.delete(dao);
 
 		execute(sql);
-	}	
+	}
 
-	public void deleteInventory(MasterInventory inventory) {
+    /**
+     * Delete inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void deleteInventory(MasterInventory inventory) {
 		MasterInventoryDAO dao = new MasterInventoryDAO(inventory);
 		
 		String sql = MasterInventorySql.delete(dao);
 
 		execute(sql);
-	}	
-	public Vector<HoldingDAO> selectHoldings(int byHoldingUnitId, int atLocationId) {
+	}
+
+    /**
+     * Select holdings vector.
+     *
+     * @param byHoldingUnitId the by holding unit id
+     * @param atLocationId    the at location id
+     * @return the vector
+     */
+    public Vector<HoldingDAO> selectHoldings(int byHoldingUnitId, int atLocationId) {
 		String sql = HoldingsSql.select(byHoldingUnitId, atLocationId);
 
 		logger.debug("SQL=" + sql);
@@ -727,7 +802,12 @@ ORDER BY I.number,I.name,MI.identity
 		return dataAccessObjects;
 	}
 
-	public void insertHolding(Holding newHolding) {
+    /**
+     * Insert holding.
+     *
+     * @param newHolding the new holding
+     */
+    public void insertHolding(Holding newHolding) {
 		HoldingDAO dao = new HoldingDAO(newHolding);
 		
 		String sql = HoldingsSql.insert(dao);
@@ -735,7 +815,12 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	public void updateHolding(Holding aHolding) {
+    /**
+     * Update holding.
+     *
+     * @param aHolding the a holding
+     */
+    public void updateHolding(Holding aHolding) {
 		HoldingDAO dao = new HoldingDAO(aHolding);
 		
 		String sql = HoldingsSql.update(dao);
@@ -743,21 +828,27 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	public void deleteHolding(Holding aHolding) {
+    /**
+     * Delete holding.
+     *
+     * @param aHolding the a holding
+     */
+    public void deleteHolding(Holding aHolding) {
 		HoldingDAO dao = new HoldingDAO(aHolding);
 		
 		String sql = HoldingsSql.delete(dao);
 		
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param withNumber
-	 * @param withName
-	 * @return
-	 */
-	public Vector<Item> selectItems(String withNumber, String withName) {
+
+    /**
+     * Select items vector.
+     *
+     * @param withNumber the with number
+     * @param withName   the with name
+     * @return vector
+     */
+    public Vector<Item> selectItems(String withNumber, String withName) {
 		String sql = ItemSql.select(connection, withNumber, withName);
 
 		logger.debug("SQL=" + sql);
@@ -803,23 +894,26 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("Selected count=" + items.size());
 		return items;
 	}
-	/**
-	 * 
-	 * @param newItem
-	 */
-	public void insertItem(Item newItem) {
+
+    /**
+     * Insert item.
+     *
+     * @param newItem the new item
+     */
+    public void insertItem(Item newItem) {
 		logger.trace("Insert item=" + newItem);
 		ItemDAO dao = new ItemDAO(newItem);
 		
 		String sql = ItemSql.insert(connection, dao);
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param anItem
-	 */
-	public void updateItem(Item anItem) {
+
+    /**
+     * Update item.
+     *
+     * @param anItem the an item
+     */
+    public void updateItem(Item anItem) {
 		logger.trace("Update iteme=" + anItem);
 		ItemDAO dao = new ItemDAO(anItem);
 		
@@ -828,11 +922,12 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	/**
-	 * 
-	 * @param anItem
-	 */
-	public void deleteItem(Item anItem) {
+    /**
+     * Delete item.
+     *
+     * @param anItem the an item
+     */
+    public void deleteItem(Item anItem) {
 		logger.trace("Remove item=" + anItem);
 		ItemDAO dao = new ItemDAO(anItem);
 		
@@ -843,14 +938,15 @@ ORDER BY I.number,I.name,MI.identity
 	/*
 	 * ************************************
 	 */
-	
-	/**
-	 * 
-	 * @param withinSection
-	 * @param atSlot
-	 * @return
-	 */
-	public Vector<StockLocation> selectLocations(String withinSection, String atSlot) {
+
+    /**
+     * Select locations vector.
+     *
+     * @param withinSection the within section
+     * @param atSlot        the at slot
+     * @return vector
+     */
+    public Vector<StockLocation> selectLocations(String withinSection, String atSlot) {
 		Vector<StockLocation> locations = new Vector<>();
 		
 		String sql = StockLocationsSql.select(connection, withinSection, atSlot);
@@ -894,11 +990,12 @@ ORDER BY I.number,I.name,MI.identity
 		return locations;
 	}
 
-	/**
-	 * 
-	 * @param newLocation
-	 */
-	public void insertStockLocation(StockLocation newLocation) {
+    /**
+     * Insert stock location.
+     *
+     * @param newLocation the new location
+     */
+    public void insertStockLocation(StockLocation newLocation) {
 		logger.trace("Insert stock location=" + newLocation);
 		
 		StockLocationDAO dao = new StockLocationDAO(newLocation);
@@ -907,12 +1004,13 @@ ORDER BY I.number,I.name,MI.identity
 		
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param aLocation
-	 */
-	public void updateStockLocation(StockLocation aLocation) {
+
+    /**
+     * Update stock location.
+     *
+     * @param aLocation the a location
+     */
+    public void updateStockLocation(StockLocation aLocation) {
 		logger.trace("Update stock location=" + aLocation);
 		
 		StockLocationDAO dao = new StockLocationDAO(aLocation);
@@ -921,12 +1019,13 @@ ORDER BY I.number,I.name,MI.identity
 		
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param aLocation
-	 */
-	public void deleteStockLocation(StockLocation aLocation) {
+
+    /**
+     * Delete stock location.
+     *
+     * @param aLocation the a location
+     */
+    public void deleteStockLocation(StockLocation aLocation) {
 		logger.trace("Update stock location=" + aLocation);
 		StockLocationDAO dao = new StockLocationDAO(aLocation);
 
@@ -934,9 +1033,16 @@ ORDER BY I.number,I.name,MI.identity
 		
 		execute(sql);
 	}
-	
 
-	public Vector<OrganizationalUnitDAO> selectOrganizationalUnits(String byCallsign, String andName) {
+
+    /**
+     * Select organizational units vector.
+     *
+     * @param byCallsign the by callsign
+     * @param andName    the and name
+     * @return the vector
+     */
+    public Vector<OrganizationalUnitDAO> selectOrganizationalUnits(String byCallsign, String andName) {
 		String sql = OrganizationalUnitsSql.select(EntityName.NULL_ID, byCallsign, andName, EntityName.NULL_ID);
 		logger.debug("SQL=" + sql);
 
@@ -981,7 +1087,12 @@ ORDER BY I.number,I.name,MI.identity
 		return dataAccessObjects;
 	}
 
-	public void insertOrganizationalUnit(OrganizationalUnit newUnit) {
+    /**
+     * Insert organizational unit.
+     *
+     * @param newUnit the new unit
+     */
+    public void insertOrganizationalUnit(OrganizationalUnit newUnit) {
 		OrganizationalUnitDAO dao = new OrganizationalUnitDAO(newUnit);
 		
 		String sql = OrganizationalUnitsSql.insert(dao);
@@ -989,7 +1100,12 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	public void updateOrganizationalUnit(OrganizationalUnit aUnit) {
+    /**
+     * Update organizational unit.
+     *
+     * @param aUnit the a unit
+     */
+    public void updateOrganizationalUnit(OrganizationalUnit aUnit) {
 		OrganizationalUnitDAO dao = new OrganizationalUnitDAO(aUnit);
 		
 		String sql = OrganizationalUnitsSql.update(dao);
@@ -997,7 +1113,12 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	public void deleteOrganizationalUnit(OrganizationalUnit aUnit) {
+    /**
+     * Delete organizational unit.
+     *
+     * @param aUnit the a unit
+     */
+    public void deleteOrganizationalUnit(OrganizationalUnit aUnit) {
 		OrganizationalUnitDAO dao = new OrganizationalUnitDAO(aUnit);
 		
 		String sql = OrganizationalUnitsSql.delete(dao);
@@ -1006,7 +1127,13 @@ ORDER BY I.number,I.name,MI.identity
 	}
 
 
-	public Vector<ItemApplicationDAO> selectItemApplications(int forUnitId) {
+    /**
+     * Select item applications vector.
+     *
+     * @param forUnitId the for unit id
+     * @return the vector
+     */
+    public Vector<ItemApplicationDAO> selectItemApplications(int forUnitId) {
 		String sql = ItemApplicationsSql.select(forUnitId, null);
 		
 		logger.debug("SQL=" + sql);
@@ -1050,8 +1177,13 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("Selected count=" + result.size());
 		return result;
 	}
-	
-	public void insertItemApplication(ItemApplication newUnit) {
+
+    /**
+     * Insert item application.
+     *
+     * @param newUnit the new unit
+     */
+    public void insertItemApplication(ItemApplication newUnit) {
 		ItemApplicationDAO dao = new ItemApplicationDAO(newUnit);
 		
 		String sql = ItemApplicationsSql.insert(dao);
@@ -1059,7 +1191,12 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	public void updateItemApplication(ItemApplication aUnit) {
+    /**
+     * Update item application.
+     *
+     * @param aUnit the a unit
+     */
+    public void updateItemApplication(ItemApplication aUnit) {
 		ItemApplicationDAO dao = new ItemApplicationDAO(aUnit);
 		
 		String sql = ItemApplicationsSql.update(dao);
@@ -1067,7 +1204,12 @@ ORDER BY I.number,I.name,MI.identity
 		execute(sql);
 	}
 
-	public void deleteItemApplication(ItemApplication aUnit) {
+    /**
+     * Delete item application.
+     *
+     * @param aUnit the a unit
+     */
+    public void deleteItemApplication(ItemApplication aUnit) {
 		ItemApplicationDAO dao = new ItemApplicationDAO(aUnit);
 		
 		String sql = ItemApplicationsSql.delete(dao);
@@ -1094,12 +1236,13 @@ ORDER BY I.number,I.name,MI.identity
 			}
 		}
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean disconnect() {
+
+    /**
+     * Disconnect boolean.
+     *
+     * @return boolean
+     */
+    public boolean disconnect() {
 		if (connection != null) {
 			try {
 				connection.close();

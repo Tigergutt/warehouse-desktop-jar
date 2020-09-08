@@ -10,25 +10,54 @@ import javax.swing.table.TableColumnModel;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The type Sorted table model.
+ */
 @SuppressWarnings("serial")
 public abstract class SortedTableModel extends AbstractTableModel implements MouseListener {
 	private static Logger logger = Logger.getLogger(SortedTable.class);
 	private TableHeaderRenderer headerRenderer = null;
 //	private int activeColumnIndex = 0;
-	
-	public void setHeaderRenderer(TableHeaderRenderer headerRenderer) {
+
+    /**
+     * Sets header renderer.
+     *
+     * @param headerRenderer the header renderer
+     */
+    public void setHeaderRenderer(TableHeaderRenderer headerRenderer) {
 		this.headerRenderer = headerRenderer;
 	}
-	
-	public TableHeaderRenderer getHeaderRenderer() {
+
+    /**
+     * Gets header renderer.
+     *
+     * @return the header renderer
+     */
+    public TableHeaderRenderer getHeaderRenderer() {
 		return headerRenderer;
 	}
 
-	public abstract int getColumnWidth(int columnIndex);
-	
-	public abstract boolean[] isSortable();
-	
-	public int getActiveColumn() {
+    /**
+     * Gets column width.
+     *
+     * @param columnIndex the column index
+     * @return the column width
+     */
+    public abstract int getColumnWidth(int columnIndex);
+
+    /**
+     * Is sortable boolean [ ].
+     *
+     * @return the boolean [ ]
+     */
+    public abstract boolean[] isSortable();
+
+    /**
+     * Gets active column.
+     *
+     * @return the active column
+     */
+    public int getActiveColumn() {
 		if (headerRenderer == null ) {
 			return 0;
 		}
@@ -36,7 +65,12 @@ public abstract class SortedTableModel extends AbstractTableModel implements Mou
 		return headerRenderer.getActiveColumn();
 	}
 
-	public abstract void orderByColumn(int columnIndex);
+    /**
+     * Order by column.
+     *
+     * @param columnIndex the column index
+     */
+    public abstract void orderByColumn(int columnIndex);
 	
 	@Override
 	public void mouseClicked(MouseEvent event) {

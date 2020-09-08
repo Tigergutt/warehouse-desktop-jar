@@ -5,8 +5,14 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 import se.melsom.warehouse.report.part.InventoryLandscapeTable;
 
+/**
+ * The type Stock location trailer page.
+ */
 public class StockLocationTrailerPage extends StockLocationPage  {
-	public static final int INVENTORY_TABLE_ROW_COUNT = 17;
+    /**
+     * The constant INVENTORY_TABLE_ROW_COUNT.
+     */
+    public static final int INVENTORY_TABLE_ROW_COUNT = 17;
 	
 	private static final float LOCATION_FIELD_X = 10;
 	private static final float LOCATION_FIELD_Y = 10;
@@ -40,8 +46,14 @@ public class StockLocationTrailerPage extends StockLocationPage  {
 	private FormField cycleCountingDateField;
 	private FormField holdingField;
 	private InventoryLandscapeTable table;
-	
-	public StockLocationTrailerPage(String reportName, String date) {
+
+    /**
+     * Instantiates a new Stock location trailer page.
+     *
+     * @param reportName the report name
+     * @param date       the date
+     */
+    public StockLocationTrailerPage(String reportName, String date) {
 		super(reportName, date);
 		cycleCountingDateField = new FormField(DATE_FIELD_X, DATE_FIELD_Y, DATE_FIELD_WIDTH, 
 				DATE_CAPTION_HEIGHT, DATE_VALUE_HEIGHT);

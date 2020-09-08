@@ -1,5 +1,8 @@
 package se.melsom.warehouse.settings;
 
+/**
+ * The type Window settings.
+ */
 public class WindowSettings {
 	private PersistentSettings parent;
 	private String name;
@@ -9,7 +12,17 @@ public class WindowSettings {
 	private int height;
 	private boolean isVisible;
 
-	public WindowSettings(String name, int x, int y, int width, int height, boolean isVisible) {
+    /**
+     * Instantiates a new Window settings.
+     *
+     * @param name      the name
+     * @param x         the x
+     * @param y         the y
+     * @param width     the width
+     * @param height    the height
+     * @param isVisible the is visible
+     */
+    public WindowSettings(String name, int x, int y, int width, int height, boolean isVisible) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
@@ -17,20 +30,40 @@ public class WindowSettings {
 		this.height = height;
 		this.isVisible = isVisible;
 	}
-	
-	public void setParent(PersistentSettings parent) {
+
+    /**
+     * Sets parent.
+     *
+     * @param parent the parent
+     */
+    public void setParent(PersistentSettings parent) {
 		this.parent = parent;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
 
-	public int getX() {
+    /**
+     * Gets x.
+     *
+     * @return the x
+     */
+    public int getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+    /**
+     * Sets x.
+     *
+     * @param x the x
+     */
+    public void setX(int x) {
 		this.x = x;
 		
 		if (parent != null) {
@@ -38,11 +71,21 @@ public class WindowSettings {
 		}
 	}
 
-	public int getY() {
+    /**
+     * Gets y.
+     *
+     * @return the y
+     */
+    public int getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+    /**
+     * Sets y.
+     *
+     * @param y the y
+     */
+    public void setY(int y) {
 		this.y = y;
 		
 		if (parent != null) {
@@ -50,11 +93,21 @@ public class WindowSettings {
 		}
 	}
 
-	public int getWidth() {
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
+    public int getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+    /**
+     * Sets width.
+     *
+     * @param width the width
+     */
+    public void setWidth(int width) {
 		this.width = width;
 		
 		if (parent != null) {
@@ -62,11 +115,21 @@ public class WindowSettings {
 		}
 	}
 
-	public int getHeight() {
+    /**
+     * Gets height.
+     *
+     * @return the height
+     */
+    public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+    /**
+     * Sets height.
+     *
+     * @param height the height
+     */
+    public void setHeight(int height) {
 		this.height = height;
 		
 		if (parent != null) {
@@ -74,11 +137,21 @@ public class WindowSettings {
 		}
 	}
 
-	public boolean isVisible() {
+    /**
+     * Is visible boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isVisible() {
 		return isVisible;
 	}
 
-	public void setVisible(boolean isVisible) {
+    /**
+     * Sets visible.
+     *
+     * @param isVisible the is visible
+     */
+    public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
 		
 		if (parent != null) {

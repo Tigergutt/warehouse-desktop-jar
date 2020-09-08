@@ -20,6 +20,9 @@ import se.melsom.warehouse.presentation.common.MessageView;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Edit item controller.
+ */
 public class EditItemController extends ViewController {
 	private static Logger logger = Logger.getLogger(EditItemController.class);
 	
@@ -36,7 +39,13 @@ public class EditItemController extends ViewController {
 	private JFrame parentView;
 	private boolean isInitializingSelectors = false;
 
-	public EditItemController(InventoryAccounting inventoryAccounting, JFrame parent) {
+    /**
+     * Instantiates a new Edit item controller.
+     *
+     * @param inventoryAccounting the inventory accounting
+     * @param parent              the parent
+     */
+    public EditItemController(InventoryAccounting inventoryAccounting, JFrame parent) {
 		this.itemMasterFile = inventoryAccounting.getItemMasterFile();
 		this.parentView = parent;
 		
@@ -62,8 +71,14 @@ public class EditItemController extends ViewController {
 		view.setPackagingSelectorItems(inventoryAccounting.getPackagings());
 		isInitializingSelectors = false;
 	}
-	
-	public Item editItem(Item anItem) {
+
+    /**
+     * Edit item item.
+     *
+     * @param anItem the an item
+     * @return the item
+     */
+    public Item editItem(Item anItem) {
 		currentItem = anItem;
 		
 		logger.trace("Edit item=" + anItem);
@@ -211,7 +226,12 @@ public class EditItemController extends ViewController {
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return EditActualInventoryView.class.getSimpleName();
 	}
 }

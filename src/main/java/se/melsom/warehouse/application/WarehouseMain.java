@@ -9,11 +9,22 @@ import se.melsom.logging.ConfigurationUtility;
 import se.melsom.warehouse.database.WarehouseDatabase;
 import se.melsom.warehouse.event.ModelEventBroker;
 
+/**
+ * This is the main entry point of the Warehouse Application.
+ */
 public class WarehouseMain implements Runnable {
 	private ApplicationController applicationController = null;
-	ModelEventBroker eventBroker = new ModelEventBroker();
+    /**
+     * The Event broker.
+     */
+    ModelEventBroker eventBroker = new ModelEventBroker();
 
-	public static void main(String[] args) {
+    /**
+     * The entry point of application.
+     *
+     * @param args command line arguments and flags (currently none).
+     */
+    public static void main(String[] args) {
 		ConfigurationUtility.loadConfiguration();
 		Logger.getLogger("org.apache").setLevel(Level.OFF);;
 

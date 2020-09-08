@@ -1,8 +1,17 @@
 package se.melsom.warehouse.report.component;
 
 
+/**
+ * The type Table.
+ */
 public class Table extends Frame {
-	public Table(float x, float y) {
+    /**
+     * Instantiates a new Table.
+     *
+     * @param x the x
+     * @param y the y
+     */
+    public Table(float x, float y) {
 		super(x, y, 0, 0);
 	}
 	

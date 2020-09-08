@@ -15,6 +15,9 @@ import javax.swing.table.TableModel;
 
 import se.melsom.warehouse.importer.ImportType;
 
+/**
+ * The type Import wizard view.
+ */
 @SuppressWarnings("serial")
 public class ImportWizardView extends JDialog {
 	private JTable table;
@@ -22,7 +25,15 @@ public class ImportWizardView extends JDialog {
 	private JButton continueButton;
 	private JButton completeButton;
 
-	public ImportWizardView(ImportWizardController controller, JFrame parent, TableModel tableModel, final TableCellRenderer cellRenderer) {
+    /**
+     * Instantiates a new Import wizard view.
+     *
+     * @param controller   the controller
+     * @param parent       the parent
+     * @param tableModel   the table model
+     * @param cellRenderer the cell renderer
+     */
+    public ImportWizardView(ImportWizardController controller, JFrame parent, TableModel tableModel, final TableCellRenderer cellRenderer) {
 		super(parent);
 		addComponentListener(controller);
 		JScrollPane scrollPane = new JScrollPane();
@@ -56,34 +67,72 @@ public class ImportWizardView extends JDialog {
 		buttonPanel.add(completeButton);
 	}
 
-	public void setImportType(ImportType type) {
+    /**
+     * Sets import type.
+     *
+     * @param type the type
+     */
+    public void setImportType(ImportType type) {
 		setTitle("Importerar data : " + type.getName());
 	}
-	
-	public void setCancelAction(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets cancel action.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCancelAction(String actionCommand, ActionListener actionListener) {
 		cancelButton.setActionCommand(actionCommand);
 		cancelButton.addActionListener(actionListener);
 	}
 
-	public void setContinueAction(String actionCommand, ActionListener actionListener) {
+    /**
+     * Sets continue action.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setContinueAction(String actionCommand, ActionListener actionListener) {
 		continueButton.setActionCommand(actionCommand);
 		continueButton.addActionListener(actionListener);
 	}
-	
-	public void setContinueEnabled(boolean enabled) {
+
+    /**
+     * Sets continue enabled.
+     *
+     * @param enabled the enabled
+     */
+    public void setContinueEnabled(boolean enabled) {
 		continueButton.setEnabled(enabled);
 	}
-	
-	public void setContinueText(String text) {
+
+    /**
+     * Sets continue text.
+     *
+     * @param text the text
+     */
+    public void setContinueText(String text) {
 		continueButton.setText(text);
 	}
-	
-	public void setCompleteAction(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets complete action.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCompleteAction(String actionCommand, ActionListener actionListener) {
 		completeButton.setActionCommand(actionCommand);
 		completeButton.addActionListener(actionListener);
 	}
-	
-	public void setCompleteEnabled(boolean enabled) {
+
+    /**
+     * Sets complete enabled.
+     *
+     * @param enabled the enabled
+     */
+    public void setCompleteEnabled(boolean enabled) {
 		completeButton.setEnabled(enabled);
 	}
 	

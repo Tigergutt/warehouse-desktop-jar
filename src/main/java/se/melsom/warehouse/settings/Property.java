@@ -1,34 +1,69 @@
 package se.melsom.warehouse.settings;
 
+/**
+ * The type Property.
+ */
 public class Property {
 	private PersistentSettings parent;
 	private String type;
 	private String name;
 	private String value;
-	
-	public Property(String type, String name, String value) {
+
+    /**
+     * Instantiates a new Property.
+     *
+     * @param type  the type
+     * @param name  the name
+     * @param value the value
+     */
+    public Property(String type, String name, String value) {
 		this.type = type;
 		this.name = name;
 		this.value = value;
 	}
 
-	public void setParent(PersistentSettings parent) {
+    /**
+     * Sets parent.
+     *
+     * @param parent the parent
+     */
+    public void setParent(PersistentSettings parent) {
 		this.parent = parent;
 	}
-	
-	public String getType() {
+
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
+    public String getType() {
 		return type;
 	}
 
-	public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
 
-	public String getValue() {
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
+    public String getValue() {
 		return value;
 	}
-	
-	public void setValue(String value) {
+
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     */
+    public void setValue(String value) {
 		this.value = value;
 		
 		if (parent != null) {

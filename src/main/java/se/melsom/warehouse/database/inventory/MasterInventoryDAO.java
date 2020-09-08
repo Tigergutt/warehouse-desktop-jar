@@ -2,6 +2,9 @@ package se.melsom.warehouse.database.inventory;
 
 import se.melsom.warehouse.model.entity.inventory.MasterInventory;
 
+/**
+ * The Master inventory data access object.
+ */
 public class MasterInventoryDAO {
 	private int id;
 	private int itemId;
@@ -11,11 +14,19 @@ public class MasterInventoryDAO {
 	private String identity;
 	private String timestamp;
 	private String annotation;
-	
-	public MasterInventoryDAO() {
+
+    /**
+     * Instantiates a new Master inventory dao.
+     */
+    public MasterInventoryDAO() {
 	}
-	
-	public MasterInventoryDAO(MasterInventory inventory) {
+
+    /**
+     * Instantiates a new Master inventory dao.
+     *
+     * @param inventory the inventory
+     */
+    public MasterInventoryDAO(MasterInventory inventory) {
 		this.id = inventory.getId();
 		this.itemId = inventory.getItem().getId();
 		this.stockPoint = inventory.getStockPoint();
@@ -25,68 +36,148 @@ public class MasterInventoryDAO {
 		this.timestamp = inventory.getTimestamp().length() > 0 ? inventory.getTimestamp() : null;
 		this.annotation = inventory.getAnnotation();
 	}
-		
-	public int getId() {
+
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
 
-	public int getItemId() {
+    /**
+     * Gets item id.
+     *
+     * @return the item id
+     */
+    public int getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+    /**
+     * Sets item id.
+     *
+     * @param itemId the item id
+     */
+    public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 
-	public String getSource() {
+    /**
+     * Gets source.
+     *
+     * @return the source
+     */
+    public String getSource() {
 		return source;
 	}
 
-	public void setSource(String source) {
+    /**
+     * Sets source.
+     *
+     * @param source the source
+     */
+    public void setSource(String source) {
 		this.source = source;
 	}
 
-	public String getStockPoint() {
+    /**
+     * Gets stock point.
+     *
+     * @return the stock point
+     */
+    public String getStockPoint() {
 		return stockPoint;
 	}
 
-	public void setStockPoint(String stockPoint) {
+    /**
+     * Sets stock point.
+     *
+     * @param stockPoint the stock point
+     */
+    public void setStockPoint(String stockPoint) {
 		this.stockPoint = stockPoint;
 	}
 
-	public int getQuantity() {
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    public int getQuantity() {
 		return quantity;
 	}
-	
-	public void setQuantity(int value) {
+
+    /**
+     * Sets quantity.
+     *
+     * @param value the value
+     */
+    public void setQuantity(int value) {
 		quantity = value;
 	}
-	
-	public String getIdentity() {
+
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
-	
-	public String getTimestamp() {
+
+    /**
+     * Gets timestamp.
+     *
+     * @return the timestamp
+     */
+    public String getTimestamp() {
 		return timestamp;
 	}
-	
-	public void setTimestamp(String timestamp) {
+
+    /**
+     * Sets timestamp.
+     *
+     * @param timestamp the timestamp
+     */
+    public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public String getAnnotation() {
+    /**
+     * Gets annotation.
+     *
+     * @return the annotation
+     */
+    public String getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(String annotation) {
+    /**
+     * Sets annotation.
+     *
+     * @param annotation the annotation
+     */
+    public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
 

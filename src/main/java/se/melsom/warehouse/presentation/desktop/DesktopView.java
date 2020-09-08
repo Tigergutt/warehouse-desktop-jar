@@ -17,6 +17,9 @@ import javax.swing.JSeparator;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The type Desktop view.
+ */
 @SuppressWarnings("serial")
 public class DesktopView extends JFrame {
 	private static Logger logger = Logger.getLogger(DesktopView.class);
@@ -34,11 +37,17 @@ public class DesktopView extends JFrame {
 	private JMenuItem editItemsMenu;
 	private JMenuItem editInstancesMenu;
 	private JMenuItem editStockLocations;
-	private JMenuItem editApplications;	
-	
-	// Report menu items
-	JMenuItem generateStockLocationInventoryMenu;	
-	JMenuItem generateStockOnHandMenu;	
+	private JMenuItem editApplications;
+
+    /**
+     * The Generate stock location inventory menu.
+     */
+// Report menu items
+	JMenuItem generateStockLocationInventoryMenu;
+    /**
+     * The Generate stock on hand menu.
+     */
+    JMenuItem generateStockOnHandMenu;	
 	
 	// Window/show menu items
 	private JCheckBoxMenuItem showInventoryViewMenu;
@@ -51,8 +60,13 @@ public class DesktopView extends JFrame {
 	
 	private JDesktopPane desktopPane;
 	private DesktopController presenter;
-	
-	public DesktopView(DesktopController presenter) {
+
+    /**
+     * Instantiates a new Desktop view.
+     *
+     * @param presenter the presenter
+     */
+    public DesktopView(DesktopController presenter) {
 		this.presenter = presenter;
 		
 		addWindowListener(new WindowAdapter() {
@@ -182,119 +196,239 @@ public class DesktopView extends JFrame {
 		getContentPane().add(desktopPane, BorderLayout.CENTER);
 	}
 
-	public JDesktopPane getDesktop() {
+    /**
+     * Gets desktop.
+     *
+     * @return the desktop
+     */
+    public JDesktopPane getDesktop() {
 		return desktopPane;
 	}
 
-	//
+    /**
+     * Sets show stock on hand view checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setShowStockOnHandViewChecked(boolean isChecked) {
 		logger.trace("showStockOnHandViewMenu isChecked=" + isChecked);
 		showStockOnHandViewMenu.setSelected(isChecked);		
 	}
 
-	public void setShowStockOnHandViewAction(String name) {
+    /**
+     * Sets show stock on hand view action.
+     *
+     * @param name the name
+     */
+    public void setShowStockOnHandViewAction(String name) {
 		showStockOnHandViewMenu.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets show inventory view checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setShowInventoryViewChecked(boolean isChecked) {
 		logger.trace("showInventoryViewMenu isChecked=" + isChecked);
 		showInventoryViewMenu.setSelected(isChecked);		
 	}
-	
-	public void setShowInventoryViewAction(String name) {
+
+    /**
+     * Sets show inventory view action.
+     *
+     * @param name the name
+     */
+    public void setShowInventoryViewAction(String name) {
 		showInventoryViewMenu.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets show inventory holding view checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setShowInventoryHoldingViewChecked(boolean isChecked) {
 		logger.trace("showInventoryHoldingView isChecked=" + isChecked);
 		showInventoryHoldingView.setSelected(isChecked);		
 	}
-	
-	public void setShowInventoryHoldingViewAction(String name) {
+
+    /**
+     * Sets show inventory holding view action.
+     *
+     * @param name the name
+     */
+    public void setShowInventoryHoldingViewAction(String name) {
 		showInventoryHoldingView.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets show search view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setShowSearchViewMenuItemChecked(boolean isChecked) {
 		logger.trace("showSearchViewMenu isChecked=" + isChecked);
 		showSearchViewMenu.setSelected(isChecked);		
 	}
 
-	public void setShowSearchViewAction(String name) {
+    /**
+     * Sets show search view action.
+     *
+     * @param name the name
+     */
+    public void setShowSearchViewAction(String name) {
 		showSearchViewMenu.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets import inventory action.
+     *
+     * @param name the name
+     */
+//
 	public void setImportInventoryAction(String name) {
 		menuImportInventory.setActionCommand(name);
 	}
 
-	public void setImportMasterInventoryAction(String name) {
+    /**
+     * Sets import master inventory action.
+     *
+     * @param name the name
+     */
+    public void setImportMasterInventoryAction(String name) {
 		menuImportMasterInventory.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets import stock locations action.
+     *
+     * @param name the name
+     */
+//
 	public void setImportStockLocationsAction(String name) {
 		menuImportLocations.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets import organizational utits action.
+     *
+     * @param name the name
+     */
+//
 	public void setImportOrganizationalUtitsAction(String name) {
 		menuImportUnits.setActionCommand(name);
 	}
 
 
-	public void setExportDatabaseAction(String name) {
+    /**
+     * Sets export database action.
+     *
+     * @param name the name
+     */
+    public void setExportDatabaseAction(String name) {
 		mntmExport.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets edit items menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setEditItemsMenuItemChecked(boolean isChecked) {
 		logger.trace("editItemsMenu isChecked=" + isChecked);
 		editItemsMenu.setEnabled(isChecked);
 	}
 
-	public void setEditItemsAction(String name) {
+    /**
+     * Sets edit items action.
+     *
+     * @param name the name
+     */
+    public void setEditItemsAction(String name) {
 		editItemsMenu.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets edit instances menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setEditInstancesMenuItemChecked(boolean isChecked) {
 		logger.trace("editInstancesMenu isChecked=" + isChecked);
 		editInstancesMenu.setEnabled(isChecked);
 	}
 
-	public void setEditInstancesAction(String name) {
+    /**
+     * Sets edit instances action.
+     *
+     * @param name the name
+     */
+    public void setEditInstancesAction(String name) {
 		editInstancesMenu.setActionCommand(name);
 	}
 
-	public void setEditApplicationsAction(String name) {
+    /**
+     * Sets edit applications action.
+     *
+     * @param name the name
+     */
+    public void setEditApplicationsAction(String name) {
 		editApplications.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets generate stock location inventor action.
+     *
+     * @param name the name
+     */
+//
 	public void setGenerateStockLocationInventorAction(String name) {
 		generateStockLocationInventoryMenu.setActionCommand(name);
 	}
 
 
-	public void setGenerateStockOnHandAction(String name) {
+    /**
+     * Sets generate stock on hand action.
+     *
+     * @param name the name
+     */
+    public void setGenerateStockOnHandAction(String name) {
 		generateStockOnHandMenu.setActionCommand(name);
 	}
 
-	//
+    /**
+     * Sets show log view checked.
+     *
+     * @param isChecked the is checked
+     */
+//
 	public void setShowLogViewChecked(boolean isChecked) {
 		logger.trace("loggerViewMenu isChecked=" + isChecked);
 		loggerViewMenu.setEnabled(isChecked);
 	}
-	
-	public void setShowLogViewAction(String name) {
+
+    /**
+     * Sets show log view action.
+     *
+     * @param name the name
+     */
+    public void setShowLogViewAction(String name) {
 		loggerViewMenu.setActionCommand(name);
 	}
 
-	void quit(boolean shouldDispose) {
+    /**
+     * Quit.
+     *
+     * @param shouldDispose the should dispose
+     */
+    void quit(boolean shouldDispose) {
 		logger.debug("quit(" + shouldDispose + ")");
 		presenter.quitApplication();
 		

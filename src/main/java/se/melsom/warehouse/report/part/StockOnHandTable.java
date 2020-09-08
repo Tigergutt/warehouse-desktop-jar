@@ -13,6 +13,9 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Position;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 
+/**
+ * The type Stock on hand table.
+ */
 public class StockOnHandTable extends Table {
 	private static Logger logger = Logger.getLogger(StockOnHandTable.class);
 	
@@ -30,7 +33,14 @@ public class StockOnHandTable extends Table {
 			Alignment.RIGHT, Alignment.RIGHT, Alignment.LEFT, 
 			Alignment.RIGHT, Alignment.LEFT };
 
-	public StockOnHandTable(float x, float y, int rowCount) {
+    /**
+     * Instantiates a new Stock on hand table.
+     *
+     * @param x        the x
+     * @param y        the y
+     * @param rowCount the row count
+     */
+    public StockOnHandTable(float x, float y, int rowCount) {
 		super(x, y);
 		float rowY = y;
 		
@@ -74,15 +84,27 @@ public class StockOnHandTable extends Table {
 		
 		setLines(FRAME_LINE_WIDTH);
 	}
-	
-	public void setRowValues(int rowIndex, StockOnHand item) {
+
+    /**
+     * Sets row values.
+     *
+     * @param rowIndex the row index
+     * @param item     the item
+     */
+    public void setRowValues(int rowIndex, StockOnHand item) {
 		setRowValues(rowIndex, 
 				item.getItemNumber(), item.getItemName(), 
 				"" + item.getNominalQuantity(), "" + item.getActualQuantity(), item.getPackaging(),
 				item.getIdentity(), item.getAnnotation());
 	}
-	
-	public void setRowValues(int rowIndex, String... values) {
+
+    /**
+     * Sets row values.
+     *
+     * @param rowIndex the row index
+     * @param values   the values
+     */
+    public void setRowValues(int rowIndex, String... values) {
 		Component row = getComponents().get(rowIndex);
 
 		for (int columnIndex = 0; columnIndex < values.length; columnIndex++) {
@@ -96,8 +118,14 @@ public class StockOnHandTable extends Table {
 			textBox.setText(values[columnIndex] == null ? "" : values[columnIndex]);
 		}
 	}
-	
-	public void setRowValues(int rowIndex, Vector<String> values) {
+
+    /**
+     * Sets row values.
+     *
+     * @param rowIndex the row index
+     * @param values   the values
+     */
+    public void setRowValues(int rowIndex, Vector<String> values) {
 		Component row = getComponents().get(rowIndex);
 
 		for (int columnIndex = 0; columnIndex < values.size(); columnIndex++) {

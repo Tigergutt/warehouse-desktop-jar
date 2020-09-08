@@ -19,6 +19,9 @@ import org.apache.log4j.Logger;
 
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The type Edit master inventory view.
+ */
 @SuppressWarnings("serial")
 public class EditMasterInventoryView extends JDialog {
 	private static Logger logger = Logger.getLogger(EditMasterInventoryView.class);
@@ -32,7 +35,12 @@ public class EditMasterInventoryView extends JDialog {
 	private JLabel quantityLabel;
 	private JTextField quantityField;
 
-	public EditMasterInventoryView(JFrame parent) {
+    /**
+     * Instantiates a new Edit master inventory view.
+     *
+     * @param parent the parent
+     */
+    public EditMasterInventoryView(JFrame parent) {
 		super(parent, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Redigera individ");
@@ -159,23 +167,44 @@ public class EditMasterInventoryView extends JDialog {
 	}
 
 
-	/*
+    /**
+     * Sets item number.
+     *
+     * @param itemNumber the item number
+     */
+    /*
 	 * Item fields
 	 */
 	public void setItemNumber(String itemNumber) {
 		itemNumberField.setText(itemNumber);
 	}
 
-	public void setItemName(String itemName) {
+    /**
+     * Sets item name.
+     *
+     * @param itemName the item name
+     */
+    public void setItemName(String itemName) {
 		itemNameField.setText(itemName);
 	}
 
-	public void setItemSelectorListener(String actionCommand, ActionListener actionListener) {
+    /**
+     * Sets item selector listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setItemSelectorListener(String actionCommand, ActionListener actionListener) {
 		selectItemButton.setActionCommand(actionCommand);
 		selectItemButton.addActionListener(actionListener);
 	}
 
-	/*
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    /*
 	 * Quantity field
 	 */
 	public int getQuantity() {
@@ -192,62 +221,126 @@ public class EditMasterInventoryView extends JDialog {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		quantityField.setText("" + quantity);
 	}
 
-	public void setQuantityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets quantity field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setQuantityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		quantityField.setActionCommand(actionCommand);
 		quantityField.addActionListener(actionListener);
 		quantityField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    /*
 	 * Identity field
 	 */
 	public String getIdentity() {
 		return identityField.getText();
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		identityField.setText(identity);
 	}
 
-	public void setIdentityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets identity field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setIdentityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		identityField.setActionCommand(actionCommand);
 		identityField.addActionListener(actionListener);
 		identityField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Gets source.
+     *
+     * @return the source
+     */
+    /*
 	 * Source field
 	 */
 	public String getSource() {
 		return sourceField.getText();
 	}
 
-	public void setSource(String source) {
+    /**
+     * Sets source.
+     *
+     * @param source the source
+     */
+    public void setSource(String source) {
 		sourceField.setText(source);
 	}
 
-	public void setSourceFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets source field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setSourceFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		sourceField.setActionCommand(actionCommand);
 		sourceField.addActionListener(actionListener);
 		sourceField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Sets save button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+    /*
 	 * Buttons
 	 */
 	public void setSaveButtonEnabled(boolean isEnabled) {
 		saveButton.setEnabled(isEnabled);
 	}
-	
-	public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets cancel button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
 		cancelButton.setActionCommand(actionCommand);
 		cancelButton.addActionListener(actionListener);
 	}
-	public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets save button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
 		saveButton.setActionCommand(actionCommand);
 		saveButton.addActionListener(actionListener);
 	}

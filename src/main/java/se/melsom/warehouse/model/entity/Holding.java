@@ -1,31 +1,65 @@
 package se.melsom.warehouse.model.entity;
 
+/**
+ * The type Holding.
+ */
 public class Holding {
 	private OrganizationalUnit unit;
 	private StockLocation location;
-	
-	public Holding(OrganizationalUnit unit, StockLocation location) {
+
+    /**
+     * Instantiates a new Holding.
+     *
+     * @param unit     the unit
+     * @param location the location
+     */
+    public Holding(OrganizationalUnit unit, StockLocation location) {
 		this.unit = unit;
 		this.location = location;
 	}
-	
-	public OrganizationalUnit getUnit() {
+
+    /**
+     * Gets unit.
+     *
+     * @return the unit
+     */
+    public OrganizationalUnit getUnit() {
 		return unit;
 	}
-	
-	public void setUnit(OrganizationalUnit value) {
+
+    /**
+     * Sets unit.
+     *
+     * @param value the value
+     */
+    public void setUnit(OrganizationalUnit value) {
 		unit = value;
 	}
 
-	public StockLocation getLocation() {
+    /**
+     * Gets location.
+     *
+     * @return the location
+     */
+    public StockLocation getLocation() {
 		return location;
 	}
-	
-	public void setLocation(StockLocation value) {
+
+    /**
+     * Sets location.
+     *
+     * @param value the value
+     */
+    public void setLocation(StockLocation value) {
 		location = value;
 	}
-	
-	public boolean isValid() {
+
+    /**
+     * Is valid boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isValid() {
 		if (unit == null) {
 			return false;
 		}

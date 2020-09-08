@@ -15,10 +15,26 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+/**
+ * The type View controller.
+ */
 public abstract class ViewController implements ActionListener, FocusListener, KeyListener, ComponentListener, TableModelListener, ListSelectionListener {
-	public abstract JComponent getView();
-	
-	public boolean isValidNumber(String currentValue, char ch, int maxDigitCount) {
+    /**
+     * Gets view.
+     *
+     * @return the view
+     */
+    public abstract JComponent getView();
+
+    /**
+     * Is valid number boolean.
+     *
+     * @param currentValue  the current value
+     * @param ch            the ch
+     * @param maxDigitCount the max digit count
+     * @return the boolean
+     */
+    public boolean isValidNumber(String currentValue, char ch, int maxDigitCount) {
 		if (!Character.isDigit(ch)) {
 			return false;
 		}
@@ -33,8 +49,15 @@ public abstract class ViewController implements ActionListener, FocusListener, K
 		
 		return true;
 	}
-	
-	public boolean isValidMinutes(String currentValue, char ch) {
+
+    /**
+     * Is valid minutes boolean.
+     *
+     * @param currentValue the current value
+     * @param ch           the ch
+     * @return the boolean
+     */
+    public boolean isValidMinutes(String currentValue, char ch) {
 		if (!Character.isDigit(ch)) {
 			return false;
 		}
@@ -56,7 +79,14 @@ public abstract class ViewController implements ActionListener, FocusListener, K
 		return true;
 	}
 
-	public boolean isValidTime(String currentValue, Character ch) {
+    /**
+     * Is valid time boolean.
+     *
+     * @param currentValue the current value
+     * @param ch           the ch
+     * @return the boolean
+     */
+    public boolean isValidTime(String currentValue, Character ch) {
 		switch (currentValue.length()) {
 		case 0:
 		case 1:

@@ -1,9 +1,21 @@
 package se.melsom.warehouse.model;
 
+/**
+ * The enum Item field.
+ */
 public enum ItemField {
-	NUMBER("F-bet/artikel", ""),
-	NAME("Benämning", ""),
-	PACKAGING("Enhet", "");
+    /**
+     * Number item field.
+     */
+    NUMBER("F-bet/artikel", ""),
+    /**
+     * Name item field.
+     */
+    NAME("Benämning", ""),
+    /**
+     * Packaging item field.
+     */
+    PACKAGING("Enhet", "");
 
 	private String name;
 	private String description;
@@ -12,12 +24,22 @@ public enum ItemField {
 		this.name = name;
 		this.description = description;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public String getDescription() {
+
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
 

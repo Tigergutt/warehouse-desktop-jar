@@ -9,27 +9,39 @@ import org.apache.log4j.Logger;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 
+/**
+ * The type Organization units table model.
+ */
 @SuppressWarnings("serial")
 public class OrganizationUnitsTableModel extends AbstractTableModel  {
 	private static Logger logger = Logger.getLogger(OrganizationUnitsTableModel.class);
 	private Vector<ActualInventory> instances = new Vector<>();
-	
-	public static final String[] columnNames = { 
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { 
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME,
 			EntityName.STOCK_LOCATION_DESIGNATION,
 			EntityName.INVENTORY_IDENTITY
 	};
-	
-	public static final int[] columnWidts = { 
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 
 			120, 
 			230, 
 			70,
 			120, 
 			75
 	};
-	
-	public static final Class<?>[] columnClass = {
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class, 
@@ -37,38 +49,68 @@ public class OrganizationUnitsTableModel extends AbstractTableModel  {
 	};
 
 	private boolean isExtendedEditActive = false;
-	
-	public OrganizationUnitsTableModel() {
+
+    /**
+     * Instantiates a new Organization units table model.
+     */
+    public OrganizationUnitsTableModel() {
 		if (columnNames.length != columnWidts.length || columnNames.length != columnClass.length) {
 			logger.warn("Array dimension mismatch.");
 		}
 	}
-	
-	public Vector<ActualInventory> getInstances() {
+
+    /**
+     * Gets instances.
+     *
+     * @return the instances
+     */
+    public Vector<ActualInventory> getInstances() {
 		return instances;
 	}
-	
-	public void insertItem(ActualInventory product, int atIndex) {
+
+    /**
+     * Insert item.
+     *
+     * @param product the product
+     * @param atIndex the at index
+     */
+    public void insertItem(ActualInventory product, int atIndex) {
 		instances.insertElementAt(product, atIndex);
 		fireTableRowsInserted(atIndex, atIndex);
 	}
-	
-	public ActualInventory removeItem(int atIndex) {
+
+    /**
+     * Remove item actual inventory.
+     *
+     * @param atIndex the at index
+     * @return the actual inventory
+     */
+    public ActualInventory removeItem(int atIndex) {
 		ActualInventory product = instances.remove(atIndex);
 
 		fireTableRowsDeleted(atIndex, atIndex);
 
 		return product;
 	}
-	
-	public void setInstances(Vector<ActualInventory> collection) {
+
+    /**
+     * Sets instances.
+     *
+     * @param collection the collection
+     */
+    public void setInstances(Vector<ActualInventory> collection) {
 		logger.debug("Product list updated");
 		instances.clear();
 		instances.addAll(collection);
 		fireTableDataChanged();
 	}
-	
-	public void setExtendedEditActive(boolean value) {
+
+    /**
+     * Sets extended edit active.
+     *
+     * @param value the value
+     */
+    public void setExtendedEditActive(boolean value) {
 		isExtendedEditActive = value;
 	}
 

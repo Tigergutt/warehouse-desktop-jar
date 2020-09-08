@@ -7,15 +7,26 @@ import javax.swing.event.DocumentListener;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
+/**
+ * The type Text area appender.
+ */
 public class TextAreaAppender extends AppenderSkeleton implements DocumentListener {
 	private static JTextArea textArea;
 	private static TextAreaAppender instance;
 
-	public TextAreaAppender() {
+    /**
+     * Instantiates a new Text area appender.
+     */
+    public TextAreaAppender() {
 		instance = this;
 	}
 
-	public static void setTextArea(JTextArea textArea) {
+    /**
+     * Sets text area.
+     *
+     * @param textArea the text area
+     */
+    public static void setTextArea(JTextArea textArea) {
 		TextAreaAppender.textArea = textArea;
 
 		textArea.getDocument().addDocumentListener(TextAreaAppender.instance);

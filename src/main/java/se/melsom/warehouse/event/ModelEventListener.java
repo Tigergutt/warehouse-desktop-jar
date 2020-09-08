@@ -1,7 +1,15 @@
 package se.melsom.warehouse.event;
 
+/**
+ * The interface Model event listener.
+ */
 public interface ModelEventListener {
-	public void handleEvent(ModelEvent event);
+    /**
+     * Handle event.
+     *
+     * @param event the event
+     */
+    public void handleEvent(ModelEvent event);
 
 	public void finalize() throws Throwable;
 }

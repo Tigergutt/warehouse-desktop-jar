@@ -8,6 +8,9 @@ import se.melsom.warehouse.report.component.TextBox;
 import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.part.StockOnHandTable;
 
+/**
+ * The type Stock on hand page.
+ */
 public class StockOnHandPage extends Page {
 	private static final float HEADER_FIELD_X = 10;
 	private static final float HEADER_FIELD_Y = 10;	
@@ -25,7 +28,13 @@ public class StockOnHandPage extends Page {
 	private TextBox pageNumberField;
 	private StockOnHandTable table;
 
-	public StockOnHandPage(String reportName, String date) {
+    /**
+     * Instantiates a new Stock on hand page.
+     *
+     * @param reportName the report name
+     * @param date       the date
+     */
+    public StockOnHandPage(String reportName, String date) {
 		super(Orientation.LANDSCAPE);
 		
 		TextBox reportTitle = new TextBox(HEADER_FIELD_X, HEADER_FIELD_Y, 
@@ -47,19 +56,39 @@ public class StockOnHandPage extends Page {
 		addComponent(table);
 	}
 
-	public int getRowCapacity() {
+    /**
+     * Gets row capacity.
+     *
+     * @return the row capacity
+     */
+    public int getRowCapacity() {
 		return STOCK_ON_HAND_TABLE_ROW_COUNT;
 	}
-	
-	public void setStockOnHandRow(int rowIndex, StockOnHand item) {
+
+    /**
+     * Sets stock on hand row.
+     *
+     * @param rowIndex the row index
+     * @param item     the item
+     */
+    public void setStockOnHandRow(int rowIndex, StockOnHand item) {
 		table.setRowValues(rowIndex, item);
 	}
 
-	public void setStockOnHandRow(int rowIndex, Vector<String> values) {
+    /**
+     * Sets stock on hand row.
+     *
+     * @param rowIndex the row index
+     * @param values   the values
+     */
+    public void setStockOnHandRow(int rowIndex, Vector<String> values) {
 		table.setRowValues(rowIndex, values);
 	}
-	
-	public void updatePageNumberField() {
+
+    /**
+     * Update page number field.
+     */
+    public void updatePageNumberField() {
 		pageNumberField.setText("Sida " + getPageNumber() + " (" + getPageCount() + ")");
 	}
 }

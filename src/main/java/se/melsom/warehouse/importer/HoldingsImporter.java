@@ -14,14 +14,22 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
+/**
+ * The type Holdings importer.
+ */
 public class HoldingsImporter extends Importer {
 	private static Logger logger = Logger.getLogger(HoldingsImporter.class);
 	private Vector<StockLocation> importedLocations = new Vector<>();
 	private Vector<Holding> importedHoldings = new Vector<>();
 	private int locationIndex = -1;
 	private int unitIndex = -1;
-	
-	public HoldingsImporter(InputTableModel tableModel) {
+
+    /**
+     * Instantiates a new Holdings importer.
+     *
+     * @param tableModel the table model
+     */
+    public HoldingsImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
 	

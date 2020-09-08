@@ -1,51 +1,107 @@
 package se.melsom.warehouse.model.entity;
 
+/**
+ * The type Stock location.
+ */
 public class StockLocation implements Comparable<StockLocation> {
 	private int id;
 	private String section;
 	private String slot;
 	private String description;
 
-	public StockLocation(int id, String section, String slot, String description) {
+    /**
+     * Instantiates a new Stock location.
+     *
+     * @param id          the id
+     * @param section     the section
+     * @param slot        the slot
+     * @param description the description
+     */
+    public StockLocation(int id, String section, String slot, String description) {
 		this.id = id;
 		this.section = section;
 		this.slot = slot;
 		this.description = description;
 	}
-	
-	public int getId() {
+
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
 
-	public void setId(int value) {
+    /**
+     * Sets id.
+     *
+     * @param value the value
+     */
+    public void setId(int value) {
 		id = value;
 	}
-	
-	public String getLocationLabel() {
+
+    /**
+     * Gets location label.
+     *
+     * @return the location label
+     */
+    public String getLocationLabel() {
 		return getSection() + getSlot();
 	}
 
-	public String getSection() {
+    /**
+     * Gets section.
+     *
+     * @return the section
+     */
+    public String getSection() {
 		return section;
 	}
-	
-	public void setSection(String value) {
+
+    /**
+     * Sets section.
+     *
+     * @param value the value
+     */
+    public void setSection(String value) {
 		section = value;
 	}
-	
-	public String getSlot() {
+
+    /**
+     * Gets slot.
+     *
+     * @return the slot
+     */
+    public String getSlot() {
 		return slot;
 	}
-	
-	public void setSlot(String value) {
+
+    /**
+     * Sets slot.
+     *
+     * @param value the value
+     */
+    public void setSlot(String value) {
 		slot = value;
 	}
-	
-	public String getDescription() {
+
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
-	
-	public void setDescription(String value) {
+
+    /**
+     * Sets description.
+     *
+     * @param value the value
+     */
+    public void setDescription(String value) {
 		description = value;
 	}
 

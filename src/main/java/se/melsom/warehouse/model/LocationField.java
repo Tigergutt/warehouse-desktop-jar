@@ -1,9 +1,21 @@
 package se.melsom.warehouse.model;
 
+/**
+ * The enum Location field.
+ */
 public enum LocationField {
-	STOCK_LOCATION("Lagerplats", ""),
-	SECTION("Sektion", ""),
-	SLOT("Fack", "");
+    /**
+     * Stock location location field.
+     */
+    STOCK_LOCATION("Lagerplats", ""),
+    /**
+     * Section location field.
+     */
+    SECTION("Sektion", ""),
+    /**
+     * Slot location field.
+     */
+    SLOT("Fack", "");
 
 	private String name;
 	private String description;
@@ -12,12 +24,22 @@ public enum LocationField {
 		this.name = name;
 		this.description = description;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public String getDescription() {
+
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
 }
