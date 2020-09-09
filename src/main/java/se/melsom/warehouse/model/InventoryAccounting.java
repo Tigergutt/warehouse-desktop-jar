@@ -23,6 +23,8 @@ import se.melsom.warehouse.model.entity.StockLocation;
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.model.entity.inventory.MasterInventory;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
+import se.melsom.warehouse.model.enumeration.ApplicationCategory;
+import se.melsom.warehouse.model.enumeration.Packaging;
 
 public class InventoryAccounting {
 	private static Logger logger = Logger.getLogger(InventoryAccounting.class);
@@ -55,7 +57,7 @@ public class InventoryAccounting {
 	public Collection<String> getPackagings() {
 		Set<String> packagings = new TreeSet<>();
 		
-		for (Packaging packaging : Packaging.values()) {			
+		for (Packaging packaging : Packaging.values()) {
 			packagings.add(packaging.getName());
 		}
 

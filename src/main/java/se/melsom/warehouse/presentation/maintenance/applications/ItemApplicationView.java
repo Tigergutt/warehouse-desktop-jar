@@ -26,7 +26,7 @@ import javax.swing.JSplitPane;
 public class ItemApplicationView  extends JDialog  {
 	private JTree tree;
 	private JCheckBox accumulateCheckBox;
-	private JButton btnNewButton;
+	private JButton packingSlipButton;
 	private SortedTable table;
 	private JButton removeButton;
 	private JButton editButton;
@@ -46,8 +46,8 @@ public class ItemApplicationView  extends JDialog  {
 		accumulateCheckBox = new JCheckBox("Ackumulera");
 		controlPanel.add(accumulateCheckBox);
 		
-		btnNewButton = new JButton("Ta ut lista...");
-		controlPanel.add(btnNewButton);
+		packingSlipButton = new JButton("Ta ut lista...");
+		controlPanel.add(packingSlipButton);
 
 		tree = new JTree(treeModel);
 		table = new SortedTable(tableModel);
@@ -116,6 +116,16 @@ public class ItemApplicationView  extends JDialog  {
 	public void setRemoveButtonAction(String name, ActionListener listener) {
 		removeButton.setActionCommand(name);
 		removeButton.addActionListener(listener);
+	}
+
+	// Remove button
+	public void setPackingSlipButtonEnabled(boolean isEnabled) {
+		packingSlipButton.setEnabled(isEnabled);
+	}
+
+	public void setPackingSlipButtonAction(String name, ActionListener listener) {
+		packingSlipButton.setActionCommand(name);
+		packingSlipButton.addActionListener(listener);
 	}
 
 	// Edit button

@@ -14,10 +14,10 @@
             "v": false
         },
         "DesktopView": {
-            "x": 95,
-            "y": 80,
-            "w": 811,
-            "h": 748,
+            "x": 68,
+            "y": 69,
+            "w": 1582,
+            "h": 1001,
             "v": true
         },
         "InstanceMaintenanceView": {
@@ -30,8 +30,8 @@
         "InventoryHoldingView": {
             "x": 16,
             "y": 13,
-            "w": 1074,
-            "h": 238,
+            "w": 1189,
+            "h": 663,
             "v": false
         },
         "InstancesView": {
@@ -49,8 +49,8 @@
             "v": false
         },
         "MasterInventoryView": {
-            "x": 120,
-            "y": 93,
+            "x": 591,
+            "y": 136,
             "w": 1063,
             "h": 873,
             "v": false
@@ -63,8 +63,8 @@
             "v": false
         },
         "ActualInventoryView": {
-            "x": 3,
-            "y": 12,
+            "x": 91,
+            "y": 267,
             "w": 1002,
             "h": 237,
             "v": false
@@ -84,17 +84,17 @@
             "v": false
         },
         "ItemApplicationView": {
-            "x": 158,
-            "y": 197,
+            "x": 426,
+            "y": 221,
             "w": 886,
             "h": 386,
             "v": false
         },
         "ItemMaintenanceView": {
-            "x": 75,
-            "y": 22,
-            "w": 456,
-            "h": 492,
+            "x": 51,
+            "y": 0,
+            "w": 463,
+            "h": 935,
             "v": true
         },
         "InventoryView": {
@@ -114,9 +114,9 @@
         "StockOnHandView": {
             "x": 19,
             "y": 15,
-            "w": 944,
-            "h": 297,
-            "v": false
+            "w": 940,
+            "h": 789,
+            "v": true
         },
         "EditInstanceView": {
             "x": 201,

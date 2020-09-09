@@ -2,6 +2,9 @@ package se.melsom.warehouse.model.entity.inventory;
 
 import se.melsom.warehouse.model.entity.StockLocation;
 
+/**
+ * Actual inventory comprise items that actually are in stock.
+ */
 public class ActualInventory extends Inventory {
 	private StockLocation location;
 

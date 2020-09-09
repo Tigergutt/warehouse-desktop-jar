@@ -35,6 +35,7 @@ public class ItemApplicationController extends ViewController implements TableMo
 	private static Logger logger = Logger.getLogger(ItemApplicationController.class);
 
 	public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
+	public static final String PACKING_SLIP_ACTION = "PackingSlipAction";
 	public static final String TREE_ACTION = "TreeAction";
 	public static final String TABLE_ACTION = "TableAction";
 	public static final String ACCUMULATE_ACTION = "AccAction";
@@ -99,6 +100,7 @@ public class ItemApplicationController extends ViewController implements TableMo
 		view.setVisible(settings.isVisible());
 		view.addComponentListener(this);
 		view.setAccumulateAction(ACCUMULATE_ACTION, this);
+		view.setPackingSlipButtonAction(PACKING_SLIP_ACTION, this);
 		view.setTreeAction(TREE_ACTION, this);
 		view.setTableAction(TABLE_ACTION, this);
 //		view.setInsertButtonEnabled(false);
@@ -130,6 +132,10 @@ public class ItemApplicationController extends ViewController implements TableMo
 		logger.trace("Received action=" + e.getActionCommand() + ",source=" + e.getSource() + ",event=" + e);
 		
 		switch (e.getActionCommand()) {
+		case PACKING_SLIP_ACTION:
+			logger.warn("Packing Slip Action is not implemented.");
+			return;
+
 		case ACCUMULATE_ACTION:
 			checkEditButtons();
 			collectApplications();

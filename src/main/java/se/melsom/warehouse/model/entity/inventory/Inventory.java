@@ -2,6 +2,9 @@ package se.melsom.warehouse.model.entity.inventory;
 
 import se.melsom.warehouse.model.entity.Item;
 
+/**
+ * Base class fpr various inventory classes.
+ */
 public abstract class Inventory {
 	private int id;
 	private Item item;

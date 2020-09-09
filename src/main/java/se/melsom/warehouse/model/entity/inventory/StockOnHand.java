@@ -1,5 +1,8 @@
 package se.melsom.warehouse.model.entity.inventory;
 
+/**
+ * Stock on hand is a union of actual and master inventory.
+ */
 public class StockOnHand {
 	private String itemNumber;
 	private String itemName;

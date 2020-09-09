@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import se.melsom.warehouse.model.InventoryAccounting;
 import se.melsom.warehouse.model.ItemMasterFile;
-import se.melsom.warehouse.model.Packaging;
+import se.melsom.warehouse.model.enumeration.Packaging;
 import se.melsom.warehouse.model.entity.Item;
 import se.melsom.warehouse.presentation.ViewController;
 import se.melsom.warehouse.presentation.common.MessageView;

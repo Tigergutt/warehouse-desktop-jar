@@ -1,10 +1,6 @@
 package se.melsom.warehouse.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
@@ -91,7 +87,7 @@ public class WarehouseDatabase {
 		
 		connectionString += "jdbc:mysql://localhost/";
 		connectionString += DATABASE_NAME;
-		connectionString += "?user=" + DATABASE_USERNAME + "&password=" + DATABASE_PASSWORD;
+		connectionString += "?serverTimezone=UTC&user=" + DATABASE_USERNAME + "&password=" + DATABASE_PASSWORD;
 		
 		try {
 			connection = DriverManager.getConnection(connectionString);
@@ -214,14 +210,11 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		Vector<StockOnHand> stockOnHandItems = new Vector<>();
-		
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				do {
 					int index = 1;
@@ -363,14 +356,11 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		Vector<StockLocationItem> itemList = new Vector<>();
-		
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				do {
 					int index = 1;
@@ -440,14 +430,11 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		int result = 0;
-		
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				result = resultSet.getInt(1);
 			}
@@ -490,14 +477,11 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		int result = 0;
-		
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				result = resultSet.getInt(1);
 			}
@@ -534,13 +518,11 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		Vector<MasterInventoryDAO> dataAccessObjects = new Vector<>();
-		
-		Statement statement = null;
 		ResultSet resultSet = null;
+
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				do {
 					MasterInventoryDAO dao = new MasterInventoryDAO();
@@ -582,13 +564,11 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		Vector<ActualInventoryDAO> dataAccessObjects = new Vector<>();
-		
-		Statement statement = null;
 		ResultSet resultSet = null;
+
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				do {
 					ActualInventoryDAO dao = new ActualInventoryDAO();
@@ -690,36 +670,34 @@ ORDER BY I.number,I.name,MI.identity
 
 		Vector<HoldingDAO> dataAccessObjects = new Vector<>();
 		
-		Statement statement = null;
-		ResultSet result = null;
+		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			result = statement.executeQuery(sql);
+			resultSet = executeQuery(sql);
 
-			if (result.first()) {
+			if (resultSet.first()) {
 				do {
-					int unitId = result.getInt(WarehouseSchema.holdings_unit_id.getName());
-					int locationId = result.getInt(WarehouseSchema.holdings_stock_location_id.getName());
+					int unitId = resultSet.getInt(WarehouseSchema.holdings_unit_id.getName());
+					int locationId = resultSet.getInt(WarehouseSchema.holdings_stock_location_id.getName());
 				
 					HoldingDAO dao = new HoldingDAO(unitId, locationId);
 					
 					logger.trace("" + dao);
 
 					dataAccessObjects.addElement(dao);
-				} while (result.next());
+				} while (resultSet.next());
 			}
 		} catch (SQLException exception) {
 			logger.error("Caught exception for SQL=" + sql, exception);
 		} finally {
-			if (result != null) {
+			if (resultSet != null) {
 				try {
-					result.close();
+					resultSet.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 
-				result = null;
+				resultSet = null;
 			}
 		}
 
@@ -764,12 +742,10 @@ ORDER BY I.number,I.name,MI.identity
 
 		Vector<Item> items = new Vector<>();
 		
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
+			resultSet = executeQuery(sql);
 
 			if (resultSet.first()) {
 				do {
@@ -857,13 +833,11 @@ ORDER BY I.number,I.name,MI.identity
 		
 		logger.debug("SQL=" + sql);
 
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				do {
 					int id = resultSet.getInt(1);
@@ -942,12 +916,11 @@ ORDER BY I.number,I.name,MI.identity
 
 		Vector<OrganizationalUnitDAO> dataAccessObjects = new Vector<>();
 		
-		Statement statement = null;
 		ResultSet resultSet = null;
+
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-			
+			resultSet = executeQuery(sql);
+
 			if (resultSet.first()) {
 				do {
 					OrganizationalUnitDAO dao = new OrganizationalUnitDAO();
@@ -1012,12 +985,10 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("SQL=" + sql);
 
 		Vector<ItemApplicationDAO> result = new Vector<>();		
-		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
+			resultSet = executeQuery(sql);
 
 			if (resultSet.first()) {
 				do {
@@ -1093,6 +1064,11 @@ ORDER BY I.number,I.name,MI.identity
 			} catch (SQLException e) {
 			}
 		}
+	}
+
+	private ResultSet executeQuery(String sql) throws SQLException {
+		PreparedStatement preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		return preparedStatement.executeQuery();
 	}
 	
 	/**

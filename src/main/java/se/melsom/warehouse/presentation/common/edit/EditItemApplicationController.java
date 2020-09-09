@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
 
-import se.melsom.warehouse.model.ApplicationCategory;
+import se.melsom.warehouse.model.enumeration.ApplicationCategory;
 import se.melsom.warehouse.model.InventoryAccounting;
 import se.melsom.warehouse.model.ItemMasterFile;
 import se.melsom.warehouse.model.entity.Item;

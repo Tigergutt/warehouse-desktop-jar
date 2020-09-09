@@ -1,5 +1,8 @@
 package se.melsom.warehouse.model.entity.inventory;
 
+/**
+ * Master inventory comprise item that should be in stock.
+ */
 public class MasterInventory extends Inventory {
 	private String source = "";
 	private String stockPoint = "";

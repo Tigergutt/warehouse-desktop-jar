@@ -1,4 +1,4 @@
-package se.melsom.warehouse.model;
+package se.melsom.warehouse.model.enumeration;
 
 public enum Packaging {
 	PIECE("ST"),

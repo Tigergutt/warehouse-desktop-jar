@@ -2,6 +2,9 @@ package se.melsom.warehouse.model.entity;
 
 import java.util.Vector;
 
+/**
+ * Accumulated applications for a unit and subordinate units.
+ */
 public class AccumulatedApplication extends ItemApplication {
 	private Vector<ItemApplication> applications = new Vector<>();
 	
