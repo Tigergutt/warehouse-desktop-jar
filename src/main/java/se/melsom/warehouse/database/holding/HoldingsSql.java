@@ -9,8 +9,18 @@ import com.healthmarketscience.sqlbuilder.UpdateQuery;
 import se.melsom.warehouse.database.WarehouseSchema;
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The Holdings sql commands.
+ */
 public class HoldingsSql {
-	public static String select(int byHoldingUnitId, int atLocationId) {
+    /**
+     * Select string.
+     *
+     * @param byHoldingUnitId the by holding unit id
+     * @param atLocationId    the at location id
+     * @return the string
+     */
+    public static String select(int byHoldingUnitId, int atLocationId) {
 		SelectQuery query = new SelectQuery();
 
 		query.addAllTableColumns(WarehouseSchema.holdings);
@@ -28,7 +38,13 @@ public class HoldingsSql {
 		return query.toString();
 	}
 
-	public static String insert(HoldingDAO dao) {
+    /**
+     * Insert string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String insert(HoldingDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.holdings);		
 		
 		query.addColumn(WarehouseSchema.holdings_unit_id, dao.getUnitId());
@@ -39,7 +55,13 @@ public class HoldingsSql {
 		return query.toString();
 	}
 
-	public static String update(HoldingDAO dao) {
+    /**
+     * Update string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String update(HoldingDAO dao) {
 		UpdateQuery query = new UpdateQuery(WarehouseSchema.holdings);		
 		
 		query.addSetClause(WarehouseSchema.holdings_unit_id, dao.getUnitId());
@@ -53,7 +75,13 @@ public class HoldingsSql {
 		return query.toString();
 	}
 
-	public static String delete(HoldingDAO dao) {
+    /**
+     * Delete string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String delete(HoldingDAO dao) {
 		DeleteQuery query = new DeleteQuery(WarehouseSchema.holdings);		
 		
 		query.addCondition(BinaryCondition.equalTo(WarehouseSchema.holdings_unit_id, dao.getUnitId()));

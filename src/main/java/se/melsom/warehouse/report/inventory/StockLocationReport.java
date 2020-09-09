@@ -12,11 +12,21 @@ import se.melsom.warehouse.model.entity.Holding;
 import se.melsom.warehouse.report.Report;
 import se.melsom.warehouse.report.part.InventoryLandscapeTable;
 
+/**
+ * The type Stock location report.
+ */
 public class StockLocationReport extends Report {
 	private static Logger logger = Logger.getLogger(StockLocationReport.class);
 	private static final String REPORT_NAME = "Materiellista";
 
-	public StockLocationReport(Vector<String> tableHeader, Vector<StockLocationItem> data, Vector<Holding> holdings) {
+    /**
+     * Instantiates a new Stock location report.
+     *
+     * @param tableHeader the table header
+     * @param data        the data
+     * @param holdings    the holdings
+     */
+    public StockLocationReport(Vector<String> tableHeader, Vector<StockLocationItem> data, Vector<Holding> holdings) {
 		logger.debug("Generating report.");
 		Map<String, LinkedList<StockLocationItem>> locationInventory = new TreeMap<>();		
 		LinkedList<StockLocationItem> currentLocationInventory = null;

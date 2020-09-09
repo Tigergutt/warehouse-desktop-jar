@@ -5,22 +5,48 @@ import java.util.Vector;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.report.component.Page;
 
+/**
+ * The type Report.
+ */
 public abstract class Report {
 	private String date = EntityName.getCurrentDate();
-	protected Vector<Page> pages = new Vector<>();
+    /**
+     * The Pages.
+     */
+    protected Vector<Page> pages = new Vector<>();
 
-	
-	public String getDate() {
+
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
+    public String getDate() {
 		return date;
 	}
-	
-	public void setDate(String date) {
+
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
+    public void setDate(String date) {
 		this.date = date;
 	}
 
-	public abstract String getReportName();
-	
-	public Vector<Page> getPages() {
+    /**
+     * Gets report name.
+     *
+     * @return the report name
+     */
+    public abstract String getReportName();
+
+    /**
+     * Gets pages.
+     *
+     * @return the pages
+     */
+    public Vector<Page> getPages() {
 		return pages;
 	}
 }

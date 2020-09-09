@@ -18,14 +18,25 @@ import se.melsom.warehouse.presentation.ViewController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Logger controller.
+ */
 public class LoggerController extends ViewController {
 	private static Logger logger = Logger.getLogger(LoggerController.class);
-	public static final String SET_LOG_LEVEL_ACTION = "SetLogLevel";
+    /**
+     * The constant SET_LOG_LEVEL_ACTION.
+     */
+    public static final String SET_LOG_LEVEL_ACTION = "SetLogLevel";
 	private LoggerView view;
 	private ApplicationController controller;
 	private Vector<String> logLevels = new Vector<>();
 
-	public LoggerController(ApplicationController controller) {
+    /**
+     * Instantiates a new Logger controller.
+     *
+     * @param controller the controller
+     */
+    public LoggerController(ApplicationController controller) {
 		this.controller = controller;
 		
 		logLevels.addElement("OFF");
@@ -51,16 +62,24 @@ public class LoggerController extends ViewController {
 
 		TextAreaAppender.setTextArea(view.getTextArea());
 	}
-	
-	void setSelectedLogLevel() {
+
+    /**
+     * Sets selected log level.
+     */
+    void setSelectedLogLevel() {
 		if (view.getSelectedIndex() < 0) {
 			return;
 		}
 		
 		setLogLevel(view.getSelectedLogLevel());
 	}
-	
-	void setLogLevel(String level) {
+
+    /**
+     * Sets log level.
+     *
+     * @param level the level
+     */
+    void setLogLevel(String level) {
 		AppenderSkeleton appender = (AppenderSkeleton) Logger.getRootLogger().getAppender("swing");
 		
 		if (appender == null) {
@@ -81,8 +100,13 @@ public class LoggerController extends ViewController {
 			break;
 		}
 	}
-		
-	public JInternalFrame getInternalFrame() {
+
+    /**
+     * Gets internal frame.
+     *
+     * @return the internal frame
+     */
+    public JInternalFrame getInternalFrame() {
 		return view;
 	}
 
@@ -91,7 +115,10 @@ public class LoggerController extends ViewController {
 		return view;
 	}
 
-	public void showView() {
+    /**
+     * Show view.
+     */
+    public void showView() {
 		logger.debug("showView()");
 		if (view.isVisible()) {
 			if (view.isIcon()) {
@@ -151,8 +178,13 @@ public class LoggerController extends ViewController {
 		controller.setLogViewMenuItemChecked(true);
 		PersistentSettings.singleton().setWindowVisible(getWindowName(), false);	
 	}
-	
-	String getWindowName() {
+
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return LoggerView.class.getSimpleName();
 	}
 }

@@ -21,21 +21,44 @@ import se.melsom.warehouse.presentation.common.edit.EditMasterInventoryControlle
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Master inventory controller.
+ */
 public class MasterInventoryController extends ViewController implements TableModelListener, ListSelectionListener {
 	private static Logger logger = Logger.getLogger(MasterInventoryController.class);
 
-	public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
-	public static final String SELECT_ACTION = "SelectAction";
-	public static final String INSERT_ACTION = "InsertAction";
-	public static final String EDIT_ACTION = "EditAction";
-	public static final String REMOVE_ACTION = "RemoveAction";
+    /**
+     * The constant EXTENDED_EDIT_ACTION.
+     */
+    public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
+    /**
+     * The constant SELECT_ACTION.
+     */
+    public static final String SELECT_ACTION = "SelectAction";
+    /**
+     * The constant INSERT_ACTION.
+     */
+    public static final String INSERT_ACTION = "InsertAction";
+    /**
+     * The constant EDIT_ACTION.
+     */
+    public static final String EDIT_ACTION = "EditAction";
+    /**
+     * The constant REMOVE_ACTION.
+     */
+    public static final String REMOVE_ACTION = "RemoveAction";
 
 	private ApplicationController controller;
 	private InventoryAccounting inventoryAccounting;
 	private MasterInventoryTableModel tableModel;
 	private MasterInventoryView view;
 
-	public MasterInventoryController(ApplicationController controller) {
+    /**
+     * Instantiates a new Master inventory controller.
+     *
+     * @param controller the controller
+     */
+    public MasterInventoryController(ApplicationController controller) {
 		this.controller = controller;
 
 		inventoryAccounting = controller.getInventoryAccounting();
@@ -180,7 +203,12 @@ public class MasterInventoryController extends ViewController implements TableMo
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return MasterInventoryView.class.getSimpleName();
 	}
 	

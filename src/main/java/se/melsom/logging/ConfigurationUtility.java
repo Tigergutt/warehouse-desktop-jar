@@ -9,10 +9,19 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+/**
+ * The type Configuration utility.
+ */
 public class ConfigurationUtility  {
-	public static String properyFile = "/log4j.properties";
-	
-	public static void loadConfiguration() {
+    /**
+     * The constant properyFile.
+     */
+    public static String properyFile = "/log4j.properties";
+
+    /**
+     * Load configuration.
+     */
+    public static void loadConfiguration() {
 		BasicConfigurator.configure();
 		Logger.getRootLogger().setLevel(Level.INFO);
 

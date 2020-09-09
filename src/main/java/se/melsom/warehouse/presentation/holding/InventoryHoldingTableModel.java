@@ -10,11 +10,17 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Inventory holding table model.
+ */
 @SuppressWarnings("serial")
 public class InventoryHoldingTableModel extends SortedTableModel  {
 	private static Logger logger = Logger.getLogger(InventoryHoldingTableModel.class);
-	
-	public static final String[] columnNames = {
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = {
 			EntityName.STOCK_LOCATION_DESIGNATION,
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME, 
@@ -23,12 +29,21 @@ public class InventoryHoldingTableModel extends SortedTableModel  {
 			EntityName.INVENTORY_LAST_UPDATED_TIMESTAMP,
 			EntityName.INVENTORY_ANNOTATION 
 	};
-	
-	public static final int[] columnWidts = { 70, 120, 300, 50, 150, 100, 250};
-	
-	public static final boolean[] isSortableArray = { true, true, true, false, false, false, false };
-	
-	public static final Class<?>[] columnClass = {
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 70, 120, 300, 50, 150, 100, 250};
+
+    /**
+     * The constant isSortableArray.
+     */
+    public static final boolean[] isSortableArray = { true, true, true, false, false, false, false };
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class, 
@@ -36,8 +51,11 @@ public class InventoryHoldingTableModel extends SortedTableModel  {
 			String.class, 
 			String.class, 
 			String.class};
-	
-	public InventoryHoldingTableModel() {
+
+    /**
+     * Instantiates a new Inventory holding table model.
+     */
+    public InventoryHoldingTableModel() {
 		if (columnNames.length != columnWidts.length || 
 				columnNames.length != columnClass.length ||
 				columnNames.length != isSortableArray.length) {
@@ -48,7 +66,13 @@ public class InventoryHoldingTableModel extends SortedTableModel  {
 	private Vector<ActualInventory> inventoryList = new Vector<>();
 
 
-	public ActualInventory getInventory(int atIndex) {
+    /**
+     * Gets inventory.
+     *
+     * @param atIndex the at index
+     * @return the inventory
+     */
+    public ActualInventory getInventory(int atIndex) {
 		if (atIndex >= inventoryList.size()) {
 			return null;
 		}
@@ -56,19 +80,37 @@ public class InventoryHoldingTableModel extends SortedTableModel  {
 		return inventoryList.get(atIndex);
 	}
 
-	public Vector<ActualInventory> getInventory() {
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
+    public Vector<ActualInventory> getInventory() {
 		return inventoryList;
 	}
-	
-	public int insert(ActualInventory anInventory) {
+
+    /**
+     * Insert int.
+     *
+     * @param anInventory the an inventory
+     * @return the int
+     */
+    public int insert(ActualInventory anInventory) {
 		inventoryList.addElement(anInventory);
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();
 		
 		return getIndex(anInventory);
 	}
-	
-	public int update(ActualInventory anInventory, int atIndex) {
+
+    /**
+     * Update int.
+     *
+     * @param anInventory the an inventory
+     * @param atIndex     the at index
+     * @return the int
+     */
+    public int update(ActualInventory anInventory, int atIndex) {
 		inventoryList.remove(atIndex);
 		inventoryList.addElement(anInventory);
 		orderByColumn(getActiveColumn());
@@ -76,8 +118,14 @@ public class InventoryHoldingTableModel extends SortedTableModel  {
 		
 		return getIndex(anInventory);
 	}
-	
-	public ActualInventory remove(int atIndex) {
+
+    /**
+     * Remove actual inventory.
+     *
+     * @param atIndex the at index
+     * @return the actual inventory
+     */
+    public ActualInventory remove(int atIndex) {
 		ActualInventory anInventory = inventoryList.remove(atIndex);
 
 		orderByColumn(getActiveColumn());
@@ -85,8 +133,13 @@ public class InventoryHoldingTableModel extends SortedTableModel  {
 
 		return anInventory;
 	}
-	
-	public void setInventory(Vector<ActualInventory> value) {
+
+    /**
+     * Sets inventory.
+     *
+     * @param value the value
+     */
+    public void setInventory(Vector<ActualInventory> value) {
 		logger.debug("Inventory updated");
 		inventoryList = value;
 		orderByColumn(getActiveColumn());

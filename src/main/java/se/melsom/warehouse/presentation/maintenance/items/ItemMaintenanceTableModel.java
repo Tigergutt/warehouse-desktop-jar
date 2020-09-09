@@ -11,60 +11,102 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.Item;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Item maintenance table model.
+ */
 @SuppressWarnings("serial")
 public class ItemMaintenanceTableModel extends SortedTableModel  {
 	private static Logger logger = Logger.getLogger(ItemMaintenanceTableModel.class);
-	
-	public static final String[] columnNames = { 
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { 
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME,
 			EntityName.ITEM_PACKAGING
 	};
-	
-	public static final int[] columnWidts = { 
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 
 			120, 
 			230, 
 			60
 	};
-	
-	public static final boolean[] isSortableArray = { true, true, false };
-	
 
-	public static final Class<?>[] columnClass = {
+    /**
+     * The constant isSortableArray.
+     */
+    public static final boolean[] isSortableArray = { true, true, false };
+
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class
 	};
 
 	private Vector<Item> itemList = new Vector<>();
-	
-	public ItemMaintenanceTableModel() {
+
+    /**
+     * Instantiates a new Item maintenance table model.
+     */
+    public ItemMaintenanceTableModel() {
 		if (columnNames.length != columnWidts.length || columnNames.length != columnClass.length) {
 			logger.warn("Array dimension mismatch.");
 		}
 	}
-	
-	public Item getItem(int itemIndex) {
+
+    /**
+     * Gets item.
+     *
+     * @param itemIndex the item index
+     * @return the item
+     */
+    public Item getItem(int itemIndex) {
 		if (itemIndex >= 0 && itemIndex < itemList.size()) {
 			return itemList.get(itemIndex);
 		}
 		
 		return null;
 	}
-	
-	public Vector<Item> getItems() {
+
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
+    public Vector<Item> getItems() {
 		return itemList;
 	}
-	
-	public int insertItem(Item anItem) {
+
+    /**
+     * Insert item int.
+     *
+     * @param anItem the an item
+     * @return the int
+     */
+    public int insertItem(Item anItem) {
 		itemList.addElement(anItem);
 		sortItemList();
 		fireTableDataChanged();
 		
 		return getIndex(anItem);
 	}
-	
-	public int updateItem(Item anItem, int atIndex) {
+
+    /**
+     * Update item int.
+     *
+     * @param anItem  the an item
+     * @param atIndex the at index
+     * @return the int
+     */
+    public int updateItem(Item anItem, int atIndex) {
 		itemList.remove(atIndex);
 		itemList.addElement(anItem);
 		sortItemList();
@@ -72,16 +114,27 @@ public class ItemMaintenanceTableModel extends SortedTableModel  {
 		
 		return getIndex(anItem);
 	}
-	
-	public Item removeItem(int atIndex) {
+
+    /**
+     * Remove item item.
+     *
+     * @param atIndex the at index
+     * @return the item
+     */
+    public Item removeItem(int atIndex) {
 		Item item = itemList.remove(atIndex);
 
 		fireTableRowsDeleted(atIndex, atIndex);
 
 		return item;
 	}
-	
-	public void setItems(Collection<Item> collection) {
+
+    /**
+     * Sets items.
+     *
+     * @param collection the collection
+     */
+    public void setItems(Collection<Item> collection) {
 		logger.debug("Product list updated");
 		itemList.clear();
 		itemList.addAll(collection);

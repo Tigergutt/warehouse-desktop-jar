@@ -21,6 +21,9 @@ import org.apache.log4j.Logger;
 
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The type Edit item application view.
+ */
 @SuppressWarnings("serial")
 public class EditItemApplicationView extends JDialog {
 	private static Logger logger = Logger.getLogger(EditItemApplicationView.class);
@@ -34,7 +37,12 @@ public class EditItemApplicationView extends JDialog {
 	private JTextField quantityField;
 	private JLabel quantityLabel;
 
-	public EditItemApplicationView(JFrame parent) {
+    /**
+     * Instantiates a new Edit item application view.
+     *
+     * @param parent the parent
+     */
+    public EditItemApplicationView(JFrame parent) {
 		super(parent, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Redigera användning");
@@ -143,34 +151,65 @@ public class EditItemApplicationView extends JDialog {
 	}
 
 
-	/*
+    /**
+     * Sets item number.
+     *
+     * @param itemNumber the item number
+     */
+    /*
 	 * Item fields
 	 */
 	public void setItemNumber(String itemNumber) {
 		itemNumberField.setText(itemNumber);
 	}
 
-	public void setItemName(String itemName) {
+    /**
+     * Sets item name.
+     *
+     * @param itemName the item name
+     */
+    public void setItemName(String itemName) {
 		itemNameField.setText(itemName);
 	}
 
-	public void setItemSelectorListener(String actionCommand, ActionListener actionListener) {
+    /**
+     * Sets item selector listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setItemSelectorListener(String actionCommand, ActionListener actionListener) {
 		selectItemButton.setActionCommand(actionCommand);
 		selectItemButton.addActionListener(actionListener);
 	}
 
-	/*
+    /**
+     * Gets selected category.
+     *
+     * @return the selected category
+     */
+    /*
 	 * Category field
 	 */
 	public String getSelectedCategory() {
 		return (String) categoryField.getSelectedItem();
 	}
 
-	public void setSelectedCategory(String section) {
+    /**
+     * Sets selected category.
+     *
+     * @param section the section
+     */
+    public void setSelectedCategory(String section) {
 		categoryField.setSelectedItem(section);
 	}
 
-	public void setCategoryItems(Vector<String> locationSections) {
+    /**
+     * Sets category items.
+     *
+     * @param locationSections the location sections
+     */
+    public void setCategoryItems(Vector<String> locationSections) {
 		categoryField.removeAllItems();
 		
 		for (String item : locationSections) {
@@ -178,13 +217,25 @@ public class EditItemApplicationView extends JDialog {
 		}
 	}
 
-	public void setCategoryFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets category field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setCategoryFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		categoryField.setActionCommand(actionCommand);
 		categoryField.addActionListener(actionListener);
 		categoryField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    /*
 	 * Quantity field
 	 */
 	public int getQuantity() {
@@ -201,28 +252,58 @@ public class EditItemApplicationView extends JDialog {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		quantityField.setText("" + quantity);
 	}
 
-	public void setQuantityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets quantity field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setQuantityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		quantityField.setActionCommand(actionCommand);
 		quantityField.addActionListener(actionListener);
 		quantityField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Sets save button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+    /*
 	 * Buttons
 	 */
 	public void setSaveButtonEnabled(boolean isEnabled) {
 		saveButton.setEnabled(isEnabled);
 	}
-	
-	public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets cancel button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
 		cancelButton.setActionCommand(actionCommand);
 		cancelButton.addActionListener(actionListener);
 	}
-	public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets save button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
 		saveButton.setActionCommand(actionCommand);
 		saveButton.addActionListener(actionListener);
 	}

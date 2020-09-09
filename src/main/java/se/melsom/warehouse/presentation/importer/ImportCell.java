@@ -1,27 +1,56 @@
 package se.melsom.warehouse.presentation.importer;
 
+/**
+ * The type Import cell.
+ */
 public class ImportCell {
 	private ImportStatus status;
 	private Object value;
 
-	public ImportCell(ImportStatus status, Object value) {
+    /**
+     * Instantiates a new Import cell.
+     *
+     * @param status the status
+     * @param value  the value
+     */
+    public ImportCell(ImportStatus status, Object value) {
 		this.status = status;
 		this.value = value;
 	}
 
-	public ImportStatus getStatus() {
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
+    public ImportStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(ImportStatus status) {
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
+    public void setStatus(ImportStatus status) {
 		this.status = status;
 	}
 
-	public Object getValue() {
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
+    public Object getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     */
+    public void setValue(Object value) {
 		this.value = value;
 	}
 

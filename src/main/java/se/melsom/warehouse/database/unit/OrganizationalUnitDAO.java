@@ -3,14 +3,22 @@ package se.melsom.warehouse.database.unit;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.OrganizationalUnit;
 
+/**
+ * The Organizational unit data access object.
+ */
 public class OrganizationalUnitDAO {
 	private int id = EntityName.NULL_ID;
 	private String callSign = "";
 	private String name = "";
 	private int level = 0;
 	private int superiorId = EntityName.NULL_ID;
-	
-	public OrganizationalUnitDAO(OrganizationalUnit unit) {
+
+    /**
+     * Instantiates a new Organizational unit dao.
+     *
+     * @param unit the unit
+     */
+    public OrganizationalUnitDAO(OrganizationalUnit unit) {
 		this.id = unit.getId();
 		this.callSign = unit.getCallsign();
 		this.name = unit.getName();
@@ -23,46 +31,99 @@ public class OrganizationalUnitDAO {
 		}
 	}
 
-	public OrganizationalUnitDAO() {
+    /**
+     * Instantiates a new Organizational unit dao.
+     */
+    public OrganizationalUnitDAO() {
 	}
 
-	public int getId() {
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
+
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getCallsign() {
+    /**
+     * Gets callsign.
+     *
+     * @return the callsign
+     */
+    public String getCallsign() {
 		return callSign;
 	}
-	
-	public void setCallSign(String callSign) {
+
+    /**
+     * Sets call sign.
+     *
+     * @param callSign the call sign
+     */
+    public void setCallSign(String callSign) {
 		this.callSign = callSign;
 	}
 
-	public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public void setName(String name) {
+
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName(String name) {
 		this.name = name;
 	}
-	
-	public int getSuperiorId() {
+
+    /**
+     * Gets superior id.
+     *
+     * @return the superior id
+     */
+    public int getSuperiorId() {
 		return superiorId;
 	}
-	
-	public void setSuperiorId(int superiorId) {
+
+    /**
+     * Sets superior id.
+     *
+     * @param superiorId the superior id
+     */
+    public void setSuperiorId(int superiorId) {
 		this.superiorId = superiorId;
 	}
 
-	public int getLevel() {
+    /**
+     * Gets level.
+     *
+     * @return the level
+     */
+    public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
+    public void setLevel(int level) {
 		this.level = level;
 	}
 

@@ -18,6 +18,9 @@ import org.apache.log4j.Logger;
 import se.melsom.warehouse.presentation.common.table.SortedTable;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Search view.
+ */
 @SuppressWarnings("serial")
 public class SearchView extends JInternalFrame {
 	private static Logger logger = Logger.getLogger(SearchView.class);
@@ -25,8 +28,14 @@ public class SearchView extends JInternalFrame {
 	private SortedTable equipmentTable;
 	private JTextField searchKeyTextField;
 	private JButton generateReportButton;
-	
-	public SearchView(SearchController controller, SortedTableModel tableModel) {
+
+    /**
+     * Instantiates a new Search view.
+     *
+     * @param controller the controller
+     * @param tableModel the table model
+     */
+    public SearchView(SearchController controller, SortedTableModel tableModel) {
 		this.controller = controller;
 		
 		addComponentListener(controller);
@@ -84,23 +93,43 @@ public class SearchView extends JInternalFrame {
 	}
 
 
-	// Search key text field access methods
+    /**
+     * Gets key.
+     *
+     * @return the key
+     */
+// Search key text field access methods
 	public String getsearchKey() {
 		return searchKeyTextField.getText();
 	}
 
-	void setSearchAction(String name) {
+    /**
+     * Sets search action.
+     *
+     * @param name the name
+     */
+    void setSearchAction(String name) {
 		logger.debug("Set search action=" + name);
 		searchKeyTextField.setActionCommand(name);
 	}
 
-	// Generate report button access methods
+    /**
+     * Sets generate report action.
+     *
+     * @param name the name
+     */
+// Generate report button access methods
 	void setGenerateReportAction(String name) {
 		logger.debug("Set generate action=" + name);
 		generateReportButton.setActionCommand(name);
 	}
 
-	void setGenerateButtonEnabled(boolean value) {
+    /**
+     * Sets generate button enabled.
+     *
+     * @param value the value
+     */
+    void setGenerateButtonEnabled(boolean value) {
 		logger.debug("Set generate button enabled=" + value);
 		generateReportButton.setEnabled(value);
 	}

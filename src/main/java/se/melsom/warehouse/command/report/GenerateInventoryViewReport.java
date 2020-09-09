@@ -10,12 +10,21 @@ import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.presentation.inventory.ActualInventoryController;
 import se.melsom.warehouse.report.inventory.InventoryViewReport;
 
+/**
+ * The Generate inventory view report command.
+ */
 public class GenerateInventoryViewReport extends GenerateReportCommand {
 	private static Logger logger = Logger.getLogger(GenerateInventoryViewReport.class);
 	private ApplicationController controller;
 	private ActualInventoryController inventoryController;
-	
-	public GenerateInventoryViewReport(ApplicationController controller, ActualInventoryController inventoryController) {
+
+    /**
+     * Instantiates a new Generate inventory view report.
+     *
+     * @param controller          the controller
+     * @param inventoryController the inventory controller
+     */
+    public GenerateInventoryViewReport(ApplicationController controller, ActualInventoryController inventoryController) {
 		this.controller = controller;
 		this.inventoryController = inventoryController;
 	}

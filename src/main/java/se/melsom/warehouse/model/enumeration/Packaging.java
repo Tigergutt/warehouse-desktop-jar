@@ -1,20 +1,46 @@
 package se.melsom.warehouse.model.enumeration;
 
+/**
+ * The enum Packaging.
+ */
 public enum Packaging {
-	PIECE("ST"),
-	PACKAGING("FÖRP"),
-	ROLL("RUL"),
-	PAIR("PAR"),
-	SET("SATS"),
-	BAG("VÄSKA");
+    /**
+     * Piece packaging.
+     */
+    PIECE("ST"),
+    /**
+     * Packaging packaging.
+     */
+    PACKAGING("FÖRP"),
+    /**
+     * Roll packaging.
+     */
+    ROLL("RUL"),
+    /**
+     * Pair packaging.
+     */
+    PAIR("PAR"),
+    /**
+     * Set packaging.
+     */
+    SET("SATS"),
+    /**
+     * Bag packaging.
+     */
+    BAG("VÄSKA");
 	
 	private String name;
 	
 	Packaging(String name) {
 		this.name = name;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
 }

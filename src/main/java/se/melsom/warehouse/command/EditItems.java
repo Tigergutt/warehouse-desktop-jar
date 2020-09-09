@@ -3,10 +3,21 @@ package se.melsom.warehouse.command;
 import se.melsom.warehouse.application.ApplicationController;
 import se.melsom.warehouse.presentation.maintenance.items.ItemMaintenanceController;
 
+/**
+ * The Edit items command.
+ */
 public class EditItems extends Command {
-	ApplicationController controller;
-	
-	public EditItems(ApplicationController applicationController) {
+    /**
+     * The Controller.
+     */
+    ApplicationController controller;
+
+    /**
+     * Instantiates a new Edit items.
+     *
+     * @param applicationController the application controller
+     */
+    public EditItems(ApplicationController applicationController) {
 		this.controller = applicationController;
 	}
 

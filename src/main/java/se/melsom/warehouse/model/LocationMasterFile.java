@@ -14,9 +14,9 @@ import se.melsom.warehouse.event.ModelEventBroker;
 import se.melsom.warehouse.model.entity.StockLocation;
 
 /**
- * 
- * @author bernard
+ * The type Location master file.
  *
+ * @author bernard
  */
 public class LocationMasterFile {
 	private static Logger logger = Logger.getLogger(LocationMasterFile.class);
@@ -25,20 +25,32 @@ public class LocationMasterFile {
 	private ModelEventBroker eventBroker;
 	private Map<Integer, StockLocation> locationList = new HashMap<>();
 
-	public LocationMasterFile(WarehouseDatabase database, ModelEventBroker eventBroker) {
+    /**
+     * Instantiates a new Location master file.
+     *
+     * @param database    the database
+     * @param eventBroker the event broker
+     */
+    public LocationMasterFile(WarehouseDatabase database, ModelEventBroker eventBroker) {
 		this.database = database;
 		this.eventBroker = eventBroker;
 	}
 
-	public int getNextLocationId() {
+    /**
+     * Gets next location id.
+     *
+     * @return the next location id
+     */
+    public int getNextLocationId() {
 		return locationList.size();
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Vector<StockLocation> getLocations() {
+
+    /**
+     * Gets locations.
+     *
+     * @return locations
+     */
+    public Vector<StockLocation> getLocations() {
 		Vector<StockLocation> locations = new Vector<>();
 		
 		locations.addAll(locationList.values());
@@ -48,12 +60,13 @@ public class LocationMasterFile {
 		return locations;
 	}
 
-	/**
-	 * 
-	 * @param withId
-	 * @return
-	 */
-	public StockLocation getdLocation(int withId) {
+    /**
+     * Gets location.
+     *
+     * @param withId the with id
+     * @return location
+     */
+    public StockLocation getdLocation(int withId) {
 		StockLocation location = locationList.get(withId);
 		
 		if (location == null) {
@@ -62,14 +75,15 @@ public class LocationMasterFile {
 		
 		return location;
 	}
-	
-	/**
-	 * 
-	 * @param withinSection
-	 * @param atSlot
-	 * @return
-	 */
-	public StockLocation getLocation(String withinSection, String atSlot) {
+
+    /**
+     * Gets location.
+     *
+     * @param withinSection the within section
+     * @param atSlot        the at slot
+     * @return location
+     */
+    public StockLocation getLocation(String withinSection, String atSlot) {
 		for (StockLocation location : locationList.values()) {
 			if (location.getSection().equals(withinSection) && location.getSlot().equals(atSlot)) {
 				return location;
@@ -79,11 +93,13 @@ public class LocationMasterFile {
 		return null;
 	}
 
-	/**
-	 * 
-	 * @param newLocation
-	 */
-	public boolean addLocation(StockLocation newLocation) {
+    /**
+     * Add location boolean.
+     *
+     * @param newLocation the new location
+     * @return the boolean
+     */
+    public boolean addLocation(StockLocation newLocation) {
 		logger.trace("Add location=" + newLocation);
 		if (getLocation(newLocation.getSection(), newLocation.getSlot()) != null) {
 			logger.error("Could not add duplicate StockLocation=" + newLocation);
@@ -93,32 +109,34 @@ public class LocationMasterFile {
 		database.insertStockLocation(newLocation);
 		return true;
 	}
-	
-	/**
-	 * 
-	 * @param aLocation
-	 */
-	public void updateLocation(StockLocation aLocation) {
+
+    /**
+     * Update location.
+     *
+     * @param aLocation the a location
+     */
+    public void updateLocation(StockLocation aLocation) {
 		logger.trace("Update location=" + aLocation);
 		locationList.put(aLocation.getId(), aLocation);
 		database.updateStockLocation(aLocation);
 	}
 
-	/**
-	 * 
-	 * @param aLocation
-	 */
-	public void removeLocation(StockLocation aLocation) {
+    /**
+     * Remove location.
+     *
+     * @param aLocation the a location
+     */
+    public void removeLocation(StockLocation aLocation) {
 		logger.trace("Remove location=" + aLocation);
 		
 		locationList.remove(aLocation.getId());
 		database.deleteStockLocation(aLocation);
 	}
-	
-	/**
-	 * 
-	 */
-	void retreiveLocationList() {
+
+    /**
+     * Retreive location list.
+     */
+    void retreiveLocationList() {
 		locationList.clear();
 		
 		logger.debug("Retriving location list.");

@@ -28,6 +28,9 @@ import se.melsom.warehouse.presentation.common.table.SortedTable;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Actual inventory view.
+ */
 @SuppressWarnings("serial")
 public class ActualInventoryView extends JInternalFrame {
 	private static Logger logger = Logger.getLogger(ActualInventoryView.class);
@@ -43,7 +46,13 @@ public class ActualInventoryView extends JInternalFrame {
 	private JButton removeButton;
 	private JButton editButton;
 
-	public ActualInventoryView(ActualInventoryController controller, SortedTableModel tableModel) {
+    /**
+     * Instantiates a new Actual inventory view.
+     *
+     * @param controller the controller
+     * @param tableModel the table model
+     */
+    public ActualInventoryView(ActualInventoryController controller, SortedTableModel tableModel) {
 		addComponentListener(controller);
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -53,31 +62,63 @@ public class ActualInventoryView extends JInternalFrame {
 		initializeView(controller, tableModel);
 	}
 
-	// Extended edit checkbox access methods
+    /**
+     * Is extended edit enabled boolean.
+     *
+     * @return the boolean
+     */
+// Extended edit checkbox access methods
 	public boolean isExtendedEditEnabled() {
 		return extendedEditCheckBox.isSelected();
 	}
 
-	public void setExtendedEditEnabled(boolean isEnabled) {
+    /**
+     * Sets extended edit enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+    public void setExtendedEditEnabled(boolean isEnabled) {
 		extendedEditCheckBox.setSelected(isEnabled);
 	}
 
-	void setExtendedEditAction(String name, ActionListener listener) {
+    /**
+     * Sets extended edit action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setExtendedEditAction(String name, ActionListener listener) {
 		extendedEditCheckBox.setActionCommand(name);
 		extendedEditCheckBox.addActionListener(listener);
 	}
 
-	// Generate report button access methods
+    /**
+     * Sets generate report action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+// Generate report button access methods
 	void setGenerateReportAction(String name, ActionListener listener) {
 		generateReportButton.setActionCommand(name);
 		generateReportButton.addActionListener(listener);
 	}
 
-	void setGenerateButtonEnabled(boolean value) {
+    /**
+     * Sets generate button enabled.
+     *
+     * @param value the value
+     */
+    void setGenerateButtonEnabled(boolean value) {
 		generateReportButton.setEnabled(value);
 	}
-	
-	// Section selector access methods
+
+    /**
+     * Sets section selector items.
+     *
+     * @param sections the sections
+     */
+// Section selector access methods
 	void setSectionSelectorItems(Set<String> sections) {
 		logger.trace("Set section selector items.");
 		slotSelector.removeAllItems();
@@ -88,20 +129,41 @@ public class ActualInventoryView extends JInternalFrame {
 		}
 	}
 
-	void setSectionSelectedAction(String name, ActionListener listener) {
+    /**
+     * Sets section selected action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setSectionSelectedAction(String name, ActionListener listener) {
 		sectionSelector.setActionCommand(name);
 		sectionSelector.addActionListener(listener);
 	}
 
-	int getSelectedSectionIndex() {
+    /**
+     * Gets selected section index.
+     *
+     * @return the selected section index
+     */
+    int getSelectedSectionIndex() {
 		return sectionSelector.getSelectedIndex();
 	}
 
-	String getSelectedSectionItem() {
+    /**
+     * Gets selected section item.
+     *
+     * @return the selected section item
+     */
+    String getSelectedSectionItem() {
 		return (String) sectionSelector.getSelectedItem();
 	}
 
-	// Slot selecor access methods
+    /**
+     * Sets slot selector items.
+     *
+     * @param slots the slots
+     */
+// Slot selecor access methods
 	void setSlotSelectorItems(Set<String> slots) {
 		logger.trace("Set slot selector items.");
 		slotSelector.removeAllItems();
@@ -110,72 +172,148 @@ public class ActualInventoryView extends JInternalFrame {
 			slotSelector.addItem(item);
 		}
 	}
-	
-	void setSlotSelectedAction(String name, ActionListener listener) {
+
+    /**
+     * Sets slot selected action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    void setSlotSelectedAction(String name, ActionListener listener) {
 		slotSelector.setActionCommand(name);
 		slotSelector.addActionListener(listener);
 	}
 
-	int getSelectedSlotIndex() {
+    /**
+     * Gets selected slot index.
+     *
+     * @return the selected slot index
+     */
+    int getSelectedSlotIndex() {
 		return slotSelector.getSelectedIndex();
 	}
 
-	String getSelectedSlotItem() {
+    /**
+     * Gets selected slot item.
+     *
+     * @return the selected slot item
+     */
+    String getSelectedSlotItem() {
 		return (String) slotSelector.getSelectedItem();
 	}
-	
-	// Inventory table access methods
+
+    /**
+     * Gets selected table row.
+     *
+     * @return the selected table row
+     */
+// Inventory table access methods
 	public int getSelectedTableRow() {
 		return inventoryTable.getSelectedRow();
 	}
 
-	public void setSelectedTableRow(int rowIndex) {
+    /**
+     * Sets selected table row.
+     *
+     * @param rowIndex the row index
+     */
+    public void setSelectedTableRow(int rowIndex) {
 		inventoryTable.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
 	}
-	
-	public void setSelectedInventoryAction(String name, ListSelectionListener listener) {
+
+    /**
+     * Sets selected inventory action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setSelectedInventoryAction(String name, ListSelectionListener listener) {
 		inventoryTable.setName(name);
 		ListSelectionModel selectionModel = inventoryTable.getSelectionModel();
 		selectionModel.addListSelectionListener(listener);
 	}
 
-	public int getSelectedInventoryColumn() {
+    /**
+     * Gets selected inventory column.
+     *
+     * @return the selected inventory column
+     */
+    public int getSelectedInventoryColumn() {
 		return inventoryTable.getSelectedColumn();
 	}
-	
-	public void setCellEditor(TableCellEditor editor, int atColumnIndex) {
+
+    /**
+     * Sets cell editor.
+     *
+     * @param editor        the editor
+     * @param atColumnIndex the at column index
+     */
+    public void setCellEditor(TableCellEditor editor, int atColumnIndex) {
 		TableColumnModel columnModel = inventoryTable.getColumnModel();
 		TableColumn nameColumn = columnModel.getColumn(atColumnIndex);
 		
 		nameColumn.setCellEditor(editor);
 	}
 
-	//
+    /**
+     * Sets edit button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+//
 	public void setEditButtonEnabled(boolean isEnabled) {
 		editButton.setEnabled(isEnabled);
 	}
-	
-	public void setEditButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets edit button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setEditButtonAction(String name, ActionListener listener) {
 		editButton.setActionCommand(name);
 		editButton.addActionListener(listener);
 	}
 
-	//
+    /**
+     * Sets insert button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+//
 	public void setInsertButtonEnabled(boolean isEnabled) {
 		insertButton.setEnabled(isEnabled);
 	}
-	
-	public void setInsertButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets insert button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setInsertButtonAction(String name, ActionListener listener) {
 		insertButton.setActionCommand(name);
 		insertButton.addActionListener(listener);
 	}
 
-	//
+    /**
+     * Sets remove button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+//
 	public void setRemoveButtonEnabled(boolean isEnabled) {
 		removeButton.setEnabled(isEnabled);
 	}
-	
-	public void setRemoveButtonAction(String name, ActionListener listener) {
+
+    /**
+     * Sets remove button action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setRemoveButtonAction(String name, ActionListener listener) {
 		removeButton.setActionCommand(name);
 		removeButton.addActionListener(listener);
 	}

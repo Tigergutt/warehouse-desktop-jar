@@ -41,10 +41,9 @@ import se.melsom.warehouse.model.entity.inventory.MasterInventory;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 
 /**
- * This class ...
- * 
- * @author bernard
+ * This class implement functionality database access.
  *
+ * @author bernard
  */
 public class WarehouseDatabase {
 	private static Logger logger = Logger.getLogger(WarehouseDatabase.class);
@@ -53,57 +52,61 @@ public class WarehouseDatabase {
 	private static final String DATABASE_PASSWORD = "peacekeeper";
 
 	private static WarehouseDatabase singletonInstance = new WarehouseDatabase();
-	
+
 	private Connection connection = null;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private WarehouseDatabase() {
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public static WarehouseDatabase singleton() {
+    /**
+     * Singleton warehouse database.
+     *
+     * @return warehouse database
+     */
+    public static WarehouseDatabase singleton() {
 		return singletonInstance;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isConnected() {
+
+    /**
+     * Is connected boolean.
+     *
+     * @return boolean
+     */
+    public boolean isConnected() {
 		return connection != null;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean connect() {
+
+    /**
+     * Connect boolean.
+     *
+     * @return boolean
+     */
+    public boolean connect() {
 		String connectionString = "";
-		
+
 		connectionString += "jdbc:mysql://localhost/";
 		connectionString += DATABASE_NAME;
 		connectionString += "?serverTimezone=UTC&user=" + DATABASE_USERNAME + "&password=" + DATABASE_PASSWORD;
-		
+
 		try {
 			connection = DriverManager.getConnection(connectionString);
 		} catch (SQLException exception) {
 			logger.error("Failed to connect to DB", exception);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	/**
-	 * 
-	 * @return Stock On Hand Vector
-	 */	
-	public Vector<StockOnHand> selectStockOnHandItems() {
+
+    /**
+     * Select stock on hand items vector.
+     *
+     * @return Stock On Hand Vector
+     */
+    public Vector<StockOnHand> selectStockOnHandItems() {
 		logger.debug("Select stock on hand data.");
 		SelectQuery query = new SelectQuery();
 /*
@@ -115,7 +118,7 @@ AND AI.identity = MI.identity
 INNER JOIN items I
 ON I.id = MI.item_id
 GROUP BY I.number,I.name,I.packaging,MI.quantity,MI.identity,MI.annotation,MI.id
-ORDER BY I.number,I.name,MI.identity		
+ORDER BY I.number,I.name,MI.identity
 */
 
 //		query.addCustomColumns(
@@ -126,16 +129,16 @@ ORDER BY I.number,I.name,MI.identity
 //				WarehouseSchema.items_packaging,
 //				WarehouseSchema.master_inventory_identity,
 //				WarehouseSchema.master_inventory_annotation);
-//		
-//		
-//		query.addJoin(JoinType.LEFT_OUTER, 
-//				WarehouseSchema.master_inventory, WarehouseSchema.actual_inventory, 
-//				new ComboCondition(Op.AND, 
+//
+//
+//		query.addJoin(JoinType.LEFT_OUTER,
+//				WarehouseSchema.master_inventory, WarehouseSchema.actual_inventory,
+//				new ComboCondition(Op.AND,
 //						BinaryCondition.equalTo(WarehouseSchema.master_inventory_item_id, WarehouseSchema.actual_inventory_item_id),
 //						BinaryCondition.equalTo(WarehouseSchema.master_inventory_identity, WarehouseSchema.actual_inventory_identity)));
-//		
-//		query.addJoin(JoinType.INNER, 
-//				WarehouseSchema.master_inventory, WarehouseSchema.items, 
+//
+//		query.addJoin(JoinType.INNER,
+//				WarehouseSchema.master_inventory, WarehouseSchema.items,
 //				WarehouseSchema.items_id, WarehouseSchema.master_inventory_item_id);
 //
 //		query.addGroupings(
@@ -164,7 +167,7 @@ AND (MI.identity is null
 OR AI.identity is null
 OR MI.identity = AI.identity)
 GROUP BY I.number,I.name,I.packaging,MI.quantity,MI.identity,MI.annotation,MI.id
-ORDER BY I.number,I.name,MI.identity		
+ORDER BY I.number,I.name,MI.identity
 ;
 */
 		query.addCustomColumns(
@@ -175,20 +178,20 @@ ORDER BY I.number,I.name,MI.identity
 				WarehouseSchema.items_packaging,
 				WarehouseSchema.master_inventory_identity,
 				WarehouseSchema.master_inventory_annotation);
-		
-		query.addJoin(JoinType.LEFT_OUTER, 
-				WarehouseSchema.items, WarehouseSchema.master_inventory, 
+
+		query.addJoin(JoinType.LEFT_OUTER,
+				WarehouseSchema.items, WarehouseSchema.master_inventory,
 				WarehouseSchema.items_id, WarehouseSchema.master_inventory_item_id);
-		
-		query.addJoin(JoinType.LEFT_OUTER, 
-				WarehouseSchema.master_inventory, WarehouseSchema.actual_inventory, 
-				new ComboCondition(Op.AND, 
+
+		query.addJoin(JoinType.LEFT_OUTER,
+				WarehouseSchema.master_inventory, WarehouseSchema.actual_inventory,
+				new ComboCondition(Op.AND,
 						BinaryCondition.equalTo(WarehouseSchema.items_id, WarehouseSchema.actual_inventory_item_id),
 						new ComboCondition(Op.OR,
 								BinaryCondition.equalTo(WarehouseSchema.master_inventory_identity, WarehouseSchema.actual_inventory_identity),
 								UnaryCondition.isNull(WarehouseSchema.master_inventory_identity),
 								UnaryCondition.isNull(WarehouseSchema.actual_inventory_identity))));
-		
+
 		query.addGroupings(
 				WarehouseSchema.items_number,
 				WarehouseSchema.items_name,
@@ -202,11 +205,11 @@ ORDER BY I.number,I.name,MI.identity
 				WarehouseSchema.items_number,
 				WarehouseSchema.items_name,
 				WarehouseSchema.master_inventory_identity);
-		
+
 		query.validate();
 
 		String sql = query.toString();
-		
+
 		logger.debug("SQL=" + sql);
 
 		Vector<StockOnHand> stockOnHandItems = new Vector<>();
@@ -219,7 +222,7 @@ ORDER BY I.number,I.name,MI.identity
 				do {
 					int index = 1;
 					StockOnHand stockOnHandItem = new StockOnHand();
-					
+
 					stockOnHandItem.setItemNumber(resultSet.getString(index++));
 					stockOnHandItem.setItemName(resultSet.getString(index++));
 					stockOnHandItem.setNominalQuantity(resultSet.getInt(index++));
@@ -244,7 +247,7 @@ ORDER BY I.number,I.name,MI.identity
 				}
 			}
 		}
-		
+
 		logger.debug("Selected count=" + stockOnHandItems.size());
 		return stockOnHandItems;
 	}
@@ -253,32 +256,32 @@ ORDER BY I.number,I.name,MI.identity
 //	public Vector<StockOnHandItem> selectStockOnHandList() {
 //		logger.debug("Select stock on hand list.");
 //		SelectQuery query = new SelectQuery();
-//		
+//
 //		query.addCustomColumns(
 //				WarehouseSchema.items_number,
 //				WarehouseSchema.items_name,
 //				WarehouseSchema.items_packaging,
 //				WarehouseSchema.actual_inventory_quantity,
 //				WarehouseSchema.actual_inventory_identity);
-//		
-//		query.addJoin(JoinType.LEFT_OUTER, WarehouseSchema.items, WarehouseSchema.actual_inventory, 
+//
+//		query.addJoin(JoinType.LEFT_OUTER, WarehouseSchema.items, WarehouseSchema.actual_inventory,
 //				BinaryCondition.equalTo(WarehouseSchema.items_id, WarehouseSchema.actual_inventory_item_id));
 //
 //		query.validate();
 //
 //		String sql = query.toString();
-//		
+//
 //		logger.debug("SQL=" + sql);
 //
 //		Vector<StockOnHandItem> itemList = new Vector<>();
-//		
+//
 //		Statement statement = null;
 //		ResultSet resultSet = null;
 //
 //		try {
 //			statement = connection.createStatement();
 //			resultSet = statement.executeQuery(sql);
-//			
+//
 //			if (resultSet.first()) {
 //				do {
 //					int index = 1;
@@ -293,7 +296,7 @@ ORDER BY I.number,I.name,MI.identity
 //					item.setAnnotation(resultSet.getString(index++));
 //
 //					logger.trace(item);
-//					
+//
 //					itemList.addElement(item);
 //				} while (resultSet.next());
 //			}
@@ -308,35 +311,40 @@ ORDER BY I.number,I.name,MI.identity
 //				}
 //			}
 //		}
-//		
+//
 //		logger.debug("Sorting data.");
 //		Collections.sort(itemList, new Comparator<StockOnHandItem>() {
 //
 //			@Override
 //			public int compare(StockOnHandItem left, StockOnHandItem right) {
 //				int result = left.getNumber().compareTo(right.getNumber());
-//				
+//
 //				if (result == 0) {
 //					result = left.getName().compareTo(right.getName());
 //
 //					if (result == 0 && left.getIdentity() != null && right.getIdentity() != null) {
-//						result = left.getIdentity().compareTo(right.getIdentity());					
+//						result = left.getIdentity().compareTo(right.getIdentity());
 //					}
 //				}
-//				
+//
 //				return result;
 //			}
-//			
+//
 //		});
 //
 //		logger.debug("Selected count=" + itemList.size());
 //		return itemList;
 //	}
 
-	public Vector<StockLocationItem> selectStockLocationInventoryList() {
+    /**
+     * Select stock location inventory list vector.
+     *
+     * @return the vector
+     */
+    public Vector<StockLocationItem> selectStockLocationInventoryList() {
 		logger.debug("Select stock location inventory list.");
 		SelectQuery query = new SelectQuery();
-		
+
 		query.addCustomColumns(
 				WarehouseSchema.stock_locations_section,
 				WarehouseSchema.stock_locations_slot,
@@ -352,7 +360,7 @@ ORDER BY I.number,I.name,MI.identity
 		query.validate();
 
 		String sql = query.toString();
-		
+
 		logger.debug("SQL=" + sql);
 
 		Vector<StockLocationItem> itemList = new Vector<>();
@@ -375,7 +383,7 @@ ORDER BY I.number,I.name,MI.identity
 					item.setDate(resultSet.getTimestamp(index++).toString().substring(0, 10));
 
 					logger.trace(item);
-					
+
 					itemList.addElement(item);
 				} while (resultSet.next());
 			}
@@ -390,43 +398,48 @@ ORDER BY I.number,I.name,MI.identity
 				}
 			}
 		}
-		
+
 		logger.debug("Sorting data.");
 		Collections.sort(itemList, new Comparator<StockLocationItem>() {
 
 			@Override
 			public int compare(StockLocationItem left, StockLocationItem right) {
 				int result = left.getSection().compareTo(right.getSection());
-				
+
 				if (result == 0) {
 					result =  left.getSlot().compareTo(right.getSlot());
-					
+
 					if (result == 0) {
 						result = left.getNumber().compareTo(right.getNumber());
-						
+
 						if (result == 0) {
 							return left.getName().compareTo(right.getName());
 						}
 					}
 				}
-				
+
 				return result;
 			}
-			
+
 		});
 
 		logger.debug("Selected count=" + itemList.size());
 		return itemList;
 	}
-	
-	public int getNumberOfMasterInventory() {
+
+    /**
+     * Gets number of master inventory.
+     *
+     * @return the number of master inventory
+     */
+    public int getNumberOfMasterInventory() {
 		SelectQuery query = new SelectQuery();
 
 		query.addCustomColumns(FunctionCall.count().addColumnParams(WarehouseSchema.master_inventory_id));
 		query.validate();
 
 		String sql = query.toString();
-		
+
 		logger.debug("SQL=" + sql);
 
 		int result = 0;
@@ -453,27 +466,47 @@ ORDER BY I.number,I.name,MI.identity
 		return result;
 	}
 
-	public Vector<MasterInventoryDAO> selectMasterInventory(int itemId, String identity) {
+    /**
+     * Select master inventory vector.
+     *
+     * @param itemId   the item id
+     * @param identity the identity
+     * @return the vector
+     */
+    public Vector<MasterInventoryDAO> selectMasterInventory(int itemId, String identity) {
 		String sql = MasterInventorySql.select(itemId, identity);
-		
+
 		return executeSelectMasterInventory(sql);
 	}
-	
 
-	public Vector<ActualInventoryDAO> selectActualInventory(int itemId, int locationId, String identity) {
+
+    /**
+     * Select actual inventory vector.
+     *
+     * @param itemId     the item id
+     * @param locationId the location id
+     * @param identity   the identity
+     * @return the vector
+     */
+    public Vector<ActualInventoryDAO> selectActualInventory(int itemId, int locationId, String identity) {
 		String sql = ActualInventorySql.select(itemId, locationId, identity);
-		
+
 		return executeSelectActualInventory(sql);
 	}
-	
-	public int getNumberOfActualInventory() {
+
+    /**
+     * Gets number of actual inventory.
+     *
+     * @return the number of actual inventory
+     */
+    public int getNumberOfActualInventory() {
 		SelectQuery query = new SelectQuery();
 
 		query.addCustomColumns(FunctionCall.count().addColumnParams(WarehouseSchema.actual_inventory_id));
 		query.validate();
 
 		String sql = query.toString();
-		
+
 		logger.debug("SQL=" + sql);
 
 		int result = 0;
@@ -500,20 +533,35 @@ ORDER BY I.number,I.name,MI.identity
 		return result;
 	}
 
-	public Vector<ActualInventoryDAO> selectActualInventory(String wildcardSearchKey) {
+    /**
+     * Select actual inventory vector.
+     *
+     * @param wildcardSearchKey the wildcard search key
+     * @return the vector
+     */
+    public Vector<ActualInventoryDAO> selectActualInventory(String wildcardSearchKey) {
 		logger.debug("Select inventory matching='" + wildcardSearchKey + "'");
 		String sql = ActualInventorySql.select(wildcardSearchKey);
-		
+
 		return executeSelectActualInventory(sql);
 	}
 
-	public Vector<ActualInventoryDAO> selectActualInventory(String itemNumber, String itemName, String locationSection, String locationSlot) {
+    /**
+     * Select actual inventory vector.
+     *
+     * @param itemNumber      the item number
+     * @param itemName        the item name
+     * @param locationSection the location section
+     * @param locationSlot    the location slot
+     * @return the vector
+     */
+    public Vector<ActualInventoryDAO> selectActualInventory(String itemNumber, String itemName, String locationSection, String locationSlot) {
 		logger.debug("Select inventory number=" + itemNumber + ",name=" + itemName + ",section=" + locationSection + ",slot=" + locationSlot);
 		String sql = ActualInventorySql.select(itemNumber, itemName, locationSection, locationSlot);
-		
+
 		return executeSelectActualInventory(sql);
 	}
-	
+
 	private Vector<MasterInventoryDAO> executeSelectMasterInventory(String sql) {
 		logger.debug("SQL=" + sql);
 
@@ -528,7 +576,7 @@ ORDER BY I.number,I.name,MI.identity
 					MasterInventoryDAO dao = new MasterInventoryDAO();
 
 					int index = 1;
-					dao.setId(resultSet.getInt(index++));					
+					dao.setId(resultSet.getInt(index++));
 					dao.setItemId(resultSet.getInt(index++));
 					dao.setSource(resultSet.getString(index++));
 					dao.setStockPoint(resultSet.getString(index++));
@@ -536,7 +584,7 @@ ORDER BY I.number,I.name,MI.identity
 					dao.setIdentity(resultSet.getString(index++));
 					dao.setTimestamp(resultSet.getTimestamp(index++).toString().substring(0, 10));
 					dao.setAnnotation(resultSet.getString(index++));
-				
+
 					logger.trace("" + dao);
 
 					dataAccessObjects.addElement(dao);
@@ -551,7 +599,7 @@ ORDER BY I.number,I.name,MI.identity
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 				resultSet = null;
 			}
 		}
@@ -572,16 +620,16 @@ ORDER BY I.number,I.name,MI.identity
 			if (resultSet.first()) {
 				do {
 					ActualInventoryDAO dao = new ActualInventoryDAO();
-					
+
 					int index = 1;
-					dao.setId(resultSet.getInt(index++));					
+					dao.setId(resultSet.getInt(index++));
 					dao.setItemId(resultSet.getInt(index++));
 					dao.setLocationId(resultSet.getInt(index++));
 					dao.setQuantity(resultSet.getInt(index++));
 					dao.setIdentity(resultSet.getString(index++));
 					dao.setTimestamp(resultSet.getTimestamp(index++).toString().substring(0, 10));
 					dao.setAnnotation(resultSet.getString(index++));
-				
+
 					logger.trace("" + dao);
 
 					dataAccessObjects.addElement(dao);
@@ -596,7 +644,7 @@ ORDER BY I.number,I.name,MI.identity
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 				resultSet = null;
 			}
 		}
@@ -605,71 +653,98 @@ ORDER BY I.number,I.name,MI.identity
 		return dataAccessObjects;
 	}
 
-	/**
-	 * 
-	 * @param inventory
-	 */
-	public void insertInventory(ActualInventory inventory) { 
+    /**
+     * Insert inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void insertInventory(ActualInventory inventory) {
 		ActualInventoryDAO dao = new ActualInventoryDAO(inventory);
-		
+
 		String sql = ActualInventorySql.insert(dao);
 
 		execute(sql);
-	}	
+	}
 
-	public void insertInventory(MasterInventory inventory) { 
+    /**
+     * Insert inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void insertInventory(MasterInventory inventory) {
 		MasterInventoryDAO dao = new MasterInventoryDAO(inventory);
-		
+
 		String sql = MasterInventorySql.insert(dao);
 
 		execute(sql);
-	}	
+	}
 
-	/**
-	 * 
-	 * @param inventory
-	 */
-	public void updateInventory(ActualInventory inventory) {
+    /**
+     * Update inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void updateInventory(ActualInventory inventory) {
 		ActualInventoryDAO dao = new ActualInventoryDAO(inventory);
-		
+
 		String sql = ActualInventorySql.update(dao);
 
 		execute(sql);
-	}	
+	}
 
-	public void updateInventory(MasterInventory inventory) {
+    /**
+     * Update inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void updateInventory(MasterInventory inventory) {
 		MasterInventoryDAO dao = new MasterInventoryDAO(inventory);
-		
+
 		String sql = MasterInventorySql.update(dao);
 
 		execute(sql);
-	}	
-	/**
-	 * 
-	 * @param inventory
-	 */
-	public void deleteInventory(ActualInventory inventory) {
+	}
+
+    /**
+     * Delete inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void deleteInventory(ActualInventory inventory) {
 		ActualInventoryDAO dao = new ActualInventoryDAO(inventory);
-		
+
 		String sql = ActualInventorySql.delete(dao);
 
 		execute(sql);
-	}	
+	}
 
-	public void deleteInventory(MasterInventory inventory) {
+    /**
+     * Delete inventory.
+     *
+     * @param inventory the inventory
+     */
+    public void deleteInventory(MasterInventory inventory) {
 		MasterInventoryDAO dao = new MasterInventoryDAO(inventory);
-		
+
 		String sql = MasterInventorySql.delete(dao);
 
 		execute(sql);
-	}	
-	public Vector<HoldingDAO> selectHoldings(int byHoldingUnitId, int atLocationId) {
+	}
+
+    /**
+     * Select holdings vector.
+     *
+     * @param byHoldingUnitId the by holding unit id
+     * @param atLocationId    the at location id
+     * @return the vector
+     */
+    public Vector<HoldingDAO> selectHoldings(int byHoldingUnitId, int atLocationId) {
 		String sql = HoldingsSql.select(byHoldingUnitId, atLocationId);
 
 		logger.debug("SQL=" + sql);
 
 		Vector<HoldingDAO> dataAccessObjects = new Vector<>();
-		
+
 		ResultSet resultSet = null;
 
 		try {
@@ -679,9 +754,9 @@ ORDER BY I.number,I.name,MI.identity
 				do {
 					int unitId = resultSet.getInt(WarehouseSchema.holdings_unit_id.getName());
 					int locationId = resultSet.getInt(WarehouseSchema.holdings_stock_location_id.getName());
-				
+
 					HoldingDAO dao = new HoldingDAO(unitId, locationId);
-					
+
 					logger.trace("" + dao);
 
 					dataAccessObjects.addElement(dao);
@@ -705,43 +780,59 @@ ORDER BY I.number,I.name,MI.identity
 		return dataAccessObjects;
 	}
 
-	public void insertHolding(Holding newHolding) {
+    /**
+     * Insert holding.
+     *
+     * @param newHolding the new holding
+     */
+    public void insertHolding(Holding newHolding) {
 		HoldingDAO dao = new HoldingDAO(newHolding);
-		
+
 		String sql = HoldingsSql.insert(dao);
-		
+
 		execute(sql);
 	}
 
-	public void updateHolding(Holding aHolding) {
+    /**
+     * Update holding.
+     *
+     * @param aHolding the a holding
+     */
+    public void updateHolding(Holding aHolding) {
 		HoldingDAO dao = new HoldingDAO(aHolding);
-		
+
 		String sql = HoldingsSql.update(dao);
-		
+
 		execute(sql);
 	}
 
-	public void deleteHolding(Holding aHolding) {
+    /**
+     * Delete holding.
+     *
+     * @param aHolding the a holding
+     */
+    public void deleteHolding(Holding aHolding) {
 		HoldingDAO dao = new HoldingDAO(aHolding);
-		
+
 		String sql = HoldingsSql.delete(dao);
-		
+
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param withNumber
-	 * @param withName
-	 * @return
-	 */
-	public Vector<Item> selectItems(String withNumber, String withName) {
+
+    /**
+     * Select items vector.
+     *
+     * @param withNumber the with number
+     * @param withName   the with name
+     * @return vector
+     */
+    public Vector<Item> selectItems(String withNumber, String withName) {
 		String sql = ItemSql.select(connection, withNumber, withName);
 
 		logger.debug("SQL=" + sql);
 
 		Vector<Item> items = new Vector<>();
-		
+
 		ResultSet resultSet = null;
 
 		try {
@@ -756,7 +847,7 @@ ORDER BY I.number,I.name,MI.identity
 					dao.setName(resultSet.getString(WarehouseSchema.items_name.getName()));
 					dao.setPackaging(resultSet.getString(WarehouseSchema.items_packaging.getName()));
 					dao.setDescription(resultSet.getString(WarehouseSchema.items_description.getName()));
-				
+
 					logger.trace("" + dao);
 
 					items.addElement(dao.createItem());
@@ -779,39 +870,43 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("Selected count=" + items.size());
 		return items;
 	}
-	/**
-	 * 
-	 * @param newItem
-	 */
-	public void insertItem(Item newItem) {
+
+    /**
+     * Insert item.
+     *
+     * @param newItem the new item
+     */
+    public void insertItem(Item newItem) {
 		logger.trace("Insert item=" + newItem);
 		ItemDAO dao = new ItemDAO(newItem);
-		
+
 		String sql = ItemSql.insert(connection, dao);
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param anItem
-	 */
-	public void updateItem(Item anItem) {
+
+    /**
+     * Update item.
+     *
+     * @param anItem the an item
+     */
+    public void updateItem(Item anItem) {
 		logger.trace("Update iteme=" + anItem);
 		ItemDAO dao = new ItemDAO(anItem);
-		
+
 		String sql = ItemSql.update(connection, dao);
 
 		execute(sql);
 	}
 
-	/**
-	 * 
-	 * @param anItem
-	 */
-	public void deleteItem(Item anItem) {
+    /**
+     * Delete item.
+     *
+     * @param anItem the an item
+     */
+    public void deleteItem(Item anItem) {
 		logger.trace("Remove item=" + anItem);
 		ItemDAO dao = new ItemDAO(anItem);
-		
+
 		String sql = ItemSql.delete(connection, dao);
 		execute(sql);
 	}
@@ -819,18 +914,19 @@ ORDER BY I.number,I.name,MI.identity
 	/*
 	 * ************************************
 	 */
-	
-	/**
-	 * 
-	 * @param withinSection
-	 * @param atSlot
-	 * @return
-	 */
-	public Vector<StockLocation> selectLocations(String withinSection, String atSlot) {
+
+    /**
+     * Select locations vector.
+     *
+     * @param withinSection the within section
+     * @param atSlot        the at slot
+     * @return vector
+     */
+    public Vector<StockLocation> selectLocations(String withinSection, String atSlot) {
 		Vector<StockLocation> locations = new Vector<>();
-		
+
 		String sql = StockLocationsSql.select(connection, withinSection, atSlot);
-		
+
 		logger.debug("SQL=" + sql);
 
 		ResultSet resultSet = null;
@@ -846,7 +942,7 @@ ORDER BY I.number,I.name,MI.identity
 					String description = resultSet.getString(4);
 
 					StockLocationDAO dao = new StockLocationDAO(id, section, slot, description);
-					
+
 					logger.trace("" + dao);
 
 					locations.addElement(dao.createLocation());
@@ -863,59 +959,69 @@ ORDER BY I.number,I.name,MI.identity
 				}
 			}
 		}
-		
+
 		logger.debug("Selected count=" + locations.size());
 		return locations;
 	}
 
-	/**
-	 * 
-	 * @param newLocation
-	 */
-	public void insertStockLocation(StockLocation newLocation) {
+    /**
+     * Insert stock location.
+     *
+     * @param newLocation the new location
+     */
+    public void insertStockLocation(StockLocation newLocation) {
 		logger.trace("Insert stock location=" + newLocation);
-		
+
 		StockLocationDAO dao = new StockLocationDAO(newLocation);
-		
+
 		String sql = StockLocationsSql.insert(connection, dao);
-		
+
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param aLocation
-	 */
-	public void updateStockLocation(StockLocation aLocation) {
+
+    /**
+     * Update stock location.
+     *
+     * @param aLocation the a location
+     */
+    public void updateStockLocation(StockLocation aLocation) {
 		logger.trace("Update stock location=" + aLocation);
-		
+
 		StockLocationDAO dao = new StockLocationDAO(aLocation);
-		
+
 		String sql = StockLocationsSql.update(connection, dao);
-		
+
 		execute(sql);
 	}
-	
-	/**
-	 * 
-	 * @param aLocation
-	 */
-	public void deleteStockLocation(StockLocation aLocation) {
+
+    /**
+     * Delete stock location.
+     *
+     * @param aLocation the a location
+     */
+    public void deleteStockLocation(StockLocation aLocation) {
 		logger.trace("Update stock location=" + aLocation);
 		StockLocationDAO dao = new StockLocationDAO(aLocation);
 
 		String sql = StockLocationsSql.delete(connection, dao);
-		
+
 		execute(sql);
 	}
-	
 
-	public Vector<OrganizationalUnitDAO> selectOrganizationalUnits(String byCallsign, String andName) {
+
+    /**
+     * Select organizational units vector.
+     *
+     * @param byCallsign the by callsign
+     * @param andName    the and name
+     * @return the vector
+     */
+    public Vector<OrganizationalUnitDAO> selectOrganizationalUnits(String byCallsign, String andName) {
 		String sql = OrganizationalUnitsSql.select(EntityName.NULL_ID, byCallsign, andName, EntityName.NULL_ID);
 		logger.debug("SQL=" + sql);
 
 		Vector<OrganizationalUnitDAO> dataAccessObjects = new Vector<>();
-		
+
 		ResultSet resultSet = null;
 
 		try {
@@ -924,13 +1030,13 @@ ORDER BY I.number,I.name,MI.identity
 			if (resultSet.first()) {
 				do {
 					OrganizationalUnitDAO dao = new OrganizationalUnitDAO();
-					
+
 					dao.setId(resultSet.getInt(WarehouseSchema.units_id.getName()));
 					dao.setName(resultSet.getString(WarehouseSchema.units_name.getName()));
 					dao.setCallSign(resultSet.getString(WarehouseSchema.units_callsign.getName()));
 					dao.setLevel(resultSet.getInt(WarehouseSchema.units_level.getName()));
 					dao.setSuperiorId(resultSet.getInt(WarehouseSchema.units_superior_unit_id.getName()));
-				
+
 					logger.trace("" + dao);
 
 					dataAccessObjects.addElement(dao);
@@ -945,7 +1051,7 @@ ORDER BY I.number,I.name,MI.identity
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 				resultSet = null;
 			}
 		}
@@ -954,37 +1060,58 @@ ORDER BY I.number,I.name,MI.identity
 		return dataAccessObjects;
 	}
 
-	public void insertOrganizationalUnit(OrganizationalUnit newUnit) {
+    /**
+     * Insert organizational unit.
+     *
+     * @param newUnit the new unit
+     */
+    public void insertOrganizationalUnit(OrganizationalUnit newUnit) {
 		OrganizationalUnitDAO dao = new OrganizationalUnitDAO(newUnit);
-		
+
 		String sql = OrganizationalUnitsSql.insert(dao);
-		
+
 		execute(sql);
 	}
 
-	public void updateOrganizationalUnit(OrganizationalUnit aUnit) {
+    /**
+     * Update organizational unit.
+     *
+     * @param aUnit the a unit
+     */
+    public void updateOrganizationalUnit(OrganizationalUnit aUnit) {
 		OrganizationalUnitDAO dao = new OrganizationalUnitDAO(aUnit);
-		
+
 		String sql = OrganizationalUnitsSql.update(dao);
-		
+
 		execute(sql);
 	}
 
-	public void deleteOrganizationalUnit(OrganizationalUnit aUnit) {
+    /**
+     * Delete organizational unit.
+     *
+     * @param aUnit the a unit
+     */
+    public void deleteOrganizationalUnit(OrganizationalUnit aUnit) {
 		OrganizationalUnitDAO dao = new OrganizationalUnitDAO(aUnit);
-		
+
 		String sql = OrganizationalUnitsSql.delete(dao);
-		
+
 		execute(sql);
 	}
 
 
-	public Vector<ItemApplicationDAO> selectItemApplications(int forUnitId) {
+    /**
+     * Select item applications vector.
+     *
+     * @param forUnitId the for unit id
+     * @return the vector
+     */
+    public Vector<ItemApplicationDAO> selectItemApplications(int forUnitId) {
 		String sql = ItemApplicationsSql.select(forUnitId, null);
-		
+
 		logger.debug("SQL=" + sql);
 
-		Vector<ItemApplicationDAO> result = new Vector<>();		
+		Vector<ItemApplicationDAO> result = new Vector<>();
 		ResultSet resultSet = null;
 
 		try {
@@ -996,9 +1123,9 @@ ORDER BY I.number,I.name,MI.identity
 					int articleId = resultSet.getInt(WarehouseSchema.item_application_item_id.getName());
 					String category = resultSet.getString(WarehouseSchema.item_application_category.getName());
 					int quantity = resultSet.getInt(WarehouseSchema.item_application_quantity.getName());
-				
+
 					ItemApplicationDAO dao = new ItemApplicationDAO(unitId, articleId, category, quantity);
-					
+
 					logger.trace("" + dao);
 
 					result.addElement(dao);
@@ -1021,43 +1148,58 @@ ORDER BY I.number,I.name,MI.identity
 		logger.debug("Selected count=" + result.size());
 		return result;
 	}
-	
-	public void insertItemApplication(ItemApplication newUnit) {
+
+    /**
+     * Insert item application.
+     *
+     * @param newUnit the new unit
+     */
+    public void insertItemApplication(ItemApplication newUnit) {
 		ItemApplicationDAO dao = new ItemApplicationDAO(newUnit);
-		
+
 		String sql = ItemApplicationsSql.insert(dao);
-		
+
 		execute(sql);
 	}
 
-	public void updateItemApplication(ItemApplication aUnit) {
+    /**
+     * Update item application.
+     *
+     * @param aUnit the a unit
+     */
+    public void updateItemApplication(ItemApplication aUnit) {
 		ItemApplicationDAO dao = new ItemApplicationDAO(aUnit);
-		
+
 		String sql = ItemApplicationsSql.update(dao);
-		
+
 		execute(sql);
 	}
 
-	public void deleteItemApplication(ItemApplication aUnit) {
+    /**
+     * Delete item application.
+     *
+     * @param aUnit the a unit
+     */
+    public void deleteItemApplication(ItemApplication aUnit) {
 		ItemApplicationDAO dao = new ItemApplicationDAO(aUnit);
-		
+
 		String sql = ItemApplicationsSql.delete(dao);
-		
+
 		execute(sql);
 	}
-	
+
 	private void execute(String sql) {
 		logger.debug("SQL=" + sql);
-		
+
 		Statement statement = null;
-		
+
 		try {
 			statement = connection.createStatement();
 			statement.execute(sql);
 		} catch (SQLException exception) {
 			logger.error("Caught exception for SQL=" + sql, exception);
 		}
-		
+
 		if (statement != null) {
 			try {
 				statement.close();
@@ -1066,16 +1208,12 @@ ORDER BY I.number,I.name,MI.identity
 		}
 	}
 
-	private ResultSet executeQuery(String sql) throws SQLException {
-		PreparedStatement preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		return preparedStatement.executeQuery();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean disconnect() {
+    /**
+     * Disconnect boolean.
+     *
+     * @return boolean
+     */
+    public boolean disconnect() {
 		if (connection != null) {
 			try {
 				connection.close();
@@ -1084,20 +1222,19 @@ ORDER BY I.number,I.name,MI.identity
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	protected void finalize() throws Throwable {
 		if (connection != null) {
 			connection.close();
 		}
-		
+
 		super.finalize();
 	}
 }
-

@@ -36,6 +36,9 @@ import se.melsom.warehouse.settings.PersistentSettings;
 
 // This class acts as a main prensenter.
 
+/**
+ * The type Application controller.
+ */
 public class ApplicationController {
 	private static Logger logger = Logger.getLogger(ApplicationController.class);
 	private static final String APPLICATION_SETTINGS_FILENAME = "ApplicationSettings.json";
@@ -54,23 +57,46 @@ public class ApplicationController {
 	private StockOnHandController stockOnHandController = null;
 	private LoggerController loggerController = null;
 
-	public ApplicationController(ModelEventBroker eventBroker) {
+    /**
+     * Instantiates a new Application controller.
+     *
+     * @param eventBroker the event broker
+     */
+    public ApplicationController(ModelEventBroker eventBroker) {
 		this.eventBroker = eventBroker;
 	}
 
-	public DesktopView getDesktopView() {
+    /**
+     * Gets desktop view.
+     *
+     * @return the desktop view
+     */
+    public DesktopView getDesktopView() {
 		return desktopView;
 	}
 
-	public DesktopController getDesktopController() {
+    /**
+     * Gets desktop controller.
+     *
+     * @return the desktop controller
+     */
+    public DesktopController getDesktopController() {
 		return desktopController;
 	}
-	
-	public InventoryAccounting getInventoryAccounting() {
+
+    /**
+     * Gets inventory accounting.
+     *
+     * @return the inventory accounting
+     */
+    public InventoryAccounting getInventoryAccounting() {
 		return inventoryAccounting;
 	}
 
-	public void applicationStart() {
+    /**
+     * Application start.
+     */
+    public void applicationStart() {
 		logger.debug("Application start.");
 		inventoryAccounting = new InventoryAccounting(WarehouseDatabase.singleton(), eventBroker);
 		persistentSettings.loadData(APPLICATION_SETTINGS_FILENAME);		
@@ -120,37 +146,70 @@ public class ApplicationController {
 		inventoryAccounting.sync();
 	}
 
-	public void setInventoryViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets inventory view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setInventoryViewMenuItemChecked(boolean isChecked) {
 		logger.trace("InventoryViewMenuItem isChecked=" + isChecked);
 		desktopController.setShowInventoryViewMenuItemChecked(isChecked);
 	}
 
-	public void setInventoryHoldingViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets inventory holding view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setInventoryHoldingViewMenuItemChecked(boolean isChecked) {
 		logger.trace("InventoryHoldingViewMenuItem isChecked=" + isChecked);
 		desktopController.setShowInventoryHoldingViewMenuItemChecked(isChecked);
 	}
 
-	public void setSearchViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets search view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setSearchViewMenuItemChecked(boolean isChecked) {
 		logger.trace("SearchViewMenuItem isChecked=" + isChecked);
 		desktopController.setShowSearchViewMenuItemChecked(isChecked);
 	}
 
-	public void setStockOnHandViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets stock on hand view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setStockOnHandViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowStockOnHandViewMenuItem isChecked=" + isChecked);
 		desktopController.setShowStockOnHandViewMenuItemChecked(isChecked);
 	}
 
-	public void setEditItemsMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets edit items menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setEditItemsMenuItemChecked(boolean isChecked) {
 		logger.trace("EditProductsMenuItem isChecked=" + isChecked);
 		desktopController.setEditProductsMenuItemChecked(isChecked);;
 	}
 
-	public void setLogViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets log view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setLogViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowLogViewMenuItem isChecked=" + isChecked);
 		desktopController.setShowLogViewMenuItemChecked(isChecked);;
 	}
 
-	public void applicationExit() {
+    /**
+     * Application exit.
+     */
+    public void applicationExit() {
 		logger.debug("applicationExit()");
 		try {
 			persistentSettings.saveData(APPLICATION_SETTINGS_FILENAME);

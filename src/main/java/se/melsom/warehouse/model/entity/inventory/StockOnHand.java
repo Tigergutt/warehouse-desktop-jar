@@ -11,68 +11,138 @@ public class StockOnHand {
 	private int actualQuantity;
 	private String identity;
 	private String annotation;
-	
-	public String getItemNumber() {
+
+    /**
+     * Gets item number.
+     *
+     * @return the item number
+     */
+    public String getItemNumber() {
 		return itemNumber;
 	}
 
-	public void setItemNumber(String itemNumber) {
+    /**
+     * Sets item number.
+     *
+     * @param itemNumber the item number
+     */
+    public void setItemNumber(String itemNumber) {
 		this.itemNumber = itemNumber;
 	}
 
-	public String getItemName() {
+    /**
+     * Gets item name.
+     *
+     * @return the item name
+     */
+    public String getItemName() {
 		return itemName;
 	}
 
-	public void setItemName(String itemName) {
+    /**
+     * Sets item name.
+     *
+     * @param itemName the item name
+     */
+    public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
 
-	public String getPackaging() {
+    /**
+     * Gets packaging.
+     *
+     * @return the packaging
+     */
+    public String getPackaging() {
 		return packaging;
 	}
 
-	public void setPackaging(String packaging) {
+    /**
+     * Sets packaging.
+     *
+     * @param packaging the packaging
+     */
+    public void setPackaging(String packaging) {
 		this.packaging = packaging;
 	}
 
-	public int getNominalQuantity() {
+    /**
+     * Gets nominal quantity.
+     *
+     * @return the nominal quantity
+     */
+    public int getNominalQuantity() {
 		return nominalQuantity;
 	}
 
-	public void setNominalQuantity(int nomnalQuantity) {
+    /**
+     * Sets nominal quantity.
+     *
+     * @param nomnalQuantity the nomnal quantity
+     */
+    public void setNominalQuantity(int nomnalQuantity) {
 		this.nominalQuantity = nomnalQuantity;
 	}
 
 
-	public int getActualQuantity() {
+    /**
+     * Gets actual quantity.
+     *
+     * @return the actual quantity
+     */
+    public int getActualQuantity() {
 		return actualQuantity;
 	}
 
 
-	public void setActualQuantity(int actualQuantity) {
+    /**
+     * Sets actual quantity.
+     *
+     * @param actualQuantity the actual quantity
+     */
+    public void setActualQuantity(int actualQuantity) {
 		this.actualQuantity = actualQuantity;
 	}
 
 
-	public String getIdentity() {
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
-	
-	public String getAnnotation() {
+
+    /**
+     * Gets annotation.
+     *
+     * @return the annotation
+     */
+    public String getAnnotation() {
 		return annotation;
 	}
 
 
-	public void setAnnotation(String annotation) {
+    /**
+     * Sets annotation.
+     *
+     * @param annotation the annotation
+     */
+    public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
-	
+
 	@Override
 	public String toString() {
 		String text = "(";
@@ -90,21 +160,39 @@ public class StockOnHand {
 		text += ",";
 		text += getAnnotation();
 		text += ")";
-		
-		return text; 
+
+		return text;
 	}
 
-	public int compareByItemNumber(StockOnHand other) {
+    /**
+     * Compare by item number int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByItemNumber(StockOnHand other) {
 		return getItemNumber().compareTo(other.getItemNumber());
 	}
-	
-	public int compareByItemName(StockOnHand other) {
+
+    /**
+     * Compare by item name int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByItemName(StockOnHand other) {
 		return getItemName().compareTo(other.getItemName());
 	}
-	
-	public int compareByIdentity(StockOnHand other) {
+
+    /**
+     * Compare by identity int.
+     *
+     * @param other the other
+     * @return the int
+     */
+    public int compareByIdentity(StockOnHand other) {
 		if (getIdentity() != null && other.getIdentity() != null) {
-			if (getIdentity().length() > 0 && other.getIdentity().length() > 0) {				
+			if (getIdentity().length() > 0 && other.getIdentity().length() > 0) {
 				return getIdentity().compareTo(other.getIdentity());
 			} else if (getIdentity().length() > 0 && other.getIdentity().length() == 0) {
 				return -1;
@@ -116,7 +204,7 @@ public class StockOnHand {
 		} else if (getIdentity() != null && other.getIdentity() == null) {
 			return -1;
 		}
-		
+
 		return 0;
 	}
 }

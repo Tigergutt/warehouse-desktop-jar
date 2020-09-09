@@ -1,7 +1,13 @@
 package se.melsom.warehouse.model.enumeration;
 
+/**
+ * The enum Application category.
+ */
 public enum ApplicationCategory {
-	RU("RU", "Reglementerad utrustning");
+    /**
+     * The Ru.
+     */
+    RU("RU", "Reglementerad utrustning");
 	
 	private String name;
 	private String description;
@@ -10,12 +16,22 @@ public enum ApplicationCategory {
 		this.name = name;
 		this.description = description;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public String getDescription() {
+
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
 		return description;
 	}
 }

@@ -2,6 +2,9 @@ package se.melsom.warehouse.model.entity;
 
 import java.util.Vector;
 
+/**
+ * The type Organizational unit.
+ */
 public class OrganizationalUnit {
 	private int id;
 	private String callsign;
@@ -9,51 +12,109 @@ public class OrganizationalUnit {
 	private int level;
 	private OrganizationalUnit superior;
 	private Vector<OrganizationalUnit> subordinates = new Vector<>();
-	
-	public OrganizationalUnit(int id, String callsign, String name, OrganizationalUnit superior) {
+
+    /**
+     * Instantiates a new Organizational unit.
+     *
+     * @param id       the id
+     * @param callsign the callsign
+     * @param name     the name
+     * @param superior the superior
+     */
+    public OrganizationalUnit(int id, String callsign, String name, OrganizationalUnit superior) {
 		this.id = id;
 		this.callsign = callsign;
 		this.name = name;
 		this.superior = superior;
 	}
 
-	public int getId() {
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getCallsign() {
+    /**
+     * Gets callsign.
+     *
+     * @return the callsign
+     */
+    public String getCallsign() {
 		return callsign;
 	}
-	
-	public String getName() {
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
-	
-	public int getLevel() {
+
+    /**
+     * Gets level.
+     *
+     * @return the level
+     */
+    public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
+    public void setLevel(int level) {
 		this.level = level;
 	}
 
-	public OrganizationalUnit getSuperior() {
+    /**
+     * Gets superior.
+     *
+     * @return the superior
+     */
+    public OrganizationalUnit getSuperior() {
 		return superior;
 	}
-	
-	public void setSuperior(OrganizationalUnit superior) {
+
+    /**
+     * Sets superior.
+     *
+     * @param superior the superior
+     */
+    public void setSuperior(OrganizationalUnit superior) {
 		this.superior = superior;
 	}
-	
-	public Vector<OrganizationalUnit> getSubordinates() {
+
+    /**
+     * Gets subordinates.
+     *
+     * @return the subordinates
+     */
+    public Vector<OrganizationalUnit> getSubordinates() {
 		return subordinates;
 	}
-	
-	public void addSubordinate(OrganizationalUnit subordinate) {
+
+    /**
+     * Add subordinate.
+     *
+     * @param subordinate the subordinate
+     */
+    public void addSubordinate(OrganizationalUnit subordinate) {
 		subordinates.addElement(subordinate);
 	}
 

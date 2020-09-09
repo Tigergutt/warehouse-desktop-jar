@@ -21,6 +21,9 @@ import se.melsom.warehouse.presentation.common.select.SelectItemController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Edit item application controller.
+ */
 public class EditItemApplicationController extends ViewController {
 	private static Logger logger = Logger.getLogger(EditItemApplicationController.class);
 	
@@ -37,7 +40,13 @@ public class EditItemApplicationController extends ViewController {
 	private ItemApplication theInventory;
 	private boolean isInitializingSelectors = false;
 
-	public EditItemApplicationController(InventoryAccounting inventoryAccounting, JFrame parent) {
+    /**
+     * Instantiates a new Edit item application controller.
+     *
+     * @param inventoryAccounting the inventory accounting
+     * @param parent              the parent
+     */
+    public EditItemApplicationController(InventoryAccounting inventoryAccounting, JFrame parent) {
 		this.inventoryAccounting = inventoryAccounting;
 		this.parent = parent;
 		this.itemMasterFile = inventoryAccounting.getItemMasterFile();
@@ -70,8 +79,14 @@ public class EditItemApplicationController extends ViewController {
 		view.setCategoryItems(categories);
 		isInitializingSelectors = false;
 	}
-	
-	public ItemApplication editApplication(ItemApplication anInventory) {
+
+    /**
+     * Edit application item application.
+     *
+     * @param anInventory the an inventory
+     * @return the item application
+     */
+    public ItemApplication editApplication(ItemApplication anInventory) {
 		theInventory = anInventory;
 		
 		if (theInventory.getItem() != null) {
@@ -179,7 +194,12 @@ public class EditItemApplicationController extends ViewController {
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return EditActualInventoryView.class.getSimpleName();
 	}
 }

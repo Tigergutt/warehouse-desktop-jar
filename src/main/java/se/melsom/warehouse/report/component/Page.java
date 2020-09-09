@@ -1,25 +1,52 @@
 package se.melsom.warehouse.report.component;
 
+/**
+ * The type Page.
+ */
 public class Page extends Component {
-	public enum Orientation {
-		PORTRAIT,
-		LANDSCAPE
+    /**
+     * The enum Orientation.
+     */
+    public enum Orientation {
+        /**
+         * Portrait orientation.
+         */
+        PORTRAIT,
+        /**
+         * Landscape orientation.
+         */
+        LANDSCAPE
 	}
 	
 	private Orientation orientation;
 	private int pageNumber = 0; 
 	private int pageCount = 0;
-	
-	public Page(Orientation orientation) {
+
+    /**
+     * Instantiates a new Page.
+     *
+     * @param orientation the orientation
+     */
+    public Page(Orientation orientation) {
 		super(0, 0, 0, 0);
 		setOrientation(orientation);
 	}
 
-	public Orientation getOrientation() {
+    /**
+     * Gets orientation.
+     *
+     * @return the orientation
+     */
+    public Orientation getOrientation() {
 		return orientation;
 	}
 
-	public void setOrientation(Orientation orientation) {
+    /**
+     * Sets orientation.
+     *
+     * @param orientation the orientation
+     */
+    public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
 		
 		switch (orientation) {
@@ -35,19 +62,39 @@ public class Page extends Component {
 		}
 	}
 
-	public int getPageNumber() {
+    /**
+     * Gets page number.
+     *
+     * @return the page number
+     */
+    public int getPageNumber() {
 		return pageNumber;
 	}
 
-	public void setPageNumber(int pageNumber) {
+    /**
+     * Sets page number.
+     *
+     * @param pageNumber the page number
+     */
+    public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
 	}
 
-	public int getPageCount() {
+    /**
+     * Gets page count.
+     *
+     * @return the page count
+     */
+    public int getPageCount() {
 		return pageCount;
 	}
 
-	public void setPageCount(int pageCount) {
+    /**
+     * Sets page count.
+     *
+     * @param pageCount the page count
+     */
+    public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
 }

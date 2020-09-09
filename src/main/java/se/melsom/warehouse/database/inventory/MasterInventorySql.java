@@ -11,8 +11,18 @@ import com.healthmarketscience.sqlbuilder.UpdateQuery;
 import se.melsom.warehouse.database.WarehouseSchema;
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The Master inventory sql (select, insert, update, delete).
+ */
 public class MasterInventorySql {
-	public static String select(int ofItemId, String identity) {
+    /**
+     * Select string.
+     *
+     * @param ofItemId the of item id
+     * @param identity the identity
+     * @return the string
+     */
+    public static String select(int ofItemId, String identity) {
 		SelectQuery query = createInventorySelect();
 		
 		if (ofItemId != EntityName.NULL_ID) {
@@ -28,7 +38,13 @@ public class MasterInventorySql {
 		return query.toString();
 	}
 
-	public static String select(String wildcardKey) {
+    /**
+     * Select string.
+     *
+     * @param wildcardKey the wildcard key
+     * @return the string
+     */
+    public static String select(String wildcardKey) {
 		String sqlWildcardKey = wildcardKey.replace("*", "%");
 
 		SelectQuery query = createInventorySelect();
@@ -44,8 +60,14 @@ public class MasterInventorySql {
 		return query.toString();
 	}
 
-	
-	public static String insert(MasterInventoryDAO dao) {
+
+    /**
+     * Insert string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String insert(MasterInventoryDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.master_inventory);		
 		
 		query.addColumn(WarehouseSchema.master_inventory_id, dao.getId());
@@ -64,8 +86,14 @@ public class MasterInventorySql {
 
 		return query.toString();
 	}
-	
-	public static String update(MasterInventoryDAO dao) {
+
+    /**
+     * Update string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String update(MasterInventoryDAO dao) {
 		UpdateQuery query = null;
 		
 		query = new UpdateQuery(WarehouseSchema.master_inventory);
@@ -84,7 +112,13 @@ public class MasterInventorySql {
 		return query.toString();
 	}
 
-	public static String delete(MasterInventoryDAO dao) {
+    /**
+     * Delete string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String delete(MasterInventoryDAO dao) {
 		DeleteQuery query = null;
 
 		query = new DeleteQuery(WarehouseSchema.master_inventory);	

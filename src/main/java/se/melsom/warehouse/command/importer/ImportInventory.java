@@ -13,11 +13,19 @@ import se.melsom.warehouse.presentation.importer.ImportWizardController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.Property;
 
+/**
+ * The Import inventory command.
+ */
 public class ImportInventory extends Command {
 	private static Logger logger = Logger.getLogger(ImportInventory.class);
 	private ApplicationController controller;
-	
-	public ImportInventory(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Import inventory.
+     *
+     * @param controller the controller
+     */
+    public ImportInventory(ApplicationController controller) {
 		this.controller = controller;
 	}
 

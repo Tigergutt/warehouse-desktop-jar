@@ -10,11 +10,17 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Search result table model.
+ */
 @SuppressWarnings("serial")
 public class SearchResultTableModel extends SortedTableModel  {
 	private static Logger logger = Logger.getLogger(SearchResultTableModel.class);
-	
-	public static final String[] columnNames = { 			
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { 			
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME, 
 			EntityName.STOCK_LOCATION_DESIGNATION,
@@ -23,11 +29,20 @@ public class SearchResultTableModel extends SortedTableModel  {
 			EntityName.INVENTORY_LAST_UPDATED_TIMESTAMP,
 			EntityName.INVENTORY_ANNOTATION,
 	};
-	public static final int[] columnWidts = { 120, 230, 70, 60, 60, 100, 300};
-	
-	public static final boolean[] isSortableArray = { true, true, true, false, false, true, false };
-	
-	public static final Class<?>[] columnClass = {
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 120, 230, 70, 60, 60, 100, 300};
+
+    /**
+     * The constant isSortableArray.
+     */
+    public static final boolean[] isSortableArray = { true, true, true, false, false, true, false };
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class, 
@@ -38,19 +53,32 @@ public class SearchResultTableModel extends SortedTableModel  {
 	
 	private Vector<ActualInventory> inventoryList = new Vector<>();
 
-	public SearchResultTableModel() {
+    /**
+     * Instantiates a new Search result table model.
+     */
+    public SearchResultTableModel() {
 		if (columnNames.length != columnWidts.length || 
 				columnNames.length != columnClass.length ||
 				columnNames.length != isSortableArray.length) {
 			logger.warn("Array dimension mismatch.");
 		}
 	}
-	
-	public Vector<ActualInventory> getInventory() {
+
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
+    public Vector<ActualInventory> getInventory() {
 		return inventoryList;
 	}
-	
-	public void setInventory(Vector<ActualInventory> value) {
+
+    /**
+     * Sets inventory.
+     *
+     * @param value the value
+     */
+    public void setInventory(Vector<ActualInventory> value) {
 		inventoryList = value;
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();

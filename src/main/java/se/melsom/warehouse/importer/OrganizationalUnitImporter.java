@@ -12,6 +12,9 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
+/**
+ * The type Organizational unit importer.
+ */
 public class OrganizationalUnitImporter extends Importer {
 	private static Logger logger = Logger.getLogger(OrganizationalUnitImporter.class);
 	private Vector<OrganizationalUnit> importedUnits = new Vector<>();
@@ -19,8 +22,13 @@ public class OrganizationalUnitImporter extends Importer {
 	private int nameIndex = -1;
 	private int superiorCallsignIndex = -1;
 	private int levelIndex = -1;
-	
-	public OrganizationalUnitImporter(InputTableModel tableModel) {
+
+    /**
+     * Instantiates a new Organizational unit importer.
+     *
+     * @param tableModel the table model
+     */
+    public OrganizationalUnitImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
 	

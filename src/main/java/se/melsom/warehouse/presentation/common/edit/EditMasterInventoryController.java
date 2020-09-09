@@ -23,6 +23,9 @@ import se.melsom.warehouse.presentation.common.select.SelectItemController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Edit master inventory controller.
+ */
 public class EditMasterInventoryController extends ViewController {
 	private static Logger logger = Logger.getLogger(EditMasterInventoryController.class);
 	
@@ -41,7 +44,13 @@ public class EditMasterInventoryController extends ViewController {
 	private MasterInventory currentInstance;
 	private boolean isInitializingSelectors = false;
 
-	public EditMasterInventoryController(InventoryAccounting inventoryAccounting, JFrame parent) {
+    /**
+     * Instantiates a new Edit master inventory controller.
+     *
+     * @param inventoryAccounting the inventory accounting
+     * @param parent              the parent
+     */
+    public EditMasterInventoryController(InventoryAccounting inventoryAccounting, JFrame parent) {
 		this.inventoryAccounting = inventoryAccounting;
 		this.parent = parent;
 		this.itemMasterFile = inventoryAccounting.getItemMasterFile();
@@ -73,8 +82,14 @@ public class EditMasterInventoryController extends ViewController {
 			locationSections.add(location.getSection());
 		}
 	}
-	
-	public MasterInventory editInstance(MasterInventory instance) {
+
+    /**
+     * Edit instance master inventory.
+     *
+     * @param instance the instance
+     * @return the master inventory
+     */
+    public MasterInventory editInstance(MasterInventory instance) {
 		currentInstance = instance;
 		
 		if (currentInstance.getItem() != null) {
@@ -186,7 +201,12 @@ public class EditMasterInventoryController extends ViewController {
 		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return EditActualInventoryView.class.getSimpleName();
 	}
 }

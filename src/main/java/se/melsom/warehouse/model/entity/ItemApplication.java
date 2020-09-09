@@ -1,62 +1,128 @@
 package se.melsom.warehouse.model.entity;
 
+/**
+ * The type Item application.
+ */
 public class ItemApplication {
 	private OrganizationalUnit unit;
 	private Item item = null;
 	private String category = "";
-	private int quantity = 0; 
-	
-	public ItemApplication(OrganizationalUnit unit) {
+	private int quantity = 0;
+
+    /**
+     * Instantiates a new Item application.
+     *
+     * @param unit the unit
+     */
+    public ItemApplication(OrganizationalUnit unit) {
 		this.unit = unit;
 	}
 
-	public ItemApplication(OrganizationalUnit unit, Item item, String category, int quantity) {
+    /**
+     * Instantiates a new Item application.
+     *
+     * @param unit     the unit
+     * @param item     the item
+     * @param category the category
+     * @param quantity the quantity
+     */
+    public ItemApplication(OrganizationalUnit unit, Item item, String category, int quantity) {
 		this.unit = unit;
 		this.item = item;
 		this.category = category;
 		this.quantity = quantity;
 	}
 
-	public ItemApplication(ItemApplication other) {
+    /**
+     * Instantiates a new Item application.
+     *
+     * @param other the other
+     */
+    public ItemApplication(ItemApplication other) {
 		this.unit = other.unit;
 		this.item = other.item;
 		this.category = other.category;
 		this.quantity = other.quantity;
 	}
 
-	public OrganizationalUnit getUnit() {
+    /**
+     * Gets unit.
+     *
+     * @return the unit
+     */
+    public OrganizationalUnit getUnit() {
 		return unit;
 	}
 
-	public void setUnit(OrganizationalUnit unit) {
+    /**
+     * Sets unit.
+     *
+     * @param unit the unit
+     */
+    public void setUnit(OrganizationalUnit unit) {
 		this.unit = unit;
 	}
 
-	public Item getItem() {
+    /**
+     * Gets item.
+     *
+     * @return the item
+     */
+    public Item getItem() {
 		return item;
 	}
 
-	public void setItem(Item item) {
+    /**
+     * Sets item.
+     *
+     * @param item the item
+     */
+    public void setItem(Item item) {
 		this.item = item;
 	}
 
-	public String getCategory() {
+    /**
+     * Gets category.
+     *
+     * @return the category
+     */
+    public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+    /**
+     * Sets category.
+     *
+     * @param category the category
+     */
+    public void setCategory(String category) {
 		this.category = category;
 	}
 
-	public int getQuantity() {
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	public boolean isValid() {
+    /**
+     * Is valid boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isValid() {
 		if (getUnit() == null) {
 			return false;
 		}
@@ -75,8 +141,14 @@ public class ItemApplication {
 		
 		return true;
 	}
-	
-	public boolean isEqual(ItemApplication other) {
+
+    /**
+     * Is equal boolean.
+     *
+     * @param other the other
+     * @return the boolean
+     */
+    public boolean isEqual(ItemApplication other) {
 		if (!this.unit.equals(other.unit)) {
 			return false;
 		}

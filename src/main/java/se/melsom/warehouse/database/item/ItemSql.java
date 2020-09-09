@@ -11,8 +11,19 @@ import com.healthmarketscience.sqlbuilder.OrderObject.Dir;
 
 import se.melsom.warehouse.database.WarehouseSchema;
 
+/**
+ * The Item sql (select, insert, update, delete).
+ */
 public class ItemSql {
-	public static String select(Connection connection, String designatedAs, String withName) {
+    /**
+     * Select string.
+     *
+     * @param connection   the connection
+     * @param designatedAs the designated as
+     * @param withName     the with name
+     * @return the string
+     */
+    public static String select(Connection connection, String designatedAs, String withName) {
 		SelectQuery query = new SelectQuery();
 
 		query.addAllTableColumns(WarehouseSchema.items);
@@ -33,7 +44,14 @@ public class ItemSql {
 		return query.toString();
 	}
 
-	public static String insert(Connection connection, ItemDAO dao) {
+    /**
+     * Insert string.
+     *
+     * @param connection the connection
+     * @param dao        the dao
+     * @return the string
+     */
+    public static String insert(Connection connection, ItemDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.items);		
 		
 		query.addColumn(WarehouseSchema.items_id, dao.getId());
@@ -47,7 +65,14 @@ public class ItemSql {
 		return query.toString();
 	}
 
-	public static String update(Connection connection, ItemDAO dao) {
+    /**
+     * Update string.
+     *
+     * @param connection the connection
+     * @param dao        the dao
+     * @return the string
+     */
+    public static String update(Connection connection, ItemDAO dao) {
 		UpdateQuery query = new UpdateQuery(WarehouseSchema.items);
 		
 		query.addSetClause(WarehouseSchema.items_number, dao.getNumber());
@@ -62,7 +87,14 @@ public class ItemSql {
 		return query.toString();
 	}
 
-	public static String delete(Connection connection, ItemDAO dao) {
+    /**
+     * Delete string.
+     *
+     * @param connection the connection
+     * @param dao        the dao
+     * @return the string
+     */
+    public static String delete(Connection connection, ItemDAO dao) {
 		DeleteQuery query = new DeleteQuery(WarehouseSchema.items);
 		
 		query.addCondition(BinaryCondition.equalTo(WarehouseSchema.items_id, dao.getId()));

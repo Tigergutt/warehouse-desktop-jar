@@ -4,19 +4,35 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The type Model event broker.
+ */
 public class ModelEventBroker {
 	private Logger logger = Logger.getLogger(this.getClass());
 	private Vector<ModelEventListener> listeners = new Vector<>();
-	
-	public ModelEventBroker() {
+
+    /**
+     * Instantiates a new Model event broker.
+     */
+    public ModelEventBroker() {
 	}
-	
-	public void addListener(ModelEventListener listener) {	
+
+    /**
+     * Add listener.
+     *
+     * @param listener the listener
+     */
+    public void addListener(ModelEventListener listener) {	
 		logger.debug("Add listener: " + listener);
 		listeners.addElement(listener);
 	}
-	
-	public void send(ModelEvent event) {
+
+    /**
+     * Send.
+     *
+     * @param event the event
+     */
+    public void send(ModelEvent event) {
 		logger.debug("Distribute event: " + event);
 		Vector<ModelEventListener> listerVector = new Vector<>(listeners);
 		
@@ -27,11 +43,19 @@ public class ModelEventBroker {
 		}
 	}
 
-	public void removeListener(ModelEventListener listener) {		
+    /**
+     * Remove listener.
+     *
+     * @param listener the listener
+     */
+    public void removeListener(ModelEventListener listener) {		
 		listeners.removeElement(listener);
 	}
-	
-	public void clear() {
+
+    /**
+     * Clear.
+     */
+    public void clear() {
 		listeners.clear();
 	}
 }

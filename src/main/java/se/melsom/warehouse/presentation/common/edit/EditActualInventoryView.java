@@ -21,6 +21,9 @@ import org.apache.log4j.Logger;
 
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The type Edit actual inventory view.
+ */
 @SuppressWarnings("serial")
 public class EditActualInventoryView extends JDialog {
 	private static Logger logger = Logger.getLogger(EditActualInventoryView.class);
@@ -36,7 +39,12 @@ public class EditActualInventoryView extends JDialog {
 	private JTextField quantityField;
 	private JLabel quantityLabel;
 
-	public EditActualInventoryView(JFrame parent) {
+    /**
+     * Instantiates a new Edit actual inventory view.
+     *
+     * @param parent the parent
+     */
+    public EditActualInventoryView(JFrame parent) {
 		super(parent, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Redigera individ");
@@ -177,30 +185,56 @@ public class EditActualInventoryView extends JDialog {
 	}
 
 
-	/*
+    /**
+     * Sets item number.
+     *
+     * @param itemNumber the item number
+     */
+    /*
 	 * Item fields
 	 */
 	public void setItemNumber(String itemNumber) {
 		itemNumberField.setText(itemNumber);
 	}
 
-	public void setItemName(String itemName) {
+    /**
+     * Sets item name.
+     *
+     * @param itemName the item name
+     */
+    public void setItemName(String itemName) {
 		itemNameField.setText(itemName);
 	}
 
-	public void setItemSelectorListener(String actionCommand, ActionListener actionListener) {
+    /**
+     * Sets item selector listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setItemSelectorListener(String actionCommand, ActionListener actionListener) {
 		selectItemButton.setActionCommand(actionCommand);
 		selectItemButton.addActionListener(actionListener);
 	}
 
-	/*
+    /**
+     * Gets location section.
+     *
+     * @return the location section
+     */
+    /*
 	 * Location fields
 	 */
 	public String getLocationSection() {
 		return (String) locationSectionField.getSelectedItem();
 	}
 
-	public void setSectionSelectorItems(Set<String> locationSections) {
+    /**
+     * Sets section selector items.
+     *
+     * @param locationSections the location sections
+     */
+    public void setSectionSelectorItems(Set<String> locationSections) {
 		locationSectionField.removeAllItems();
 		
 		for (String item : locationSections) {
@@ -208,25 +242,52 @@ public class EditActualInventoryView extends JDialog {
 		}
 	}
 
-	public void setLocationSectionFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets location section field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setLocationSectionFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		locationSectionField.setActionCommand(actionCommand);
 		locationSectionField.addActionListener(actionListener);
 		locationSectionField.addFocusListener(focusListener);
 	}
 
-	public String getLocationSlot() {
+    /**
+     * Gets location slot.
+     *
+     * @return the location slot
+     */
+    public String getLocationSlot() {
 		return (String) locationSlotField.getSelectedItem();
 	}
-	
-	public void setSelectedLocationSection(String section) {
+
+    /**
+     * Sets selected location section.
+     *
+     * @param section the section
+     */
+    public void setSelectedLocationSection(String section) {
 		locationSectionField.setSelectedItem(section);
 	}
 
-	public void setSelectedLocationSlot(String meterCount) {
+    /**
+     * Sets selected location slot.
+     *
+     * @param meterCount the meter count
+     */
+    public void setSelectedLocationSlot(String meterCount) {
 		locationSlotField.setSelectedItem(meterCount);
 	}
 
-	public void setSlotSelectorItems(Set<String> locationSlots) {
+    /**
+     * Sets slot selector items.
+     *
+     * @param locationSlots the location slots
+     */
+    public void setSlotSelectorItems(Set<String> locationSlots) {
 		locationSlotField.removeAllItems();
 		
 		for (String item : locationSlots) {
@@ -234,30 +295,59 @@ public class EditActualInventoryView extends JDialog {
 		}
 	}
 
-	public void setLocationSlotFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets location slot field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setLocationSlotFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		locationSlotField.setActionCommand(actionCommand);
 		locationSlotField.addActionListener(actionListener);
 		locationSlotField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    /*
 	 * Identity fields
 	 */
 	public String getIdentity() {
 		return identityField.getText();
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		identityField.setText(identity);
 	}
 
-	public void setIdentityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets identity field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setIdentityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		identityField.setActionCommand(actionCommand);
 		identityField.addActionListener(actionListener);
 		identityField.addFocusListener(focusListener);
 	}
-	
-	/*
+
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    /*
 	 * Quantity field
 	 */
 	public int getQuantity() {
@@ -274,28 +364,58 @@ public class EditActualInventoryView extends JDialog {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		quantityField.setText("" + quantity);
 	}
 
-	public void setQuantityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets quantity field listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setQuantityFieldListener(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		quantityField.setActionCommand(actionCommand);
 		quantityField.addActionListener(actionListener);
 		quantityField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Sets save button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+    /*
 	 * Buttons
 	 */
 	public void setSaveButtonEnabled(boolean isEnabled) {
 		saveButton.setEnabled(isEnabled);
 	}
-	
-	public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets cancel button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
 		cancelButton.setActionCommand(actionCommand);
 		cancelButton.addActionListener(actionListener);
 	}
-	public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets save button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
 		saveButton.setActionCommand(actionCommand);
 		saveButton.addActionListener(actionListener);
 	}

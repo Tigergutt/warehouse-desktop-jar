@@ -8,7 +8,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
- 
+
+/**
+ * The type Table header renderer.
+ */
 @SuppressWarnings("serial")
 public class TableHeaderRenderer extends JLabel implements TableCellRenderer {
 	private Font defaultFont;
@@ -16,7 +19,13 @@ public class TableHeaderRenderer extends JLabel implements TableCellRenderer {
 	private Font activeFont;
 	private boolean[] columnStatus;
 	private int activeColumn = 0;
-	
+
+    /**
+     * Instantiates a new Table header renderer.
+     *
+     * @param font         the font
+     * @param columnStatus the column status
+     */
     public TableHeaderRenderer(Font font, boolean[] columnStatus) {
     	this.columnStatus = columnStatus;
     	defaultFont = font;
@@ -24,11 +33,21 @@ public class TableHeaderRenderer extends JLabel implements TableCellRenderer {
     	activeFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
     	setOpaque(true);
     }
-    
+
+    /**
+     * Gets active column.
+     *
+     * @return the active column
+     */
     public int getActiveColumn() {
     	return activeColumn;
     }
-    
+
+    /**
+     * Sets active column.
+     *
+     * @param columnIndex the column index
+     */
     public void setActiveColumn(int columnIndex) {
     	if (columnStatus[columnIndex]) {
     		activeColumn = columnIndex;

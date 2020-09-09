@@ -15,6 +15,9 @@ import javax.swing.JCheckBox;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Stock on hand view.
+ */
 @SuppressWarnings("serial")
 public class StockOnHandView extends JInternalFrame {
 	private JCheckBox shortfallCheckBox;
@@ -22,7 +25,13 @@ public class StockOnHandView extends JInternalFrame {
 	private JCheckBox overplusCheckBox;
 	private SortedTable stockOnHandtTable;
 
-	public StockOnHandView(StockOnHandController controller, SortedTableModel tableModel) {
+    /**
+     * Instantiates a new Stock on hand view.
+     *
+     * @param controller the controller
+     * @param tableModel the table model
+     */
+    public StockOnHandView(StockOnHandController controller, SortedTableModel tableModel) {
 		addComponentListener(controller);
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -52,55 +61,109 @@ public class StockOnHandView extends JInternalFrame {
 		stockOnHandtTable = new SortedTable(tableModel);
 		scrollPane.setViewportView(stockOnHandtTable);
 	}
-	
-	public void setCellRenderer(int columnIndex, TableCellRenderer renderer) {
+
+    /**
+     * Sets cell renderer.
+     *
+     * @param columnIndex the column index
+     * @param renderer    the renderer
+     */
+    public void setCellRenderer(int columnIndex, TableCellRenderer renderer) {
 		stockOnHandtTable.addCellRenderer(columnIndex, renderer);
 	}
-	
-	/*
+
+    /**
+     * Gets filter shortfall checked.
+     *
+     * @return the filter shortfall checked
+     */
+    /*
 	 * Shortfall filter check box
 	 */
 	public boolean getFilterShortfallChecked() {
 		return shortfallCheckBox.isSelected();
 	}
-	
-	public void setFilterShortfallChecked(boolean checked) {
+
+    /**
+     * Sets filter shortfall checked.
+     *
+     * @param checked the checked
+     */
+    public void setFilterShortfallChecked(boolean checked) {
 		shortfallCheckBox.setSelected(checked);
 	}
-	
-	public void setFilterShortfallAction(String name, ActionListener listener) {
+
+    /**
+     * Sets filter shortfall action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setFilterShortfallAction(String name, ActionListener listener) {
 		shortfallCheckBox.setActionCommand(name);
 		shortfallCheckBox.addActionListener(listener);
 	}
 
-	/*
+    /**
+     * Gets filter balances checked.
+     *
+     * @return the filter balances checked
+     */
+    /*
 	 * Balances filter check box
 	 */
 	public boolean getFilterBalancesChecked() {
 		return balancesCheckBox.isSelected();
 	}
-	
-	public void setFilterBalancesChecked(boolean checked) {
+
+    /**
+     * Sets filter balances checked.
+     *
+     * @param checked the checked
+     */
+    public void setFilterBalancesChecked(boolean checked) {
 		balancesCheckBox.setSelected(checked);
 	}
 
-	public void setFilterBalancesAction(String name, ActionListener listener) {
+    /**
+     * Sets filter balances action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setFilterBalancesAction(String name, ActionListener listener) {
 		balancesCheckBox.setActionCommand(name);
 		balancesCheckBox.addActionListener(listener);
 	}
 
-	/*
+    /**
+     * Gets filter overplus checked.
+     *
+     * @return the filter overplus checked
+     */
+    /*
 	 * Overplus filter check box
 	 */
 	public boolean getFilterOverplusChecked() {
 		return overplusCheckBox.isSelected();
 	}
-	
-	public void setFilterOverplusChecked(boolean checked) {
+
+    /**
+     * Sets filter overplus checked.
+     *
+     * @param checked the checked
+     */
+    public void setFilterOverplusChecked(boolean checked) {
 		overplusCheckBox.setSelected(checked);
 	}
 
-	public void setFilterOverplusAction(String name, ActionListener listener) {
+    /**
+     * Sets filter overplus action.
+     *
+     * @param name     the name
+     * @param listener the listener
+     */
+    public void setFilterOverplusAction(String name, ActionListener listener) {
 		overplusCheckBox.setActionCommand(name);
 		overplusCheckBox.addActionListener(listener);
 	}

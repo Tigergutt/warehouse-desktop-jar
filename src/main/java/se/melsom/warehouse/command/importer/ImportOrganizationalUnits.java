@@ -13,11 +13,19 @@ import se.melsom.warehouse.presentation.importer.ImportWizardController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.Property;
 
+/**
+ * The Import organizational units command.
+ */
 public class ImportOrganizationalUnits extends Command {
 	private static Logger logger = Logger.getLogger(ImportOrganizationalUnits.class);
 	private ApplicationController controller;
-	
-	public ImportOrganizationalUnits(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Import organizational units.
+     *
+     * @param controller the controller
+     */
+    public ImportOrganizationalUnits(ApplicationController controller) {
 		this.controller = controller;
 	}
 

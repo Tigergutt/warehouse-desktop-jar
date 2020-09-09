@@ -11,8 +11,19 @@ import com.healthmarketscience.sqlbuilder.UpdateQuery;
 import se.melsom.warehouse.database.WarehouseSchema;
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The Actual inventory sql (select, update, insert, and delete).
+ */
 public class ActualInventorySql {
-	public static String select(int ofItemId, int atLocationId, String withIdentity) {
+    /**
+     * Select string.
+     *
+     * @param ofItemId     the of item id
+     * @param atLocationId the at location id
+     * @param withIdentity the with identity
+     * @return the string
+     */
+    public static String select(int ofItemId, int atLocationId, String withIdentity) {
 		SelectQuery query = createInventorySelect();
 		
 		if (ofItemId != EntityName.NULL_ID) {
@@ -31,8 +42,17 @@ public class ActualInventorySql {
 		
 		return query.toString();
 	}
-	
-	public static String select(String itemNumber, String itemName, String locationSection, String locationSlot) {
+
+    /**
+     * Select string.
+     *
+     * @param itemNumber      the item number
+     * @param itemName        the item name
+     * @param locationSection the location section
+     * @param locationSlot    the location slot
+     * @return the string
+     */
+    public static String select(String itemNumber, String itemName, String locationSection, String locationSlot) {
 		SelectQuery query = createInventorySelect();
 		
 		boolean isItemNumberDefined = itemNumber != null && itemNumber.length() > 0;
@@ -70,7 +90,13 @@ public class ActualInventorySql {
 		return query.toString();
 	}
 
-	public static String select(String wildcardKey) {
+    /**
+     * Select string.
+     *
+     * @param wildcardKey the wildcard key
+     * @return the string
+     */
+    public static String select(String wildcardKey) {
 		String sqlWildcardKey = wildcardKey.replace("*", "%");
 
 		SelectQuery query = createInventorySelect();
@@ -88,7 +114,13 @@ public class ActualInventorySql {
 		return query.toString();
 	}
 
-	public static String insert(ActualInventoryDAO dao) {
+    /**
+     * Insert string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String insert(ActualInventoryDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.actual_inventory);		
 		
 		query.addColumn(WarehouseSchema.actual_inventory_id, dao.getId());
@@ -106,8 +138,14 @@ public class ActualInventorySql {
 
 		return query.toString();
 	}
-	
-	public static String update(ActualInventoryDAO dao) {
+
+    /**
+     * Update string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String update(ActualInventoryDAO dao) {
 		UpdateQuery query = null;
 		
 		query = new UpdateQuery(WarehouseSchema.actual_inventory);
@@ -125,7 +163,13 @@ public class ActualInventorySql {
 		return query.toString();
 	}
 
-	public static String delete(ActualInventoryDAO dao) {
+    /**
+     * Delete string.
+     *
+     * @param dao the dao
+     * @return the string
+     */
+    public static String delete(ActualInventoryDAO dao) {
 		DeleteQuery query = null;
 
 		query = new DeleteQuery(WarehouseSchema.actual_inventory);	

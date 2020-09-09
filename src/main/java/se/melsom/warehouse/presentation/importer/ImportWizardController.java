@@ -28,6 +28,9 @@ import se.melsom.warehouse.presentation.ViewController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Import wizard controller.
+ */
 public class ImportWizardController extends ViewController {
 	private static Logger logger = Logger.getLogger(ImportWizardController.class);
 	
@@ -41,11 +44,22 @@ public class ImportWizardController extends ViewController {
 	private ImporterState state = ImporterState.PENDING;
 	private Importer importer = null;
 
-	public ImportWizardController(InventoryAccounting inventoryAccounting) {
+    /**
+     * Instantiates a new Import wizard controller.
+     *
+     * @param inventoryAccounting the inventory accounting
+     */
+    public ImportWizardController(InventoryAccounting inventoryAccounting) {
 		this.inventoryAccounting = inventoryAccounting;
 	}
 
-	public boolean importExcelFile(String path) {
+    /**
+     * Import excel file boolean.
+     *
+     * @param path the path
+     * @return the boolean
+     */
+    public boolean importExcelFile(String path) {
 		logger.debug("Load equipment type data from: '" + path + "'");
 		InputStream input = null;
 		try {
@@ -150,8 +164,14 @@ public class ImportWizardController extends ViewController {
 		
 		return true;
 	}
-	
-	public void showWizardView(ImportType type, JFrame parent) {
+
+    /**
+     * Show wizard view.
+     *
+     * @param type   the type
+     * @param parent the parent
+     */
+    public void showWizardView(ImportType type, JFrame parent) {
 		this.view = new ImportWizardView(this, parent, tableModel, new InputTableCellRenderer(tableModel));
 		
 		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());

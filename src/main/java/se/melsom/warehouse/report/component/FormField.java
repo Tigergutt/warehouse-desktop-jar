@@ -3,11 +3,23 @@ package se.melsom.warehouse.report.component;
 import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Position;
 
+/**
+ * The type Form field.
+ */
 public class FormField extends Frame {
 	private TextBox caption;
 	private TextBox value;
 
-	public FormField(float x, float y, float width, float captionHeight, float valueHeight) {
+    /**
+     * Instantiates a new Form field.
+     *
+     * @param x             the x
+     * @param y             the y
+     * @param width         the width
+     * @param captionHeight the caption height
+     * @param valueHeight   the value height
+     */
+    public FormField(float x, float y, float width, float captionHeight, float valueHeight) {
 		super(x, y, width, captionHeight + valueHeight);
 		
 		caption = new TextBox(x, y, width, captionHeight);
@@ -25,26 +37,57 @@ public class FormField extends Frame {
 		addComponent(value);
 	}
 
-	public TextBox getCaption() {
+    /**
+     * Gets caption.
+     *
+     * @return the caption
+     */
+    public TextBox getCaption() {
 		return caption;
 	}
-	public void setCaptionText(String text) {
+
+    /**
+     * Sets caption text.
+     *
+     * @param text the text
+     */
+    public void setCaptionText(String text) {
 		caption.setText(text);
 	}
 
-	public void setCaptionAlignment(Alignment alignment) {
+    /**
+     * Sets caption alignment.
+     *
+     * @param alignment the alignment
+     */
+    public void setCaptionAlignment(Alignment alignment) {
 		caption.setAlignment(alignment);
 	}
 
-	public TextBox getValue() {
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
+    public TextBox getValue() {
 		return value;
 	}
-	
-	public void setValueText(String text) {
+
+    /**
+     * Sets value text.
+     *
+     * @param text the text
+     */
+    public void setValueText(String text) {
 		value.setText(text);
 	}
 
-	public void setValueAlignment(Alignment alignment) {
+    /**
+     * Sets value alignment.
+     *
+     * @param alignment the alignment
+     */
+    public void setValueAlignment(Alignment alignment) {
 		value.setAlignment(alignment);
 	}
 }

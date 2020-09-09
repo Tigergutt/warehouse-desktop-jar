@@ -6,6 +6,9 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Inset;
 import se.melsom.warehouse.report.component.property.Position;
 
+/**
+ * The type Component.
+ */
 public abstract class Component {
 	private Vector<Component> components = new Vector<>();
 	private Inset[] insets = { null, null, null, null};
@@ -14,79 +17,169 @@ public abstract class Component {
 	private float y;
 	private float width;
 	private float height;
-	
-	public Component(float x, float y, float width, float height) {
+
+    /**
+     * Instantiates a new Component.
+     *
+     * @param x      the x
+     * @param y      the y
+     * @param width  the width
+     * @param height the height
+     */
+    public Component(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 	}
-	
-	public Vector<Component> getComponents() {
+
+    /**
+     * Gets components.
+     *
+     * @return the components
+     */
+    public Vector<Component> getComponents() {
 		return components;
 	}
-	
-	public void addComponent(Component component) {
+
+    /**
+     * Add component.
+     *
+     * @param component the component
+     */
+    public void addComponent(Component component) {
 //		component.setX(this.getX() + component.getX());
 //		component.setY(this.getY() + component.getY());
 		components.addElement(component);
 	}
 
-	public void setInsets(float width) {
+    /**
+     * Sets insets.
+     *
+     * @param width the width
+     */
+    public void setInsets(float width) {
 		setInsets(width, Position.TOP, Position.RIGHT, Position.BOTTOM, Position.LEFT);
 	}
-	
-	public Inset[] getInsets() {
+
+    /**
+     * Get insets inset [ ].
+     *
+     * @return the inset [ ]
+     */
+    public Inset[] getInsets() {
 		return insets;
 	}
-	
-	public Inset getInset(Position position) {
+
+    /**
+     * Gets inset.
+     *
+     * @param position the position
+     * @return the inset
+     */
+    public Inset getInset(Position position) {
 		return insets[position.ordinal()];
 	}
-	
-	public void setInsets(float width, Position... positions) {
+
+    /**
+     * Sets insets.
+     *
+     * @param width     the width
+     * @param positions the positions
+     */
+    public void setInsets(float width, Position... positions) {
 		for (Position position : positions) {
 			insets[position.ordinal()] = new Inset(width, position);
 		}
 	}
-	
-	public Alignment getAlignment() {
+
+    /**
+     * Gets alignment.
+     *
+     * @return the alignment
+     */
+    public Alignment getAlignment() {
 		return alignment;
 	}
 
-	public void setAlignment(Alignment alignment) {
+    /**
+     * Sets alignment.
+     *
+     * @param alignment the alignment
+     */
+    public void setAlignment(Alignment alignment) {
 		this.alignment = alignment;
 	}
 
-	public float getX() {
+    /**
+     * Gets x.
+     *
+     * @return the x
+     */
+    public float getX() {
 		return x;
 	}
 
-	public void setX(float x) {
+    /**
+     * Sets x.
+     *
+     * @param x the x
+     */
+    public void setX(float x) {
 		this.x = x;
 	}
 
-	public float getY() {
+    /**
+     * Gets y.
+     *
+     * @return the y
+     */
+    public float getY() {
 		return y;
 	}
 
-	public void setY(float y) {
+    /**
+     * Sets y.
+     *
+     * @param y the y
+     */
+    public void setY(float y) {
 		this.y = y;
 	}
 
-	public float getWidth() {
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
+    public float getWidth() {
 		return width;
 	}
 
-	public void setWidth(float width) {
+    /**
+     * Sets width.
+     *
+     * @param width the width
+     */
+    public void setWidth(float width) {
 		this.width = width;
 	}
 
-	public float getHeight() {
+    /**
+     * Gets height.
+     *
+     * @return the height
+     */
+    public float getHeight() {
 		return height;
 	}
 
-	public void setHeight(float height) {
+    /**
+     * Sets height.
+     *
+     * @param height the height
+     */
+    public void setHeight(float height) {
 		this.height = height;
 	}
 }

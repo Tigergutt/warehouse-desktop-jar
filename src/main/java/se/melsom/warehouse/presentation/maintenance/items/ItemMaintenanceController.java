@@ -28,14 +28,35 @@ import se.melsom.warehouse.presentation.common.edit.EditItemController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Item maintenance controller.
+ */
 public class ItemMaintenanceController extends ViewController implements ModelEventListener {
 	private static Logger logger = Logger.getLogger(ItemMaintenanceController.class);
-	public static final String GENERATE_REPORT_ACTION = "GenerateReport";
-	public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
-	public static final String SELECT_ITEM_ACTION = "SelectAction";
-	public static final String EDIT_ITEM_ACTION = "EditItem";
-	public static final String INSERT_ITEM_ACTION = "AddItem";
-	public static final String REMOVE_ITEM_ACTION = "DeleteItem";
+    /**
+     * The constant GENERATE_REPORT_ACTION.
+     */
+    public static final String GENERATE_REPORT_ACTION = "GenerateReport";
+    /**
+     * The constant EXTENDED_EDIT_ACTION.
+     */
+    public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
+    /**
+     * The constant SELECT_ITEM_ACTION.
+     */
+    public static final String SELECT_ITEM_ACTION = "SelectAction";
+    /**
+     * The constant EDIT_ITEM_ACTION.
+     */
+    public static final String EDIT_ITEM_ACTION = "EditItem";
+    /**
+     * The constant INSERT_ITEM_ACTION.
+     */
+    public static final String INSERT_ITEM_ACTION = "AddItem";
+    /**
+     * The constant REMOVE_ITEM_ACTION.
+     */
+    public static final String REMOVE_ITEM_ACTION = "DeleteItem";
 	
 	private ApplicationController controller;
 	private InventoryAccounting inventoryAccounting;
@@ -43,8 +64,13 @@ public class ItemMaintenanceController extends ViewController implements ModelEv
 	private ItemMaintenanceTableModel tableModel;
 	private ItemMaintenanceView view;
 	private Map<String, Command> actionCommands = new HashMap<>();
-	
-	public ItemMaintenanceController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Item maintenance controller.
+     *
+     * @param controller the controller
+     */
+    public ItemMaintenanceController(ApplicationController controller) {
 		logger.debug("Executing constructor.");
 		this.controller = controller;
 		this.inventoryAccounting = controller.getInventoryAccounting();
@@ -77,16 +103,31 @@ public class ItemMaintenanceController extends ViewController implements ModelEv
 		view.setRemoveButtonEnabled(false);
 		view.setRemoveButtonAction(REMOVE_ITEM_ACTION, this);
 	}
-	
-	public Vector<Item> getItems() {
+
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
+    public Vector<Item> getItems() {
 		return tableModel.getItems();
 	}
-	 	
-	public void setItems(Collection<Item> collection) {
+
+    /**
+     * Sets items.
+     *
+     * @param collection the collection
+     */
+    public void setItems(Collection<Item> collection) {
 		tableModel.setItems(collection);
 	}
-	 	
-	public JInternalFrame getInternalFrame() {
+
+    /**
+     * Gets internal frame.
+     *
+     * @return the internal frame
+     */
+    public JInternalFrame getInternalFrame() {
 		return view;
 	}
 
@@ -95,7 +136,10 @@ public class ItemMaintenanceController extends ViewController implements ModelEv
 		return view;
 	}
 
-	public void showView() {
+    /**
+     * Show view.
+     */
+    public void showView() {
 		logger.debug("showView()");
 		if (view.isVisible()) {
 			if (view.isIcon()) {
@@ -166,7 +210,13 @@ public class ItemMaintenanceController extends ViewController implements ModelEv
 		PersistentSettings.singleton().setWindowVisible(getWindowName(), false);	
 	}
 
-	public void addActionCommand(String action, Command command) {
+    /**
+     * Add action command.
+     *
+     * @param action  the action
+     * @param command the command
+     */
+    public void addActionCommand(String action, Command command) {
 		actionCommands.put(action, command);
 	} 
 	
@@ -294,7 +344,12 @@ public class ItemMaintenanceController extends ViewController implements ModelEv
 		logger.warn("Unknown action event=" + e);
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return ItemMaintenanceView.class.getSimpleName();
 	}
 

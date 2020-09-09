@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * The type Input table cell renderer.
+ */
 @SuppressWarnings("serial")
 public class InputTableCellRenderer extends JLabel implements TableCellRenderer {
 	private InputTableModel tableModel;
@@ -22,8 +25,13 @@ public class InputTableCellRenderer extends JLabel implements TableCellRenderer 
 	private Color warningForeground = new Color(1, 0, 0);
 	private Color errorBackground = new Color(235, 83, 43);
 	private Color errorForeground = new Color(1, 0, 0);
-	
-	public InputTableCellRenderer(InputTableModel tableModel) {
+
+    /**
+     * Instantiates a new Input table cell renderer.
+     *
+     * @param tableModel the table model
+     */
+    public InputTableCellRenderer(InputTableModel tableModel) {
 		this.tableModel = tableModel;
 		super.setOpaque(true);
 	}

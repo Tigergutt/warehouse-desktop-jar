@@ -1,67 +1,143 @@
 package se.melsom.warehouse.database.inventory;
 
+/**
+ * The type Stock location item.
+ */
 public class StockLocationItem {
 	private String section;
 	private String slot;
 	private String number;
 	private String name;
-	int quantity;
+    /**
+     * The Quantity.
+     */
+    int quantity;
 	private String identity;
 	private String date;
 
-	public String getSection() {
+    /**
+     * Gets section.
+     *
+     * @return the section
+     */
+    public String getSection() {
 		return section;
 	}
 
-	public void setSection(String section) {
+    /**
+     * Sets section.
+     *
+     * @param section the section
+     */
+    public void setSection(String section) {
 		this.section = section;
 	}
 
-	public String getSlot() {
+    /**
+     * Gets slot.
+     *
+     * @return the slot
+     */
+    public String getSlot() {
 		return slot;
 	}
 
-	public void setSlot(String slot) {
+    /**
+     * Sets slot.
+     *
+     * @param slot the slot
+     */
+    public void setSlot(String slot) {
 		this.slot = slot;
 	}
 
-	public String getNumber() {
+    /**
+     * Gets number.
+     *
+     * @return the number
+     */
+    public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(String number) {
+    /**
+     * Sets number.
+     *
+     * @param number the number
+     */
+    public void setNumber(String number) {
 		this.number = number;
 	}
 
-	public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getQuantity() {
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	public String getIdentity() {
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
-	
-	public String getDate() {
+
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
+    public String getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
+    public void setDate(String date) {
 		this.date = date;
 	}
 	

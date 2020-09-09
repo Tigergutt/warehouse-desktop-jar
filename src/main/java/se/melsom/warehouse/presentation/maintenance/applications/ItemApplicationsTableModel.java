@@ -8,67 +8,113 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.ItemApplication;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Item applications table model.
+ */
 @SuppressWarnings("serial")
 public class ItemApplicationsTableModel extends SortedTableModel {
 	private static Logger logger = Logger.getLogger(ItemApplicationsTableModel.class);
 	private Vector<ItemApplication> instances = new Vector<>();
-	
-	public static final String[] columnNames = { 
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { 
 			"Kategori",
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME,
 			EntityName.INVENTORY_NOMINAL_QUANTIY
 	};
-	
-	public static final int[] columnWidts = { 
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 
 			70,
 			120, 
 			230, 
 			75
 	};
-	
-	public static final Class<?>[] columnClass = {
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class, 
 			Integer.class
 	};
 
-	public static final boolean[] isSortableArray = { true, true, true, false };
-	
+    /**
+     * The constant isSortableArray.
+     */
+    public static final boolean[] isSortableArray = { true, true, true, false };
 
-	public ItemApplicationsTableModel() {
+
+    /**
+     * Instantiates a new Item applications table model.
+     */
+    public ItemApplicationsTableModel() {
 		if (columnNames.length != columnWidts.length || columnNames.length != columnClass.length) {
 			logger.warn("Array dimension mismatch.");
 		}
 	}
-	
-	public Vector<ItemApplication> getItems() {
+
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
+    public Vector<ItemApplication> getItems() {
 		return instances;
 	}
-	
-	public void insertItem(ItemApplication itemApplication, int atIndex) {
+
+    /**
+     * Insert item.
+     *
+     * @param itemApplication the item application
+     * @param atIndex         the at index
+     */
+    public void insertItem(ItemApplication itemApplication, int atIndex) {
 		instances.insertElementAt(itemApplication, atIndex);
 		fireTableRowsInserted(atIndex, atIndex);
 	}
-	
-	public ItemApplication removeItem(int atIndex) {
+
+    /**
+     * Remove item item application.
+     *
+     * @param atIndex the at index
+     * @return the item application
+     */
+    public ItemApplication removeItem(int atIndex) {
 		ItemApplication item = instances.remove(atIndex);
 
 		fireTableRowsDeleted(atIndex, atIndex);
 
 		return item;
 	}
-	
-	public void setItems(Vector<ItemApplication> collection) {
+
+    /**
+     * Sets items.
+     *
+     * @param collection the collection
+     */
+    public void setItems(Vector<ItemApplication> collection) {
 		logger.debug("Product list updated");
 		instances.clear();
 		instances.addAll(collection);
 		fireTableDataChanged();
 	}
-	
 
-	public int getIndex(ItemApplication ofApplication) {
+
+    /**
+     * Gets index.
+     *
+     * @param ofApplication the of application
+     * @return the index
+     */
+    public int getIndex(ItemApplication ofApplication) {
 		for (int index = 0; index < instances.size(); index++) {
 			ItemApplication application = instances.get(index);
 			

@@ -1,13 +1,26 @@
 package se.melsom.warehouse.event;
 
+/**
+ * The type Model event.
+ */
 public class ModelEvent {
 	private EventType type;
-	
-	public ModelEvent(EventType type) {
+
+    /**
+     * Instantiates a new Model event.
+     *
+     * @param type the type
+     */
+    public ModelEvent(EventType type) {
 		this.type = type;
 	}
-	
-	public EventType getType() {
+
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
+    public EventType getType() {
 		return type;
 	}
 	

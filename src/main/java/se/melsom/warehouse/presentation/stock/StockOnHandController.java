@@ -23,6 +23,9 @@ import se.melsom.warehouse.presentation.ViewController;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Stock on hand controller.
+ */
 public class StockOnHandController extends ViewController implements ModelEventListener, ActionListener {
 	private static Logger logger = Logger.getLogger(StockOnHandController.class);
 	private static final String SHORTFALL_ACTION_COMMAND = "SAC";
@@ -33,8 +36,13 @@ public class StockOnHandController extends ViewController implements ModelEventL
 	private Map<String, Command> actionCommands = new HashMap<>();
 	private StockOnHandView view;
 	private StockOnHandTableModel tableModel;
-	
-	public StockOnHandController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Stock on hand controller.
+     *
+     * @param controller the controller
+     */
+    public StockOnHandController(ApplicationController controller) {
 		this.controller = controller;
 
 		inventoryAccounting = controller.getInventoryAccounting();
@@ -60,8 +68,13 @@ public class StockOnHandController extends ViewController implements ModelEventL
 
 		controller.setStockOnHandViewMenuItemChecked(settings.isVisible());
 	}
-	
-	public JInternalFrame getInternalFrame() {
+
+    /**
+     * Gets internal frame.
+     *
+     * @return the internal frame
+     */
+    public JInternalFrame getInternalFrame() {
 		return view;
 	}
 
@@ -70,7 +83,10 @@ public class StockOnHandController extends ViewController implements ModelEventL
 		return view;
 	}
 
-	public void showView() {
+    /**
+     * Show view.
+     */
+    public void showView() {
 		logger.debug("showView()");
 		if (view.isVisible()) {
 			if (view.isIcon()) {
@@ -88,8 +104,11 @@ public class StockOnHandController extends ViewController implements ModelEventL
 			view.setVisible(true);
 		}
 	}
-	
-	public void compileStockOnHand() {
+
+    /**
+     * Compile stock on hand.
+     */
+    public void compileStockOnHand() {
 		Vector<StockOnHand> inventory = inventoryAccounting.getStockOnHandList();
 		
 		view.setTitle("Lagersaldo : antal artikelrader " + inventory.size() + ".");
@@ -149,11 +168,22 @@ public class StockOnHandController extends ViewController implements ModelEventL
 		PersistentSettings.singleton().setWindowVisible(getWindowName(), false);	
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return StockOnHandView.class.getSimpleName();
 	}
 
-	public void addActionCommand(String action, Command command) {
+    /**
+     * Add action command.
+     *
+     * @param action  the action
+     * @param command the command
+     */
+    public void addActionCommand(String action, Command command) {
 		actionCommands.put(action, command);
 	}
 	

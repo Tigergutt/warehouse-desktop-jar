@@ -2,55 +2,111 @@ package se.melsom.warehouse.database.application;
 
 import se.melsom.warehouse.model.entity.ItemApplication;
 
+/**
+ * The Item application data access object.
+ */
 public class ItemApplicationDAO {
 	private int unitId;
 	private int itemId;
 	private String category;
-	private int quantity; 
-	
-	public ItemApplicationDAO(int unitId, int itemId, String category, int quantity) {
+	private int quantity;
+
+    /**
+     * Instantiates a new Item application dao.
+     *
+     * @param unitId   the unit id
+     * @param itemId   the item id
+     * @param category the category
+     * @param quantity the quantity
+     */
+    public ItemApplicationDAO(int unitId, int itemId, String category, int quantity) {
 		this.unitId = unitId;
 		this.itemId = itemId;
 		this.category = category;
 		this.quantity = quantity;
 	}
 
-	public ItemApplicationDAO(ItemApplication anItemApplication) {
+    /**
+     * Instantiates a new Item application dao.
+     *
+     * @param anItemApplication the an item application
+     */
+    public ItemApplicationDAO(ItemApplication anItemApplication) {
 		this.unitId = anItemApplication.getUnit().getId();
 		this.itemId = anItemApplication.getItem().getId();
 		this.category = anItemApplication.getCategory();
 		this.quantity = anItemApplication.getQuantity();
 	}
 
-	public int getUnitId() {
+    /**
+     * Gets unit id.
+     *
+     * @return the unit id
+     */
+    public int getUnitId() {
 		return unitId;
 	}
 
-	public void setUnitId(int unitId) {
+    /**
+     * Sets unit id.
+     *
+     * @param unitId the unit id
+     */
+    public void setUnitId(int unitId) {
 		this.unitId = unitId;
 	}
 
-	public int getItemId() {
+    /**
+     * Gets item id.
+     *
+     * @return the item id
+     */
+    public int getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+    /**
+     * Sets item id.
+     *
+     * @param itemId the item id
+     */
+    public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 
-	public String getCategory() {
+    /**
+     * Gets category.
+     *
+     * @return the category
+     */
+    public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+    /**
+     * Sets category.
+     *
+     * @param category the category
+     */
+    public void setCategory(String category) {
 		this.category = category;
 	}
 
-	public int getQuantity() {
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
+    public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 	

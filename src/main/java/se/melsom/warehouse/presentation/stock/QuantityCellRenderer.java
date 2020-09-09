@@ -9,11 +9,19 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
- 
+
+/**
+ * The type Quantity cell renderer.
+ */
 @SuppressWarnings("serial")
 public class QuantityCellRenderer extends JLabel implements TableCellRenderer {
 	private StockOnHandTableModel tableModel;
-	
+
+    /**
+     * Instantiates a new Quantity cell renderer.
+     *
+     * @param tableModel the table model
+     */
     public QuantityCellRenderer(StockOnHandTableModel tableModel) {
     	this.tableModel = tableModel;
     	super.setOpaque(true);

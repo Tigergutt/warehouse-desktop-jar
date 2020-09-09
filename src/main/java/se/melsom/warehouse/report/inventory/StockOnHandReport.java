@@ -7,11 +7,20 @@ import org.apache.log4j.Logger;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 import se.melsom.warehouse.report.Report;
 
+/**
+ * The type Stock on hand report.
+ */
 public class StockOnHandReport extends Report {
 	private static Logger logger = Logger.getLogger(StockOnHandReport.class);
 	private static final String REPORT_NAME = "Inventeringsrutin";
 
-	public StockOnHandReport(Vector<String> heading, Vector<StockOnHand> data) {
+    /**
+     * Instantiates a new Stock on hand report.
+     *
+     * @param heading the heading
+     * @param data    the data
+     */
+    public StockOnHandReport(Vector<String> heading, Vector<StockOnHand> data) {
 		logger.debug("Generating report.");
 		for (int itemIndex = 0, rowIndex = 0; itemIndex < data.size(); itemIndex++) {
 			StockOnHand item = data.get(itemIndex);

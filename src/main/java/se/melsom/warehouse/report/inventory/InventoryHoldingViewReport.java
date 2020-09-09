@@ -8,12 +8,22 @@ import se.melsom.warehouse.model.entity.OrganizationalUnit;
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.report.Report;
 
+/**
+ * The type Inventory holding view report.
+ */
 public class InventoryHoldingViewReport extends Report {
 	private static Logger logger = Logger.getLogger(InventoryHoldingViewReport.class);
 	private static final String REPORT_NAME = "Materiellista";
 	private OrganizationalUnit unit;
 
-	public InventoryHoldingViewReport(OrganizationalUnit unit, Vector<ActualInventory> inventoryList, String... columnHeaders) {
+    /**
+     * Instantiates a new Inventory holding view report.
+     *
+     * @param unit          the unit
+     * @param inventoryList the inventory list
+     * @param columnHeaders the column headers
+     */
+    public InventoryHoldingViewReport(OrganizationalUnit unit, Vector<ActualInventory> inventoryList, String... columnHeaders) {
 		logger.debug("Generating report.");
 		this.unit = unit;
 		for (int itemIndex = 0, rowIndex = 0; itemIndex < inventoryList.size(); itemIndex++) {

@@ -19,6 +19,9 @@ import javax.swing.JTextField;
 
 import se.melsom.warehouse.model.EntityName;
 
+/**
+ * The type Edit item view.
+ */
 @SuppressWarnings("serial")
 public class EditItemView extends JDialog {
 	private JTextField itemNumberField;
@@ -27,7 +30,12 @@ public class EditItemView extends JDialog {
 	private JButton cancelButton;
 	private JButton saveButton;
 
-	public EditItemView(JFrame parent) {
+    /**
+     * Instantiates a new Edit item view.
+     *
+     * @param parent the parent
+     */
+    public EditItemView(JFrame parent) {
 		super(parent, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Redigera artikel");
@@ -111,58 +119,110 @@ public class EditItemView extends JDialog {
 		pack();
 	}
 
-	/*
+    /**
+     * Sets focus on item number.
+     */
+    /*
 	 * Item number field
 	 */
 	public void setFocusOnItemNumber() {
 		itemNumberField.requestFocus();
 	}
-	
-	public String getItemNumber() {
+
+    /**
+     * Gets item number.
+     *
+     * @return the item number
+     */
+    public String getItemNumber() {
 		return itemNumberField.getText();
 	}
 
-	public void setItemNumber(String itemNumber) {
+    /**
+     * Sets item number.
+     *
+     * @param itemNumber the item number
+     */
+    public void setItemNumber(String itemNumber) {
 		itemNumberField.setText(itemNumber);
 	}
 
-	public void setItemNumberAction(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets item number action.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setItemNumberAction(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		itemNumberField.setActionCommand(actionCommand);
 		itemNumberField.setName(actionCommand);
 		itemNumberField.addActionListener(actionListener);
 		itemNumberField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Gets item name.
+     *
+     * @return the item name
+     */
+    /*
 	 * Item name field
 	 */
 	public String getItemName() {
 		return itemNameField.getText();
 	}
 
-	public void setItemName(String itemName) {
+    /**
+     * Sets item name.
+     *
+     * @param itemName the item name
+     */
+    public void setItemName(String itemName) {
 		itemNameField.setText(itemName);
 	}
 
-	public void setItemNameAction(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
+    /**
+     * Sets item name action.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     * @param focusListener  the focus listener
+     */
+    public void setItemNameAction(String actionCommand, ActionListener actionListener, FocusListener focusListener) {
 		itemNameField.setActionCommand(actionCommand);
 		itemNameField.setName(actionCommand);
 		itemNameField.addActionListener(actionListener);
 		itemNameField.addFocusListener(focusListener);
 	}
 
-	/*
+    /**
+     * Gets packaging.
+     *
+     * @return the packaging
+     */
+    /*
 	 * Packaging fields
 	 */
 	public String getPackaging() {
 		return (String) packagingField.getSelectedItem();
 	}
 
-	public void setPackaging(String packaging) {
+    /**
+     * Sets packaging.
+     *
+     * @param packaging the packaging
+     */
+    public void setPackaging(String packaging) {
 		 packagingField.setSelectedItem(packaging);
 	}
 
-	public void setPackagingSelectorItems(Collection<String> packagingItemList) {
+    /**
+     * Sets packaging selector items.
+     *
+     * @param packagingItemList the packaging item list
+     */
+    public void setPackagingSelectorItems(Collection<String> packagingItemList) {
 		packagingField.removeAllItems();
 		
 		for (String item : packagingItemList) {
@@ -170,24 +230,47 @@ public class EditItemView extends JDialog {
 		}
 	}
 
-	public void setPackagingSelectorAction(String actionCommand, ActionListener actionListener) {
+    /**
+     * Sets packaging selector action.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setPackagingSelectorAction(String actionCommand, ActionListener actionListener) {
 		packagingField.setActionCommand(actionCommand);
 		packagingField.addActionListener(actionListener);
 	}
 
-	/*
+    /**
+     * Sets save button enabled.
+     *
+     * @param isEnabled the is enabled
+     */
+    /*
 	 * Buttons
 	 */
 	public void setSaveButtonEnabled(boolean isEnabled) {
 		saveButton.setEnabled(isEnabled);
 	}
-	
-	public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets cancel button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setCancelButtonListener(String actionCommand, ActionListener actionListener) {
 		cancelButton.setActionCommand(actionCommand);
 		cancelButton.addActionListener(actionListener);
 	}
-	
-	public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
+
+    /**
+     * Sets save button listener.
+     *
+     * @param actionCommand  the action command
+     * @param actionListener the action listener
+     */
+    public void setSaveButtonListener(String actionCommand, ActionListener actionListener) {
 		saveButton.setActionCommand(actionCommand);
 		saveButton.addActionListener(actionListener);
 	}

@@ -12,6 +12,9 @@ import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.report.inventory.StockOnHandPage;
 import se.melsom.warehouse.report.inventory.StockOnHandReport;
 
+/**
+ * The Generate stock on hand report command.
+ */
 public class GenerateStockOnHandReport  extends GenerateReportCommand  {
 	private static Logger logger = Logger.getLogger(GenerateStockOnHandReport.class);
 	private ApplicationController controller;
@@ -21,8 +24,13 @@ public class GenerateStockOnHandReport  extends GenerateReportCommand  {
 			EntityName.INVENTORY_NOMINAL_QUANTIY, EntityName.INVENTORY_ACTUAL_QUANTITY, EntityName.ITEM_PACKAGING, 
 			EntityName.INVENTORY_IDENTITY, EntityName.INVENTORY_ANNOTATION
 		};
-		
-	public GenerateStockOnHandReport(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Generate stock on hand report.
+     *
+     * @param controller the controller
+     */
+    public GenerateStockOnHandReport(ApplicationController controller) {
 		this.controller = controller;
 	}
 	

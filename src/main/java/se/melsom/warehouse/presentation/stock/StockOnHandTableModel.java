@@ -10,11 +10,17 @@ import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 import se.melsom.warehouse.presentation.common.table.SortedTableModel;
 
+/**
+ * The type Stock on hand table model.
+ */
 @SuppressWarnings("serial")
 public class StockOnHandTableModel extends SortedTableModel  {
 	private static Logger logger = Logger.getLogger(StockOnHandTableModel.class);
-	
-	public static final String[] columnNames = { 
+
+    /**
+     * The constant columnNames.
+     */
+    public static final String[] columnNames = { 
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME,
 			EntityName.ITEM_PACKAGING,
@@ -23,8 +29,11 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			EntityName.INVENTORY_IDENTITY,
 			EntityName.INVENTORY_ANNOTATION 
 	};
-	
-	public static final int[] columnWidts = { 
+
+    /**
+     * The constant columnWidts.
+     */
+    public static final int[] columnWidts = { 
 			120, 
 			230, 
 			50,
@@ -33,8 +42,11 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			100, 
 			300
 	};
-	
-	public static final boolean[] isSortableArray = { 
+
+    /**
+     * The constant isSortableArray.
+     */
+    public static final boolean[] isSortableArray = { 
 			true, 
 			true, 
 			false, 
@@ -42,8 +54,11 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			false,
 			true,
 			false};
-	
-	public static final Class<?>[] columnClass = {
+
+    /**
+     * The constant columnClass.
+     */
+    public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
 			String.class, 
@@ -52,8 +67,11 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			String.class,
 			String.class
 	};
-	
-	public StockOnHandTableModel() {
+
+    /**
+     * Instantiates a new Stock on hand table model.
+     */
+    public StockOnHandTableModel() {
 		if (columnNames.length != columnWidts.length || 
 				columnNames.length != columnClass.length ||
 				columnNames.length != isSortableArray.length) {
@@ -67,33 +85,58 @@ public class StockOnHandTableModel extends SortedTableModel  {
 	private boolean shouldFilterBalances = false;
 	private boolean shouldFilterOverplus = false;
 
-	public Vector<StockOnHand> getStockOnHand() {
+    /**
+     * Gets stock on hand.
+     *
+     * @return the stock on hand
+     */
+    public Vector<StockOnHand> getStockOnHand() {
 		return filteredList;
 	}
-	
-	public void setStockOnHand(Vector<StockOnHand> value) {
+
+    /**
+     * Sets stock on hand.
+     *
+     * @param value the value
+     */
+    public void setStockOnHand(Vector<StockOnHand> value) {
 		originalList = value;
 		filterStockOnHand(originalList, filteredList);
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();
 		logger.debug("Inventory updated.");
 	}
-	
-	public void setFilterShortfall(boolean shouldFilterShortfall) {
+
+    /**
+     * Sets filter shortfall.
+     *
+     * @param shouldFilterShortfall the should filter shortfall
+     */
+    public void setFilterShortfall(boolean shouldFilterShortfall) {
 		this.shouldFilterShortfall = shouldFilterShortfall;
 		filterStockOnHand(originalList, filteredList);
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();
 	}
 
-	public void setFilterBalances(boolean shouldFilterBalances) {
+    /**
+     * Sets filter balances.
+     *
+     * @param shouldFilterBalances the should filter balances
+     */
+    public void setFilterBalances(boolean shouldFilterBalances) {
 		this.shouldFilterBalances = shouldFilterBalances;
 		filterStockOnHand(originalList, filteredList);
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();
 	}
 
-	public void setFilterOverplus(boolean shouldFilterOverplus) {
+    /**
+     * Sets filter overplus.
+     *
+     * @param shouldFilterOverplus the should filter overplus
+     */
+    public void setFilterOverplus(boolean shouldFilterOverplus) {
 		this.shouldFilterOverplus = shouldFilterOverplus;
 		filterStockOnHand(originalList, filteredList);
 		orderByColumn(getActiveColumn());

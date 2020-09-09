@@ -15,13 +15,21 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
+/**
+ * The type Logger view.
+ */
 @SuppressWarnings("serial")
 public class LoggerView extends JInternalFrame {
 	private static Logger logger = Logger.getLogger(LoggerView.class);
 	private JTextArea textArea;
 	private JComboBox<String> logLevelSelector = null;
-	
-	public LoggerView(LoggerController controller) {
+
+    /**
+     * Instantiates a new Logger view.
+     *
+     * @param controller the controller
+     */
+    public LoggerView(LoggerController controller) {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		logger.debug("Create logger view.");
 		setClosable(true);
@@ -56,40 +64,78 @@ public class LoggerView extends JInternalFrame {
 		logger.debug("Finalize logger view.");
 		super.finalize();
 	}
-	
-	JTextArea getTextArea() {
+
+    /**
+     * Gets text area.
+     *
+     * @return the text area
+     */
+    JTextArea getTextArea() {
 		return textArea;
 	}
-	
-	String getSelectedLogLevel() {
+
+    /**
+     * Gets selected log level.
+     *
+     * @return the selected log level
+     */
+    String getSelectedLogLevel() {
 		return (String) logLevelSelector.getSelectedItem();
 	}
-	
-	void setSelectedLogLevel(int atIndex) {
+
+    /**
+     * Sets selected log level.
+     *
+     * @param atIndex the at index
+     */
+    void setSelectedLogLevel(int atIndex) {
 		logLevelSelector.setSelectedIndex(atIndex);;
 	}
-	
-	int getSelectedIndex() {
+
+    /**
+     * Gets selected index.
+     *
+     * @return the selected index
+     */
+    int getSelectedIndex() {
 		return logLevelSelector.getSelectedIndex();
 	}
-	
-	void setLogLevels(Vector<String> logLevels) {
+
+    /**
+     * Sets log levels.
+     *
+     * @param logLevels the log levels
+     */
+    void setLogLevels(Vector<String> logLevels) {
 		logLevelSelector.removeAllItems();
 		
 		for (String logLevel : logLevels) {
 			logLevelSelector.addItem(logLevel);
 		}
 	}
-	
-	void setLogLevelSelectAction(String name) {
+
+    /**
+     * Sets log level select action.
+     *
+     * @param name the name
+     */
+    void setLogLevelSelectAction(String name) {
 		logLevelSelector.setActionCommand(name);
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return LoggerView.class.getSimpleName();
 	}
 
-	public void clearLogView() {
+    /**
+     * Clear log view.
+     */
+    public void clearLogView() {
 		textArea.setText("");
 	}
 }

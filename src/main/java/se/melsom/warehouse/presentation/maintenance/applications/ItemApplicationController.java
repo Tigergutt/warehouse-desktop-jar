@@ -31,6 +31,9 @@ import se.melsom.warehouse.presentation.common.edit.EditItemApplicationControlle
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Item application controller.
+ */
 public class ItemApplicationController extends ViewController implements TableModelListener, TreeSelectionListener {
 	private static Logger logger = Logger.getLogger(ItemApplicationController.class);
 
@@ -49,40 +52,45 @@ public class ItemApplicationController extends ViewController implements TableMo
 	private MutableTreeNode rootNode;
 	private ItemApplicationsTableModel tableModel;
 	private ItemApplicationView view;
-	
-	public ItemApplicationController(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Item application controller.
+     *
+     * @param controller the controller
+     */
+    public ItemApplicationController(ApplicationController controller) {
 		logger.debug("Executing constructor.");
 		this.controller = controller;
-		
+
 		inventoryAccounting = controller.getInventoryAccounting();
-		
+
 		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());
-		
+
 		if (settings == null) {
 			settings = new WindowSettings(getWindowName(), 120, 93, 619, 260, false);
-			
+
 			PersistentSettings.singleton().addWindowSettings(settings);
 		}
 
 		rootNode = new DefaultMutableTreeNode();
 
 		UnitsMasterFile unitsMasterfile = inventoryAccounting.getUnitsMasterFile();
-		
+
 		for (OrganizationalUnit aUnit : unitsMasterfile.getUnits()) {
 			if (aUnit.getLevel() == 0) {
 				logger.debug("Root object=" + aUnit);
 				rootNode.setUserObject(aUnit);
-				
+
 				for (int subordinateIndex = 0; subordinateIndex < aUnit.getSubordinates().size(); subordinateIndex++) {
 					OrganizationalUnit subordinate = aUnit.getSubordinates().get(subordinateIndex);
 					DefaultMutableTreeNode subordinateNode = new DefaultMutableTreeNode(subordinate);
-					
+
 					rootNode.insert(subordinateNode, subordinateIndex);
-					
+
 					for (int subSubordinateIndex = 0; subSubordinateIndex < subordinate.getSubordinates().size(); subSubordinateIndex++) {
 						OrganizationalUnit subSubordinate = subordinate.getSubordinates().get(subSubordinateIndex);
 						DefaultMutableTreeNode subSubordinateNode = new DefaultMutableTreeNode(subSubordinate);
-						
+
 						subordinateNode.insert(subSubordinateNode, subSubordinateIndex);
 					}
 				}
@@ -92,9 +100,9 @@ public class ItemApplicationController extends ViewController implements TableMo
 
 		treeModel = new DefaultTreeModel(rootNode);
 		tableModel = new ItemApplicationsTableModel();
-		
+
 		tableModel.addTableModelListener(this);
-		
+
 		view = new ItemApplicationView(controller.getDesktopView(),this, treeModel, tableModel);
 		view.setBounds(settings.getX(), settings.getY(), settings.getWidth(), settings.getHeight());
 		view.setVisible(settings.isVisible());
@@ -109,7 +117,7 @@ public class ItemApplicationController extends ViewController implements TableMo
 		view.setEditButtonAction(EDIT_ACTION, this);
 		view.setRemoveButtonEnabled(false);
 		view.setRemoveButtonAction(REMOVE_ACTION, this);
-		
+
 		view.setVisible(true);
 	}
 
@@ -123,14 +131,14 @@ public class ItemApplicationController extends ViewController implements TableMo
 		if (e.getValueIsAdjusting()) {
 			return;
 		}
-		
+
 		checkEditButtons();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		logger.trace("Received action=" + e.getActionCommand() + ",source=" + e.getSource() + ",event=" + e);
-		
+
 		switch (e.getActionCommand()) {
 		case PACKING_SLIP_ACTION:
 			logger.warn("Packing Slip Action is not implemented.");
@@ -140,23 +148,23 @@ public class ItemApplicationController extends ViewController implements TableMo
 			checkEditButtons();
 			collectApplications();
 			return;
-			
+
 		case EDIT_ACTION: {
 			int rowIndex = view.getSelectedTableRow();
-			
+
 			if (view.getSelectedTableRow() < 0) {
 				return;
 			}
-			
+
 			ItemApplication application = tableModel.getItems().get(rowIndex);
 			ItemApplication original = new ItemApplication(application);
 			EditItemApplicationController applicationEditor = new EditItemApplicationController(inventoryAccounting, controller.getDesktopView());
 			ItemApplication edited = applicationEditor.editApplication(application);
-			
+
 			if (edited == null) {
 				return;
 			}
-			
+
 			if (original.equals(edited)) {
 				if (original.getQuantity() != edited.getQuantity()) {
 					inventoryAccounting.updateApplication(edited);
@@ -167,47 +175,47 @@ public class ItemApplicationController extends ViewController implements TableMo
 				inventoryAccounting.addApplication(edited);
 				tableModel.fireTableRowsUpdated(rowIndex, rowIndex);
 			}
-			
+
 			return;
 		}
-			
+
 		case INSERT_ACTION: {
 			OrganizationalUnit selectedUnit = getSelectedUnit();
-			
+
 			if (selectedUnit == null) {
 				return;
 			}
-			
+
 			ItemApplication application = new ItemApplication(selectedUnit);
 			EditItemApplicationController applicationEditor = new EditItemApplicationController(inventoryAccounting, controller.getDesktopView());
-			
+
 			application = applicationEditor.editApplication(application);
-			
+
 			if (application != null) {
 				inventoryAccounting.addApplication(application);
 				tableModel.insertItem(application, tableModel.getRowCount());
 			}
-			
+
 			return;
 		}
-			
+
 		case REMOVE_ACTION: {
 			int rowIndex = view.getSelectedTableRow();
-			
+
 			if (view.getSelectedTableRow() < 0) {
 				return;
 			}
-			
+
 			ItemApplication application = tableModel.removeItem(rowIndex);
-			
+
 			inventoryAccounting.removeApplication(application);
 			return;
 		}
-		
+
 		default:
 			break;
 		}
-		
+
 		logger.warn("Unknown action event=" + e);
 	}
 
@@ -216,9 +224,9 @@ public class ItemApplicationController extends ViewController implements TableMo
 		if (event.getSource() instanceof JDialog == false) {
 			return;
 		}
-		
+
 		JDialog frame = (JDialog) event.getSource();
-		PersistentSettings.singleton().setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());	
+		PersistentSettings.singleton().setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());
 	}
 
 	@Override
@@ -226,27 +234,32 @@ public class ItemApplicationController extends ViewController implements TableMo
 		if (event.getSource() instanceof JDialog == false) {
 			return;
 		}
-		
+
 		JDialog frame = (JDialog) event.getSource();
-		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
+		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return ItemApplicationView.class.getSimpleName();
 	}
-	
+
 	@Override
 	public JComponent getView() {
 		return null;
 	}
-	
+
 	private void collectApplications() {
 		OrganizationalUnit aUnit = getSelectedUnit();
-		
+
 		if (aUnit == null) {
 			return;
 		}
-		
+
 		logger.trace("Selected unit=" + aUnit);
 
 		if (view.isAccumulated()) {
@@ -255,22 +268,22 @@ public class ItemApplicationController extends ViewController implements TableMo
 				Item item = application.getItem();
 				String category = application.getCategory();
 				AccumulatedApplication accumulated = new AccumulatedApplication(item, category);
-				
+
 				accumulated.addApplication(application);
 				accumulatedApplications.put(item.getNumber(), accumulated);
 			}
-			
+
 			for (OrganizationalUnit subUnit : aUnit.getSubordinates()) {
 				for (ItemApplication application : inventoryAccounting.getItemApplications(subUnit, null)) {
 					Item item = application.getItem();
 					String category = application.getCategory();
-					
+
 					if (!accumulatedApplications.containsKey(item.getNumber())) {
 						AccumulatedApplication accumulated = new AccumulatedApplication(item, category);
-						
+
 						accumulatedApplications.put(item.getNumber(), accumulated);
 					}
-					
+
 					accumulatedApplications.get(item.getNumber()).addApplication(application);
 				}
 
@@ -278,18 +291,18 @@ public class ItemApplicationController extends ViewController implements TableMo
 					for (ItemApplication application : inventoryAccounting.getItemApplications(subSubUnit, null)) {
 						Item item = application.getItem();
 						String category = application.getCategory();
-						
+
 						if (!accumulatedApplications.containsKey(item.getNumber())) {
 							AccumulatedApplication accumulated = new AccumulatedApplication(item, category);
-							
+
 							accumulatedApplications.put(item.getNumber(), accumulated);
 						}
-						
+
 						accumulatedApplications.get(item.getNumber()).addApplication(application);
-					}				
+					}
 				}
 			}
-			
+
 			tableModel.setItems(new Vector<ItemApplication>(accumulatedApplications.values()));
 		} else {
 			tableModel.setItems(inventoryAccounting.getItemApplications(aUnit, null));
@@ -298,24 +311,24 @@ public class ItemApplicationController extends ViewController implements TableMo
 
 	private OrganizationalUnit getSelectedUnit() {
 		DefaultMutableTreeNode aNode = (DefaultMutableTreeNode) view.getSelectedTreeNode();
-		
+
 		if (aNode == null) {
 			return null;
 		}
-		
+
 		return (OrganizationalUnit) aNode.getUserObject();
 	}
-	
+
 	private void checkEditButtons() {
 		boolean isRowSelected = false;
 		boolean canEdit = !view.isAccumulated();
-		
+
 		int rowIndex = view.getSelectedTableRow();
 
 		if (rowIndex >= 0) {
 			isRowSelected = true;
 		}
-		
+
 		view.setRemoveButtonEnabled(isRowSelected && canEdit);
 		view.setEditButtonEnabled(isRowSelected && canEdit);
 		view.setInsertButtonEnabled(canEdit);

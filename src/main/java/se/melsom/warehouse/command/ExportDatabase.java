@@ -27,11 +27,19 @@ import se.melsom.warehouse.model.entity.StockLocation;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.Property;
 
+/**
+ * The Export database command.
+ */
 public class ExportDatabase extends Command {
 	private static Logger logger = Logger.getLogger(ExportDatabase.class);
 	private ApplicationController controller;
-	
-	public ExportDatabase(ApplicationController controller) {
+
+    /**
+     * Instantiates a new Export database.
+     *
+     * @param controller the controller
+     */
+    public ExportDatabase(ApplicationController controller) {
 		this.controller = controller;
 	}
 

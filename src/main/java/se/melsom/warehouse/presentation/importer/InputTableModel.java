@@ -5,28 +5,50 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 
+/**
+ * The type Input table model.
+ */
 @SuppressWarnings("serial")
 public class InputTableModel extends AbstractTableModel {
 	private Vector<String> columnNames = new Vector<>();
 	private Vector<Vector<ImportCell>> content = new Vector<>();
 
-	public InputTableModel() {
+    /**
+     * Instantiates a new Input table model.
+     */
+    public InputTableModel() {
 	}
 	
 //	@Override
 //	public Class<?> getColumnClass(int col) {
 //		return content.get(0).get(col).getClass();
 //	}
-	
-	public void addColumnName(String columnName) {
+
+    /**
+     * Add column name.
+     *
+     * @param columnName the column name
+     */
+    public void addColumnName(String columnName) {
 		columnNames.addElement(columnName);
 	}
 
-	public Vector<ImportCell> getRow(int rowIndex) {
+    /**
+     * Gets row.
+     *
+     * @param rowIndex the row index
+     * @return the row
+     */
+    public Vector<ImportCell> getRow(int rowIndex) {
 		return content.get(rowIndex);
 	}
-	
-	public void addRow(Vector<ImportCell> row) {
+
+    /**
+     * Add row.
+     *
+     * @param row the row
+     */
+    public void addRow(Vector<ImportCell> row) {
 		content.addElement(row);
 	}
 	

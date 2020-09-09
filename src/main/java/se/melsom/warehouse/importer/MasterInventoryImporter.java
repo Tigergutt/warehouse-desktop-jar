@@ -13,6 +13,9 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
+/**
+ * The type Master inventory importer.
+ */
 public class MasterInventoryImporter extends Importer {
 	private static Logger logger = Logger.getLogger(MasterInventoryImporter.class);
 	private Vector<Item> importedItems = new Vector<>();
@@ -25,9 +28,14 @@ public class MasterInventoryImporter extends Importer {
 	private int inventoryQuantityIndex = -1;
 	private int inventoryIdentityIndex = -1;
 	private int inventoryAnnotationIndex = -1;
-	
-	
-	public MasterInventoryImporter(InputTableModel tableModel) {
+
+
+    /**
+     * Instantiates a new Master inventory importer.
+     *
+     * @param tableModel the table model
+     */
+    public MasterInventoryImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
 

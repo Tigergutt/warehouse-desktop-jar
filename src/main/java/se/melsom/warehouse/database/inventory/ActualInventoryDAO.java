@@ -2,6 +2,9 @@ package se.melsom.warehouse.database.inventory;
 
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 
+/**
+ * The Actual inventory data access object.
+ */
 public class ActualInventoryDAO {
 	private int id;
 	private int itemId;
@@ -10,11 +13,19 @@ public class ActualInventoryDAO {
 	private String identity;
 	private String timestamp;
 	private String annotation;
-	
-	public ActualInventoryDAO() {
+
+    /**
+     * Instantiates a new Actual inventory dao.
+     */
+    public ActualInventoryDAO() {
 	}
-	
-	public ActualInventoryDAO(ActualInventory inventory) {
+
+    /**
+     * Instantiates a new Actual inventory dao.
+     *
+     * @param inventory the inventory
+     */
+    public ActualInventoryDAO(ActualInventory inventory) {
 		this.id = inventory.getId();
 		this.itemId = inventory.getItem().getId();
 		this.locationId = inventory.getLocation().getId();
@@ -23,60 +34,130 @@ public class ActualInventoryDAO {
 		this.timestamp = inventory.getTimestamp().length() > 0 ? inventory.getTimestamp() : null;
 		this.annotation = inventory.getAnnotation();
 	}
-		
-	public int getId() {
+
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
 
-	public int getItemId() {
+    /**
+     * Gets item id.
+     *
+     * @return the item id
+     */
+    public int getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+    /**
+     * Sets item id.
+     *
+     * @param itemId the item id
+     */
+    public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 
-	public int getLocationId() {
+    /**
+     * Gets location id.
+     *
+     * @return the location id
+     */
+    public int getLocationId() {
 		return locationId;
 	}
-	
-	public void setLocationId(int locationId) {
+
+    /**
+     * Sets location id.
+     *
+     * @param locationId the location id
+     */
+    public void setLocationId(int locationId) {
 		this.locationId = locationId;
 	}
 
-	public int getQuantity() {
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
+    public int getQuantity() {
 		return quantity;
 	}
-	
-	public void setQuantity(int value) {
+
+    /**
+     * Sets quantity.
+     *
+     * @param value the value
+     */
+    public void setQuantity(int value) {
 		quantity = value;
 	}
-	
-	public String getIdentity() {
+
+    /**
+     * Gets identity.
+     *
+     * @return the identity
+     */
+    public String getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(String identity) {
+    /**
+     * Sets identity.
+     *
+     * @param identity the identity
+     */
+    public void setIdentity(String identity) {
 		this.identity = identity;
 	}
-	
-	public String getTimestamp() {
+
+    /**
+     * Gets timestamp.
+     *
+     * @return the timestamp
+     */
+    public String getTimestamp() {
 		return timestamp;
 	}
-	
-	public void setTimestamp(String timestamp) {
+
+    /**
+     * Sets timestamp.
+     *
+     * @param timestamp the timestamp
+     */
+    public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public String getAnnotation() {
+    /**
+     * Gets annotation.
+     *
+     * @return the annotation
+     */
+    public String getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(String annotation) {
+    /**
+     * Sets annotation.
+     *
+     * @param annotation the annotation
+     */
+    public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
 

@@ -13,6 +13,9 @@ import se.melsom.warehouse.event.ModelEvent;
 import se.melsom.warehouse.event.ModelEventBroker;
 import se.melsom.warehouse.model.entity.Item;
 
+/**
+ * The type Item master file.
+ */
 public class ItemMasterFile {
 	private static Logger logger = Logger.getLogger(ItemMasterFile.class);
 	
@@ -20,20 +23,32 @@ public class ItemMasterFile {
 	private ModelEventBroker eventBroker;
 	private Map<Integer, Item> itemList = new HashMap<>();
 
-	public ItemMasterFile(WarehouseDatabase database, ModelEventBroker eventBroker) {
+    /**
+     * Instantiates a new Item master file.
+     *
+     * @param database    the database
+     * @param eventBroker the event broker
+     */
+    public ItemMasterFile(WarehouseDatabase database, ModelEventBroker eventBroker) {
 		this.database = database;
 		this.eventBroker = eventBroker;
 	}
-	
-	public int getNextItemId() {
+
+    /**
+     * Gets next item id.
+     *
+     * @return the next item id
+     */
+    public int getNextItemId() {
 		return itemList.size();
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Vector<Item> getItems() {
+
+    /**
+     * Gets items.
+     *
+     * @return items
+     */
+    public Vector<Item> getItems() {
 		Vector<Item> items = new Vector<>();
 		
 		items.addAll(itemList.values());
@@ -43,12 +58,13 @@ public class ItemMasterFile {
 		return items;
 	}
 
-	/**
-	 * 
-	 * @param withId
-	 * @return
-	 */
-	public Item getdItem(int withId) {
+    /**
+     * Gets item.
+     *
+     * @param withId the with id
+     * @return item
+     */
+    public Item getdItem(int withId) {
 		Item item = itemList.get(withId);
 		
 		if (item == null) {
@@ -57,13 +73,14 @@ public class ItemMasterFile {
 		
 		return item;
 	}
-	
-	/**
-	 * 
-	 * @param bySearchKey
-	 * @return
-	 */
-	public Vector<Item> getItems(String thatMatches) {
+
+    /**
+     * Gets items.
+     *
+     * @param thatMatches the that matches
+     * @return items
+     */
+    public Vector<Item> getItems(String thatMatches) {
 		Vector<Item> result = new Vector<>();
 		
 		for (Item item : itemList.values()) {
@@ -81,7 +98,13 @@ public class ItemMasterFile {
 		return result;
 	}
 
-	public Item getItem(String withNumber) {
+    /**
+     * Gets item.
+     *
+     * @param withNumber the with number
+     * @return the item
+     */
+    public Item getItem(String withNumber) {
 		for (Item item : itemList.values()) {
 			if (item.getNumber().equals(withNumber)) {
 				return item;
@@ -91,11 +114,13 @@ public class ItemMasterFile {
 		return null;
 	}
 
-	/**
-	 * 
-	 * @param newItem
-	 */
-	public boolean addItem(Item newItem) {
+    /**
+     * Add item boolean.
+     *
+     * @param newItem the new item
+     * @return the boolean
+     */
+    public boolean addItem(Item newItem) {
 		logger.trace("Add item=" + newItem);
 		if (getItem(newItem.getNumber()) != null) {
 			logger.error("Could not att duplicate Item=" + newItem);
@@ -106,34 +131,36 @@ public class ItemMasterFile {
 		notifyObservers(new ModelEvent(EventType.ITEM_LIST_MODIFIED));
 		return true;
 	}
-	
-	/**
-	 * 
-	 * @param anItem
-	 */
-	public void updateItem(Item anItem) {
+
+    /**
+     * Update item.
+     *
+     * @param anItem the an item
+     */
+    public void updateItem(Item anItem) {
 		logger.trace("Update article=" + anItem);
 		itemList.put(anItem.getId(), anItem);
 		database.updateItem(anItem);
 		notifyObservers(new ModelEvent(EventType.ITEM_LIST_MODIFIED));
 	}
 
-	/**
-	 * 
-	 * @param anItem
-	 */
-	public void removeItem(Item anItem) {
+    /**
+     * Remove item.
+     *
+     * @param anItem the an item
+     */
+    public void removeItem(Item anItem) {
 		logger.trace("Remove article=" + anItem);
 		
 		itemList.remove(anItem.getId());
 		database.deleteItem(anItem);
 		notifyObservers(new ModelEvent(EventType.ITEM_LIST_MODIFIED));
 	}
-	
-	/**
-	 * 
-	 */
-	void retreiveItemList() {
+
+    /**
+     * Retreive item list.
+     */
+    void retreiveItemList() {
 		itemList.clear();
 		
 		logger.debug("Retriving item list.");

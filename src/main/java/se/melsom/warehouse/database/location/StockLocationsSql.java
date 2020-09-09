@@ -11,8 +11,19 @@ import com.healthmarketscience.sqlbuilder.UpdateQuery;
 
 import se.melsom.warehouse.database.WarehouseSchema;
 
+/**
+ * The Stock locations sql (select, insert, update, delete).
+ */
 public class StockLocationsSql {
-	public static String select(Connection connection, String atSection, String inSlot) {
+    /**
+     * Select string.
+     *
+     * @param connection the connection
+     * @param atSection  the at section
+     * @param inSlot     the in slot
+     * @return the string
+     */
+    public static String select(Connection connection, String atSection, String inSlot) {
 		SelectQuery query = new SelectQuery();
 		
 		query.addAllTableColumns(WarehouseSchema.stock_locations);
@@ -32,8 +43,15 @@ public class StockLocationsSql {
 		
 		return query.toString();
 	}
-	
-	public static String insert(Connection connection, StockLocationDAO dao) {
+
+    /**
+     * Insert string.
+     *
+     * @param connection the connection
+     * @param dao        the dao
+     * @return the string
+     */
+    public static String insert(Connection connection, StockLocationDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.stock_locations);		
 		
 		query.addColumn(WarehouseSchema.stock_locations_id, dao.getId());
@@ -45,8 +63,15 @@ public class StockLocationsSql {
 
 		return query.toString();
 	}
-	
-	public static String update(Connection connection, StockLocationDAO dao) {
+
+    /**
+     * Update string.
+     *
+     * @param connection the connection
+     * @param dao        the dao
+     * @return the string
+     */
+    public static String update(Connection connection, StockLocationDAO dao) {
 		UpdateQuery query = new UpdateQuery(WarehouseSchema.stock_locations);	
 		
 		query.addSetClause(WarehouseSchema.stock_locations_section, dao.getSection());
@@ -60,7 +85,14 @@ public class StockLocationsSql {
 		return query.toString();
 	}
 
-	public static String delete(Connection connection, StockLocationDAO dao) {
+    /**
+     * Delete string.
+     *
+     * @param connection the connection
+     * @param dao        the dao
+     * @return the string
+     */
+    public static String delete(Connection connection, StockLocationDAO dao) {
 		DeleteQuery query = new DeleteQuery(WarehouseSchema.stock_locations);	
 
 		query.addCondition(BinaryCondition.equalTo(WarehouseSchema.stock_locations_id, dao.getId()));

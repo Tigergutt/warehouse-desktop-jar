@@ -17,30 +17,83 @@ import se.melsom.warehouse.command.Command;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowSettings;
 
+/**
+ * The type Desktop controller.
+ */
 public class DesktopController implements ActionListener, ComponentListener {
 	private static Logger logger = Logger.getLogger(DesktopController.class);
-	
-	public static final String SHOW_INVENTORY_VIEW = "ShowInventoryView";
-	public static final String SHOW_INVENTORY_HOLDING_VIEW = "ShowInventoryHoldingView";
-	public static final String SHOW_SEARCH_INVENTORY_VIEW = "ShowSearchEquipmentView";
-	public static final String SHOW_STOCK_ON_HAND_VIEW = "ShowStockOnHandView";
-	public static final String IMPORT_INVENTORY = "ImportInventory";
-	public static final String IMPORT_MASTER_INVENTORY = "ImportItems";
-	public static final String IMPORT_STOCK_LOCATIONS = "ImportLocations";
-	public static final String IMPORT_ORGANIZATIONAL_UNITS = "ImportUnits";
-	public static final String EXPORT_DATABASE = "ExportDatabase";
-	public static final String GENERATE_LOCATION_INVENTORY_REPORT = "GenLocInvRep";
-	public static final String GENERATE_STOCK_ON_HAND_REPORT = "GenSOHRep";
-	public static final String EDIT_ITEMS = "EditItems";
-	public static final String EDIT_INSTANCES = "EditInstances";
-	public static final String EDIT_APPLICATIONS = "EditApplications";
-	public static final String SHOW_LOGGER_VIEW = "ShowLogWindow";
+
+    /**
+     * The constant SHOW_INVENTORY_VIEW.
+     */
+    public static final String SHOW_INVENTORY_VIEW = "ShowInventoryView";
+    /**
+     * The constant SHOW_INVENTORY_HOLDING_VIEW.
+     */
+    public static final String SHOW_INVENTORY_HOLDING_VIEW = "ShowInventoryHoldingView";
+    /**
+     * The constant SHOW_SEARCH_INVENTORY_VIEW.
+     */
+    public static final String SHOW_SEARCH_INVENTORY_VIEW = "ShowSearchEquipmentView";
+    /**
+     * The constant SHOW_STOCK_ON_HAND_VIEW.
+     */
+    public static final String SHOW_STOCK_ON_HAND_VIEW = "ShowStockOnHandView";
+    /**
+     * The constant IMPORT_INVENTORY.
+     */
+    public static final String IMPORT_INVENTORY = "ImportInventory";
+    /**
+     * The constant IMPORT_MASTER_INVENTORY.
+     */
+    public static final String IMPORT_MASTER_INVENTORY = "ImportItems";
+    /**
+     * The constant IMPORT_STOCK_LOCATIONS.
+     */
+    public static final String IMPORT_STOCK_LOCATIONS = "ImportLocations";
+    /**
+     * The constant IMPORT_ORGANIZATIONAL_UNITS.
+     */
+    public static final String IMPORT_ORGANIZATIONAL_UNITS = "ImportUnits";
+    /**
+     * The constant EXPORT_DATABASE.
+     */
+    public static final String EXPORT_DATABASE = "ExportDatabase";
+    /**
+     * The constant GENERATE_LOCATION_INVENTORY_REPORT.
+     */
+    public static final String GENERATE_LOCATION_INVENTORY_REPORT = "GenLocInvRep";
+    /**
+     * The constant GENERATE_STOCK_ON_HAND_REPORT.
+     */
+    public static final String GENERATE_STOCK_ON_HAND_REPORT = "GenSOHRep";
+    /**
+     * The constant EDIT_ITEMS.
+     */
+    public static final String EDIT_ITEMS = "EditItems";
+    /**
+     * The constant EDIT_INSTANCES.
+     */
+    public static final String EDIT_INSTANCES = "EditInstances";
+    /**
+     * The constant EDIT_APPLICATIONS.
+     */
+    public static final String EDIT_APPLICATIONS = "EditApplications";
+    /**
+     * The constant SHOW_LOGGER_VIEW.
+     */
+    public static final String SHOW_LOGGER_VIEW = "ShowLogWindow";
 
 	private DesktopView desktopView;
 	private Map<String, Command> actionCommands = new HashMap<>();
 	private ApplicationController applicationController;
 
-	public void createView(ApplicationController applicationController) {
+    /**
+     * Create view.
+     *
+     * @param applicationController the application controller
+     */
+    public void createView(ApplicationController applicationController) {
 		this.applicationController = applicationController;
 		
 		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());
@@ -73,45 +126,89 @@ public class DesktopController implements ActionListener, ComponentListener {
 		desktopView.setVisible(true);
 		desktopView.addComponentListener(this);
 	}
-	
-	public void addInternalFrame(JInternalFrame internalFrame) {
+
+    /**
+     * Add internal frame.
+     *
+     * @param internalFrame the internal frame
+     */
+    public void addInternalFrame(JInternalFrame internalFrame) {
 		desktopView.getDesktop().add(internalFrame);
 	}
-	
-	public void addActionCommand(String action, Command command) {
-		actionCommands.put(action, command);
-	} 
 
-	public void quitApplication() {
+    /**
+     * Add action command.
+     *
+     * @param action  the action
+     * @param command the command
+     */
+    public void addActionCommand(String action, Command command) {
+		actionCommands.put(action, command);
+	}
+
+    /**
+     * Quit application.
+     */
+    public void quitApplication() {
 		applicationController.applicationExit();
 	}
 
-	public void setShowInventoryViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets show inventory view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setShowInventoryViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowInventoryViewMenuItem isChecked=" + isChecked);
 		desktopView.setShowInventoryViewChecked(isChecked);
 	}
 
-	public void setShowInventoryHoldingViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets show inventory holding view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setShowInventoryHoldingViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowInventoryHoldingViewMenuItem isChecked=" + isChecked);
 		desktopView.setShowInventoryHoldingViewChecked(isChecked);
 	}
 
-	public void setShowSearchViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets show search view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setShowSearchViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowSearchViewMenuItem isChecked=" + isChecked);
 		desktopView.setShowSearchViewMenuItemChecked(isChecked);
 	}
 
-	public void setShowStockOnHandViewMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets show stock on hand view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setShowStockOnHandViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowStockOnHandViewMenuItem isChecked=" + isChecked);
 		desktopView.setShowStockOnHandViewChecked(isChecked);
 	}
 
-	public void setEditProductsMenuItemChecked(boolean isChecked) {
+    /**
+     * Sets edit products menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setEditProductsMenuItemChecked(boolean isChecked) {
 		logger.trace("EditProductsMenuItem isChecked=" + isChecked);
 		desktopView.setEditItemsMenuItemChecked(isChecked);
 	}
-	
-	public void setShowLogViewMenuItemChecked(boolean isChecked) {
+
+    /**
+     * Sets show log view menu item checked.
+     *
+     * @param isChecked the is checked
+     */
+    public void setShowLogViewMenuItemChecked(boolean isChecked) {
 		logger.trace("ShowLogViewMenuItem isChecked=" + isChecked);
 		desktopView.setShowLogViewChecked(isChecked);
 	}
@@ -162,7 +259,12 @@ public class DesktopController implements ActionListener, ComponentListener {
 	public void componentHidden(ComponentEvent e) {
 	}
 
-	String getWindowName() {
+    /**
+     * Gets window name.
+     *
+     * @return the window name
+     */
+    String getWindowName() {
 		return DesktopView.class.getSimpleName();
 	}
 }
