@@ -49,10 +49,10 @@ public class OrganizationalUnitsSql {
 	}
 
     /**
-     * Insert string.
+     * Generates SQL for inserting an Organizational Unit into database.
      *
-     * @param dao the dao
-     * @return the string
+     * @param dao an Organizational Unit
+     * @return SQL-query
      */
     public static String insert(OrganizationalUnitDAO dao) {
 		InsertQuery query = new InsertQuery(WarehouseSchema.units);		
@@ -69,10 +69,10 @@ public class OrganizationalUnitsSql {
 	}
 
     /**
-     * Update string.
+     * UGenerates SQL for updating an Organizational Unit into database.
      *
-     * @param dao the dao
-     * @return the string
+     * @param dao an Organizational Unit
+     * @return SQL-query
      */
     public static String update(OrganizationalUnitDAO dao) {
 		UpdateQuery query = new UpdateQuery(WarehouseSchema.units);	
@@ -90,10 +90,10 @@ public class OrganizationalUnitsSql {
 	}
 
     /**
-     * Delete string.
+     * Generates SQL for removing an Organizational Unit from database.
      *
-     * @param dao the dao
-     * @return the string
+     * @param dao an Organizational Unit
+     * @return SQL-query
      */
     public static String delete(OrganizationalUnitDAO dao) {
 		DeleteQuery query = new DeleteQuery(WarehouseSchema.units);	
