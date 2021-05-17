@@ -5,13 +5,7 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 import se.melsom.warehouse.report.part.InventoryLandscapeTable;
 
-/**
- * The type Stock location front page.
- */
 public class StockLocationFrontPage extends StockLocationPage {
-    /**
-     * The constant INVENTORY_TABLE_ROW_COUNT.
-     */
     public static final int INVENTORY_TABLE_ROW_COUNT = 12;
 	
 	private static final float LOCATION_FIELD_X = 10;
@@ -41,18 +35,12 @@ public class StockLocationFrontPage extends StockLocationPage {
 	private static final float INVENTORY_TABLE_X = 10;
 	private static final float INVENTORY_Y = 70;
 	
-	private FormField locationField;
-	private FormField pageNumberField;
-	private FormField cycleCountingDateField;
-	private FormField holdingField;
-	private InventoryLandscapeTable table;
+	private final FormField locationField;
+	private final FormField pageNumberField;
+	private final FormField cycleCountingDateField;
+	private final FormField holdingField;
+	private final InventoryLandscapeTable table;
 
-    /**
-     * Instantiates a new Stock location front page.
-     *
-     * @param reportName the report name
-     * @param date       the date
-     */
     public StockLocationFrontPage(String reportName, String date) {
 		super(reportName, date);
 		locationField = new FormField(LOCATION_FIELD_X, LOCATION_FIELD_Y, LOCATION_FIELD_WIDTH, 

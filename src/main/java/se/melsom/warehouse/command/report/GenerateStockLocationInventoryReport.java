@@ -1,34 +1,25 @@
 package se.melsom.warehouse.command.report;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.application.ApplicationController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.application.ApplicationPresentationModel;
 import se.melsom.warehouse.command.GenerateReportCommand;
-import se.melsom.warehouse.database.WarehouseDatabase;
-import se.melsom.warehouse.database.inventory.StockLocationItem;
+import se.melsom.warehouse.data.vo.StockLocationVO;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.entity.Holding;
 import se.melsom.warehouse.report.inventory.StockLocationReport;
 
-/**
- * The Generate stock location inventory report command.
- */
+import java.util.Vector;
+
 public class GenerateStockLocationInventoryReport  extends GenerateReportCommand  {
-	private static Logger logger = Logger.getLogger(GenerateStockLocationInventoryReport.class);
-	private ApplicationController controller;
+	private static final Logger logger = LoggerFactory.getLogger(GenerateStockLocationInventoryReport.class);
+	private final ApplicationPresentationModel controller;
 	
-	private static String[] tableColumnNames = {
+	private static final String[] tableColumnNames = {
 		EntityName.ITEM_NUMBER, EntityName.ITEM_NAME, EntityName.INVENTORY_ACTUAL_QUANTITY
 	};
 
-    /**
-     * Instantiates a new Generate stock location inventory report.
-     *
-     * @param controller the controller
-     */
-    public GenerateStockLocationInventoryReport(ApplicationController controller) {
+    public GenerateStockLocationInventoryReport(ApplicationPresentationModel controller) {
 		this.controller = controller;
 	}
 	
@@ -40,11 +31,13 @@ public class GenerateStockLocationInventoryReport  extends GenerateReportCommand
 		for (String columnName : tableColumnNames) {
 			tableHeader.addElement(columnName);
 		}
-		
-		Vector<StockLocationItem> data = WarehouseDatabase.singleton().selectStockLocationInventoryList();
-		Vector<Holding> holdings = controller.getInventoryAccounting().getHoldings();
+
+		// TODO: fixa till här!
+//		Vector<StockLocationVO> data = WarehouseDatabase.singleton().selectStockLocationInventoryList();
+		Vector<StockLocationVO> data = new Vector<>();
+		Vector<Holding> holdings = null; // controller.getInventoryAccounting().getHoldings();
 		logger.debug("Generate stock on hand report total row count=" + data.size());
-		StockLocationReport report = new StockLocationReport(tableHeader, data, holdings);
+		StockLocationReport report = new StockLocationReport(tableHeader, null, holdings);
 		
 		save(report, controller.getDesktopView());
 	}

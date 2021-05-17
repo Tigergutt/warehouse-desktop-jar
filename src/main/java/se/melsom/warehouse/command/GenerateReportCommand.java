@@ -1,32 +1,25 @@
 package se.melsom.warehouse.command;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.melsom.warehouse.application.Command;
 import se.melsom.warehouse.report.PdfReportRenderer;
 import se.melsom.warehouse.report.Report;
 import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.settings.PersistentSettings;
-import se.melsom.warehouse.settings.Property;
 
-/**
- * The base class for report generation commands.
- */
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.IOException;
+
 public abstract class GenerateReportCommand extends Command {
-	private static Logger logger = Logger.getLogger(GenerateReportCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(GenerateReportCommand.class);
 
-    /**
-     * Save.
-     *
-     * @param report the report
-     * @param parent the parent
-     */
+	@Autowired
+	private PersistentSettings persistentSettings;
+
     protected void save(Report report, JFrame parent) {
 		PdfReportRenderer renderer = new PdfReportRenderer();
 		
@@ -34,20 +27,20 @@ public abstract class GenerateReportCommand extends Command {
 			renderer.render(page);
 		}
 		
-		Property property = PersistentSettings.singleton().getProperty("reportDirectory", ".");
+		String directory = persistentSettings.getProperty("reportDirectory", ".");
 
-		JFileChooser chooser = new JFileChooser(property.getValue());
+		JFileChooser chooser = new JFileChooser(directory);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF file.", "pdf");
 
 		chooser.setFileFilter(filter);
-		chooser.setSelectedFile(new File(property.getValue(), report.getReportName() + ".pdf"));
+		chooser.setSelectedFile(new File(directory, report.getReportName() + ".pdf"));
 
 		if (chooser.showSaveDialog(parent) != JFileChooser.APPROVE_OPTION) {
 			return;
 		}
-			
-		property.setValue(chooser.getSelectedFile().getParent());
-		
+
+		persistentSettings.setProperty("reportDirectory", directory);
+
 		String path = chooser.getSelectedFile().getPath();
 		
 		if (!path.endsWith(".pdf")) {

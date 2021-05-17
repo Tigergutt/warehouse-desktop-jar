@@ -1,36 +1,24 @@
 package se.melsom.warehouse.presentation.importer;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 
-/**
- * The type Input table cell renderer.
- */
-@SuppressWarnings("serial")
 public class InputTableCellRenderer extends JLabel implements TableCellRenderer {
-	private InputTableModel tableModel;
-	private Color pendingBackground = new Color(242, 242, 242);
-	private Color pendingForeground = new Color(117, 113, 113);
-	private Color ignoredBackground = new Color(242, 242, 242);
-	private Color ignoredForeground = new Color(1, 0, 0);
-	private Color validBackground = new Color(242, 242, 242);
-	private Color validForeground = new Color(76, 165, 49);
-	private Color okBackground = new Color(102, 206, 114);
-	private Color okForeground = new Color(1, 0, 0);
-	private Color warningBackground = new Color(235, 233, 102);
-	private Color warningForeground = new Color(1, 0, 0);
-	private Color errorBackground = new Color(235, 83, 43);
-	private Color errorForeground = new Color(1, 0, 0);
+	private final InputTableModel tableModel;
+	private final Color pendingBackground = new Color(242, 242, 242);
+	private final Color pendingForeground = new Color(117, 113, 113);
+	private final Color ignoredBackground = new Color(242, 242, 242);
+	private final Color ignoredForeground = new Color(1, 0, 0);
+	private final Color validBackground = new Color(242, 242, 242);
+	private final Color validForeground = new Color(76, 165, 49);
+	private final Color okBackground = new Color(102, 206, 114);
+	private final Color okForeground = new Color(1, 0, 0);
+	private final Color warningBackground = new Color(235, 233, 102);
+	private final Color warningForeground = new Color(1, 0, 0);
+	private final Color errorBackground = new Color(235, 83, 43);
+	private final Color errorForeground = new Color(1, 0, 0);
 
-    /**
-     * Instantiates a new Input table cell renderer.
-     *
-     * @param tableModel the table model
-     */
     public InputTableCellRenderer(InputTableModel tableModel) {
 		this.tableModel = tableModel;
 		super.setOpaque(true);
@@ -74,5 +62,4 @@ public class InputTableCellRenderer extends JLabel implements TableCellRenderer 
 		
 		return this;
 	}
-
 }

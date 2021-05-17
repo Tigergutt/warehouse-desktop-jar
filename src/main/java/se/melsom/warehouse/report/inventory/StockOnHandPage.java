@@ -1,16 +1,13 @@
 package se.melsom.warehouse.report.inventory;
 
-import java.util.Vector;
-
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.report.component.TextBox;
 import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.part.StockOnHandTable;
 
-/**
- * The type Stock on hand page.
- */
+import java.util.Vector;
+
 public class StockOnHandPage extends Page {
 	private static final float HEADER_FIELD_X = 10;
 	private static final float HEADER_FIELD_Y = 10;	
@@ -25,15 +22,9 @@ public class StockOnHandPage extends Page {
 	private static final float STOCK_ON_HAND_X = 10;
 	private static final float STOCK_ON_HAND_Y = 32;
 	
-	private TextBox pageNumberField;
-	private StockOnHandTable table;
+	private final TextBox pageNumberField;
+	private final StockOnHandTable table;
 
-    /**
-     * Instantiates a new Stock on hand page.
-     *
-     * @param reportName the report name
-     * @param date       the date
-     */
     public StockOnHandPage(String reportName, String date) {
 		super(Orientation.LANDSCAPE);
 		
@@ -56,38 +47,18 @@ public class StockOnHandPage extends Page {
 		addComponent(table);
 	}
 
-    /**
-     * Gets row capacity.
-     *
-     * @return the row capacity
-     */
     public int getRowCapacity() {
 		return STOCK_ON_HAND_TABLE_ROW_COUNT;
 	}
 
-    /**
-     * Sets stock on hand row.
-     *
-     * @param rowIndex the row index
-     * @param item     the item
-     */
     public void setStockOnHandRow(int rowIndex, StockOnHand item) {
 		table.setRowValues(rowIndex, item);
 	}
 
-    /**
-     * Sets stock on hand row.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
-    public void setStockOnHandRow(int rowIndex, Vector<String> values) {
+	public void setStockOnHandRow(int rowIndex, Vector<String> values) {
 		table.setRowValues(rowIndex, values);
 	}
 
-    /**
-     * Update page number field.
-     */
     public void updatePageNumberField() {
 		pageNumberField.setText("Sida " + getPageNumber() + " (" + getPageCount() + ")");
 	}

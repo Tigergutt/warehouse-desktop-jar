@@ -1,27 +1,15 @@
 package se.melsom.warehouse.presentation.stock;
 
-import java.awt.Color;
-import java.awt.Component;
+import se.melsom.warehouse.data.vo.StockOnHandVO;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 
-import se.melsom.warehouse.model.entity.inventory.StockOnHand;
-
-/**
- * The type Quantity cell renderer.
- */
-@SuppressWarnings("serial")
+@Deprecated
 public class QuantityCellRenderer extends JLabel implements TableCellRenderer {
-	private StockOnHandTableModel tableModel;
+	private final StockOnHandTableModel tableModel;
 
-    /**
-     * Instantiates a new Quantity cell renderer.
-     *
-     * @param tableModel the table model
-     */
     public QuantityCellRenderer(StockOnHandTableModel tableModel) {
     	this.tableModel = tableModel;
     	super.setOpaque(true);
@@ -30,7 +18,7 @@ public class QuantityCellRenderer extends JLabel implements TableCellRenderer {
     
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    	StockOnHand stockOnHand = tableModel.getStockOnHand().get(row);
+    	StockOnHandVO stockOnHand = tableModel.getStockOnHand().get(row);
     	
     	if (stockOnHand.getActualQuantity() < stockOnHand.getNominalQuantity()) {
     		super.setForeground(Color.RED);

@@ -5,71 +5,27 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
-/**
- * The type Importer.
- */
 public abstract class Importer {
-	private InputTableModel tableModel;
+	private final InputTableModel tableModel;
 
-    /**
-     * Instantiates a new Importer.
-     *
-     * @param tableModel the table model
-     */
     public Importer(InputTableModel tableModel) {
 		this.tableModel = tableModel;
 	}
 
-    /**
-     * Gets table model.
-     *
-     * @return the table model
-     */
     public InputTableModel getTableModel() {
 		return tableModel;
 	}
 
-    /**
-     * Evaluate column indices boolean.
-     *
-     * @return the boolean
-     */
     public abstract boolean evaluateColumnIndices();
 
-    /**
-     * Check validity.
-     *
-     * @param inventoryAccounting the inventory accounting
-     */
     public abstract void checkValidity(InventoryAccounting inventoryAccounting);
 
-    /**
-     * Check consitency.
-     *
-     * @param inventoryAccounting the inventory accounting
-     */
     public abstract void checkConsitency(InventoryAccounting inventoryAccounting);
 
-    /**
-     * Anything to store boolean.
-     *
-     * @return the boolean
-     */
     public abstract boolean anythingToStore();
 
-    /**
-     * Store data.
-     *
-     * @param inventoryAccounting the inventory accounting
-     */
     public abstract void storeData(InventoryAccounting inventoryAccounting);
 
-    /**
-     * Validate string value boolean.
-     *
-     * @param cell the cell
-     * @return the boolean
-     */
     boolean validateStringValue(ImportCell cell) {
 		if (cell.getValue() == null) {
 			cell.setStatus(ImportStatus.ERROR);
@@ -89,12 +45,6 @@ public abstract class Importer {
 		return true;
 	}
 
-    /**
-     * Validate integer value boolean.
-     *
-     * @param cell the cell
-     * @return the boolean
-     */
     boolean validateIntegerValue(ImportCell cell) {
 		if (cell.getValue() == null) {
 			cell.setStatus(ImportStatus.ERROR);
@@ -115,13 +65,6 @@ public abstract class Importer {
 		return false;
 	}
 
-    /**
-     * Gets importer.
-     *
-     * @param type       the type
-     * @param tableModel the table model
-     * @return the importer
-     */
     public static Importer getImporter(ImportType type, InputTableModel tableModel) {
 		Importer importer = null;
 		

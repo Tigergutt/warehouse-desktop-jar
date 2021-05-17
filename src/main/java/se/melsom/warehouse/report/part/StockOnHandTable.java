@@ -1,9 +1,7 @@
 package se.melsom.warehouse.report.part;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 import se.melsom.warehouse.report.component.Component;
 import se.melsom.warehouse.report.component.Table;
@@ -13,11 +11,10 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Position;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 
-/**
- * The type Stock on hand table.
- */
+import java.util.Vector;
+
 public class StockOnHandTable extends Table {
-	private static Logger logger = Logger.getLogger(StockOnHandTable.class);
+	private static final Logger logger = LoggerFactory.getLogger(StockOnHandTable.class);
 	
 	private static final float FRAME_LINE_WIDTH = 0.5f;
 	private static final float INNER_FRAME_LINE_WIDTH = 0.1f;
@@ -33,13 +30,6 @@ public class StockOnHandTable extends Table {
 			Alignment.RIGHT, Alignment.RIGHT, Alignment.LEFT, 
 			Alignment.RIGHT, Alignment.LEFT };
 
-    /**
-     * Instantiates a new Stock on hand table.
-     *
-     * @param x        the x
-     * @param y        the y
-     * @param rowCount the row count
-     */
     public StockOnHandTable(float x, float y, int rowCount) {
 		super(x, y);
 		float rowY = y;
@@ -85,12 +75,6 @@ public class StockOnHandTable extends Table {
 		setLines(FRAME_LINE_WIDTH);
 	}
 
-    /**
-     * Sets row values.
-     *
-     * @param rowIndex the row index
-     * @param item     the item
-     */
     public void setRowValues(int rowIndex, StockOnHand item) {
 		setRowValues(rowIndex, 
 				item.getItemNumber(), item.getItemName(), 
@@ -98,12 +82,6 @@ public class StockOnHandTable extends Table {
 				item.getIdentity(), item.getAnnotation());
 	}
 
-    /**
-     * Sets row values.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
     public void setRowValues(int rowIndex, String... values) {
 		Component row = getComponents().get(rowIndex);
 
@@ -119,12 +97,6 @@ public class StockOnHandTable extends Table {
 		}
 	}
 
-    /**
-     * Sets row values.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
     public void setRowValues(int rowIndex, Vector<String> values) {
 		Component row = getComponents().get(rowIndex);
 

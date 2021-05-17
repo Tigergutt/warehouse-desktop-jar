@@ -1,33 +1,24 @@
 package se.melsom.warehouse.command.report;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.application.ApplicationController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.application.ApplicationPresentationModel;
+import se.melsom.warehouse.application.inventory.holding.InventoryHolding;
 import se.melsom.warehouse.command.GenerateReportCommand;
-import se.melsom.warehouse.model.entity.OrganizationalUnit;
-import se.melsom.warehouse.model.entity.inventory.ActualInventory;
-import se.melsom.warehouse.presentation.holding.InventoryHoldingController;
+import se.melsom.warehouse.data.vo.ActualInventoryVO;
+import se.melsom.warehouse.data.vo.UnitVO;
 import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.report.inventory.InventoryHoldingViewReport;
 import se.melsom.warehouse.report.inventory.InventoryPage;
 
-/**
- * The Generate inventory holding view report command.
- */
-public class GenerateInventoryHoldingViewReport extends GenerateReportCommand {
-	private static Logger logger = Logger.getLogger(GenerateInventoryHoldingViewReport.class);
-	private ApplicationController controller;
-	private InventoryHoldingController inventoryController;
+import java.util.Vector;
 
-    /**
-     * Instantiates a new Generate inventory holding view report.
-     *
-     * @param controller          the controller
-     * @param inventoryController the inventory controller
-     */
-    public GenerateInventoryHoldingViewReport(ApplicationController controller, InventoryHoldingController inventoryController) {
+public class GenerateInventoryHoldingViewReport extends GenerateReportCommand {
+	private static final Logger logger = LoggerFactory.getLogger(GenerateInventoryHoldingViewReport.class);
+	private final ApplicationPresentationModel controller;
+	private final InventoryHolding inventoryController;
+
+    public GenerateInventoryHoldingViewReport(ApplicationPresentationModel controller, InventoryHolding inventoryController) {
 		this.controller = controller;
 		this.inventoryController = inventoryController;
 	}
@@ -35,8 +26,8 @@ public class GenerateInventoryHoldingViewReport extends GenerateReportCommand {
 	@Override
 	public void execute() {
 		logger.debug("Generate inventory report.");
-		OrganizationalUnit unit = inventoryController.getSelectedUnit();
-		Vector<ActualInventory> inventoryList = inventoryController.getInventory();
+		UnitVO unit = inventoryController.getSelectedUnit();
+		Vector<ActualInventoryVO> inventoryList = inventoryController.getInventory();
 		String[] columnNames = inventoryController.getTableColumnNames();
 		InventoryHoldingViewReport report = new InventoryHoldingViewReport(unit, inventoryList, columnNames);
 		

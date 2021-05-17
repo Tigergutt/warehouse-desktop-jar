@@ -52,7 +52,7 @@ PRIMARY KEY (id)
 CREATE TABLE actual_inventory ( 
 id INT NOT NULL, 
 item_id INT NOT NULL, 
-stock_location_id CHAR(40) NOT NULL, 
+stock_location_id INT NOT NULL,
 quantity INT DEFAULT '1' NOT NULL, 
 identity CHAR(16) DEFAULT '' NOT NULL,  
 annotation CHAR(50) DEFAULT '' NOT NULL, 

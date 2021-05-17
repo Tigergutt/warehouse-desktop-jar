@@ -1,25 +1,16 @@
 package se.melsom.warehouse.report.inventory;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.entity.inventory.StockOnHand;
 import se.melsom.warehouse.report.Report;
 
-/**
- * The type Stock on hand report.
- */
+import java.util.Vector;
+
 public class StockOnHandReport extends Report {
-	private static Logger logger = Logger.getLogger(StockOnHandReport.class);
+	private static final Logger logger = LoggerFactory.getLogger(StockOnHandReport.class);
 	private static final String REPORT_NAME = "Inventeringsrutin";
 
-    /**
-     * Instantiates a new Stock on hand report.
-     *
-     * @param heading the heading
-     * @param data    the data
-     */
     public StockOnHandReport(Vector<String> heading, Vector<StockOnHand> data) {
 		logger.debug("Generating report.");
 		for (int itemIndex = 0, rowIndex = 0; itemIndex < data.size(); itemIndex++) {

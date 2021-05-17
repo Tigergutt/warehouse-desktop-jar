@@ -1,42 +1,30 @@
 package se.melsom.warehouse.presentation.logger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.melsom.warehouse.application.ApplicationPresentationModel;
+import se.melsom.warehouse.presentation.ViewController;
+import se.melsom.warehouse.settings.PersistentSettings;
+import se.melsom.warehouse.settings.WindowBean;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
 import java.util.Vector;
 
-import javax.swing.JComponent;
-import javax.swing.JInternalFrame;
-
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-
-import se.melsom.logging.TextAreaAppender;
-import se.melsom.warehouse.application.ApplicationController;
-import se.melsom.warehouse.presentation.ViewController;
-import se.melsom.warehouse.settings.PersistentSettings;
-import se.melsom.warehouse.settings.WindowSettings;
-
-/**
- * The type Logger controller.
- */
 public class LoggerController extends ViewController {
-	private static Logger logger = Logger.getLogger(LoggerController.class);
-    /**
-     * The constant SET_LOG_LEVEL_ACTION.
-     */
+	private static final Logger logger = LoggerFactory.getLogger(LoggerController.class);
     public static final String SET_LOG_LEVEL_ACTION = "SetLogLevel";
-	private LoggerView view;
-	private ApplicationController controller;
-	private Vector<String> logLevels = new Vector<>();
+	private final LoggerView view;
+	private final ApplicationPresentationModel controller;
+	private final Vector<String> logLevels = new Vector<>();
 
-    /**
-     * Instantiates a new Logger controller.
-     *
-     * @param controller the controller
-     */
-    public LoggerController(ApplicationController controller) {
+	@Autowired
+	private PersistentSettings persistentSettings;
+
+    public LoggerController(ApplicationPresentationModel controller) {
 		this.controller = controller;
 		
 		logLevels.addElement("OFF");
@@ -45,12 +33,12 @@ public class LoggerController extends ViewController {
 		logLevels.addElement("DEBUG");
 		logLevels.addElement("TRACE");
 
-		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());
+		WindowBean settings = persistentSettings.getWindowSettings(getWindowName());
 		
 		if (settings == null) {
-			settings = new WindowSettings(getWindowName(), 500, 10, 300, 400, false);
-			
-			PersistentSettings.singleton().addWindowSettings(settings);
+			settings = new WindowBean(500, 10, 300, 400, false);
+
+			persistentSettings.addWindowSettings(getWindowName(), settings);
 		}
 		
 		view = new LoggerView(this);
@@ -60,12 +48,9 @@ public class LoggerController extends ViewController {
 		view.setVisible(settings.isVisible());
 		view.addComponentListener(this);
 
-		TextAreaAppender.setTextArea(view.getTextArea());
+//		TextAreaAppender.setTextArea(view.getTextArea());
 	}
 
-    /**
-     * Sets selected log level.
-     */
     void setSelectedLogLevel() {
 		if (view.getSelectedIndex() < 0) {
 			return;
@@ -74,19 +59,14 @@ public class LoggerController extends ViewController {
 		setLogLevel(view.getSelectedLogLevel());
 	}
 
-    /**
-     * Sets log level.
-     *
-     * @param level the level
-     */
     void setLogLevel(String level) {
-		AppenderSkeleton appender = (AppenderSkeleton) Logger.getRootLogger().getAppender("swing");
-		
-		if (appender == null) {
-			return;
-		}
-		
-		appender.setThreshold(Level.toLevel(level));
+//		AppenderSkeleton appender = (AppenderSkeleton) Logger.getRootLogger().getAppender("swing");
+//
+//		if (appender == null) {
+//			return;
+//		}
+//
+//		appender.setThreshold(Level.toLevel(level));
 	}
 
 	@Override
@@ -101,11 +81,6 @@ public class LoggerController extends ViewController {
 		}
 	}
 
-    /**
-     * Gets internal frame.
-     *
-     * @return the internal frame
-     */
     public JInternalFrame getInternalFrame() {
 		return view;
 	}
@@ -115,9 +90,6 @@ public class LoggerController extends ViewController {
 		return view;
 	}
 
-    /**
-     * Show view.
-     */
     public void showView() {
 		logger.debug("showView()");
 		if (view.isVisible()) {
@@ -149,7 +121,7 @@ public class LoggerController extends ViewController {
 		}
 		
 		JInternalFrame frame = (JInternalFrame) event.getSource();
-		PersistentSettings.singleton().setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());	
+		persistentSettings.setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());
 	}
 
 	@Override
@@ -159,15 +131,14 @@ public class LoggerController extends ViewController {
 		}
 		
 		JInternalFrame frame = (JInternalFrame) event.getSource();
-		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
+		persistentSettings.setWindowLocation(getWindowName(), frame.getX(), frame.getY());
 	}
 	
 	@Override
 	public void componentShown(ComponentEvent e) {
 		logger.trace("Shown event=" + e);
 		setSelectedLogLevel();
-		controller.setLogViewMenuItemChecked(false);
-		PersistentSettings.singleton().setWindowVisible(getWindowName(), true);	
+		persistentSettings.setWindowVisible(getWindowName(), true);
 	}
 
 	@Override
@@ -175,15 +146,9 @@ public class LoggerController extends ViewController {
 		logger.trace("Hidden event=" + e);
 		setLogLevel("OFF");
 		view.clearLogView();
-		controller.setLogViewMenuItemChecked(true);
-		PersistentSettings.singleton().setWindowVisible(getWindowName(), false);	
+		persistentSettings.setWindowVisible(getWindowName(), false);
 	}
 
-    /**
-     * Gets window name.
-     *
-     * @return the window name
-     */
     String getWindowName() {
 		return LoggerView.class.getSimpleName();
 	}

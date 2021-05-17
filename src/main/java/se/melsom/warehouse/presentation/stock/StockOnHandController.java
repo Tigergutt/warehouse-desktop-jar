@@ -1,5 +1,19 @@
 package se.melsom.warehouse.presentation.stock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.melsom.warehouse.application.ApplicationPresentationModel;
+import se.melsom.warehouse.application.Command;
+import se.melsom.warehouse.data.service.InventoryService;
+import se.melsom.warehouse.data.vo.StockOnHandVO;
+import se.melsom.warehouse.event.ModelEvent;
+import se.melsom.warehouse.event.ModelEventListener;
+import se.melsom.warehouse.presentation.ViewController;
+import se.melsom.warehouse.settings.PersistentSettings;
+import se.melsom.warehouse.settings.WindowBean;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -8,72 +22,51 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.JComponent;
-import javax.swing.JInternalFrame;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.application.ApplicationController;
-import se.melsom.warehouse.command.Command;
-import se.melsom.warehouse.event.ModelEvent;
-import se.melsom.warehouse.event.ModelEventListener;
-import se.melsom.warehouse.model.InventoryAccounting;
-import se.melsom.warehouse.model.entity.inventory.StockOnHand;
-import se.melsom.warehouse.presentation.ViewController;
-import se.melsom.warehouse.settings.PersistentSettings;
-import se.melsom.warehouse.settings.WindowSettings;
-
 /**
- * The type Stock on hand controller.
+ * Lagersaldo (Stock on hand) består av en sammanställning över aktuellt lagersaldo.
+ * I saldot ingår visning av faktiskt inventerat antal artiklar tillsammans med nominellt antal artiklar.
+ * På så vis kan vi få en översikt över eventuella brister/behov.
+ *
+ * Denna klass (Controller) hanterar kopplingen mellan visning/presentation (View) och datamodell.
+ * Datat presenteras i en tabell (StockOnHandTableModel) saldot (antal artiklar) kan ha tre olika förger.
+ * Röd för brist/behov, svart för balans (mot nominellt antal) och blå för övertal (fler än nominellt antal).
+ *
+ * StockOnHandController använder InventoryService för hämtning av saldouppgifterna.
+ * Datat kan inte ändras, men det kan filtreras utifrån brist, balans och övertal i syfte att ge bättre
+ * översikt utifrån behov, som till exempel enbart visa de artiklar där det finns brist/behov/undertal.
  */
+@Deprecated
 public class StockOnHandController extends ViewController implements ModelEventListener, ActionListener {
-	private static Logger logger = Logger.getLogger(StockOnHandController.class);
+	private static final Logger logger = LoggerFactory.getLogger(StockOnHandController.class);
 	private static final String SHORTFALL_ACTION_COMMAND = "SAC";
 	private static final String BALANCES_ACTION_COMMAND = "BAC";
 	private static final String OVERPLUS_ACTION_COMMAND = "OAC";
-	private ApplicationController controller;
-	private InventoryAccounting inventoryAccounting;
-	private Map<String, Command> actionCommands = new HashMap<>();
+	private ApplicationPresentationModel controller;
+	private final Map<String, Command> actionCommands = new HashMap<>();
 	private StockOnHandView view;
 	private StockOnHandTableModel tableModel;
 
-    /**
-     * Instantiates a new Stock on hand controller.
-     *
-     * @param controller the controller
-     */
-    public StockOnHandController(ApplicationController controller) {
+	@Autowired
+	private PersistentSettings persistentSettings;
+
+	@Autowired
+	InventoryService inventoryService;
+
+	public StockOnHandController() {}
+
+    public void initialize(ApplicationPresentationModel controller) {
+		logger.debug("Initializing StockOnHandController.");
 		this.controller = controller;
 
-		inventoryAccounting = controller.getInventoryAccounting();
-
-		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());
-		
-		if (settings == null) {
-			settings = new WindowSettings(getWindowName(), 500, 10, 300, 400, false);
-			
-			PersistentSettings.singleton().addWindowSettings(settings);
-		}
-		
 		tableModel = new StockOnHandTableModel();
 		view = new StockOnHandView(this, tableModel);
-		logger.debug("Bounds=" + settings);
-		view.setBounds(settings.getX(), settings.getY(), settings.getWidth(), settings.getHeight());
-		view.setVisible(settings.isVisible());
-		view.addComponentListener(this);
 		view.setCellRenderer(4, new QuantityCellRenderer(tableModel));
 		view.setFilterShortfallAction(SHORTFALL_ACTION_COMMAND, this);
 		view.setFilterBalancesAction(BALANCES_ACTION_COMMAND, this);
 		view.setFilterOverplusAction(OVERPLUS_ACTION_COMMAND, this);
-
-		controller.setStockOnHandViewMenuItemChecked(settings.isVisible());
+		view.addComponentListener(this);
 	}
 
-    /**
-     * Gets internal frame.
-     *
-     * @return the internal frame
-     */
     public JInternalFrame getInternalFrame() {
 		return view;
 	}
@@ -83,11 +76,15 @@ public class StockOnHandController extends ViewController implements ModelEventL
 		return view;
 	}
 
-    /**
-     * Show view.
-     */
     public void showView() {
 		logger.debug("showView()");
+		WindowBean settings = persistentSettings.getWindowSettings(getWindowName());
+
+		if (settings == null) {
+			settings = new WindowBean(500, 10, 300, 400, true);
+
+			persistentSettings.addWindowSettings(getWindowName(), settings);
+		}
 		if (view.isVisible()) {
 			if (view.isIcon()) {
 				try {
@@ -101,29 +98,29 @@ public class StockOnHandController extends ViewController implements ModelEventL
 			}
 		} else {
 			logger.debug("showView(true)");
+
+			logger.debug("Bounds=" + settings);
+			view.setBounds(settings.getX(), settings.getY(), settings.getWidth(), settings.getHeight());
+			view.setVisible(settings.isVisible());
 			view.setVisible(true);
 		}
 	}
 
-    /**
-     * Compile stock on hand.
-     */
-    public void compileStockOnHand() {
-		Vector<StockOnHand> inventory = inventoryAccounting.getStockOnHandList();
+    public void compileStockOnHand(Vector<StockOnHandVO> stockOnHand) {
+		String title = String.format("Lagersaldo : antal artikelrader %d.", stockOnHand.size());
+		view.setTitle(title);
 		
-		view.setTitle("Lagersaldo : antal artikelrader " + inventory.size() + ".");
-		
-		tableModel.setStockOnHand(inventory);
+		tableModel.setStockOnHand(stockOnHand);
 	}
 
 	@Override
 	public void handleEvent(ModelEvent event) {
-		logger.debug("Receved model event=" + event);
+		logger.debug("Received model event [{}].", event);
 		switch (event.getType()) {
 		case STOCK_LOCATIONS_RELOADED:
 		case STOCK_LOCATIONS_MODIFIED:
 		case INVENTORY_UPDATED:
-			compileStockOnHand();
+			compileStockOnHand(inventoryService.getStockOnHand());
 			break;
 			
 		default:
@@ -139,50 +136,46 @@ public class StockOnHandController extends ViewController implements ModelEventL
 
 	@Override
 	public void componentResized(ComponentEvent event) {
+		logger.trace("Component resized [{}].", event);
 		if (event.getSource() instanceof JInternalFrame == false) {
 			return;
 		}
-		
-		JInternalFrame frame = (JInternalFrame) event.getSource();
-		PersistentSettings.singleton().setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());	
+
+		if (view != null && view.isVisible()) {
+			JInternalFrame frame = (JInternalFrame) event.getSource();
+			logger.trace("[{}] width={}, height={}.", getWindowName(), frame.getWidth(), frame.getHeight());
+			persistentSettings.setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());
+		}
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent event) {
+		logger.trace("Component moved [{}].", event);
 		if (event.getSource() instanceof JInternalFrame == false) {
 			return;
 		}
-		
-		JInternalFrame frame = (JInternalFrame) event.getSource();
-		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
+
+		if (view != null && view.isVisible()) {
+			JInternalFrame frame = (JInternalFrame) event.getSource();
+			logger.trace("[{}] x={}, y={}.", getWindowName(), frame.getX(), frame.getY());
+			persistentSettings.setWindowLocation(getWindowName(), frame.getX(), frame.getY());
+		}
 	}
 	
 	@Override
 	public void componentShown(ComponentEvent e) {
-		PersistentSettings.singleton().setWindowVisible(getWindowName(), true);	
+		persistentSettings.setWindowVisible(getWindowName(), true);
 	}
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
-		controller.setStockOnHandViewMenuItemChecked(false);
-		PersistentSettings.singleton().setWindowVisible(getWindowName(), false);	
+		persistentSettings.setWindowVisible(getWindowName(), false);
 	}
 
-    /**
-     * Gets window name.
-     *
-     * @return the window name
-     */
     String getWindowName() {
 		return StockOnHandView.class.getSimpleName();
 	}
 
-    /**
-     * Add action command.
-     *
-     * @param action  the action
-     * @param command the command
-     */
     public void addActionCommand(String action, Command command) {
 		actionCommands.put(action, command);
 	}
@@ -203,7 +196,7 @@ public class StockOnHandController extends ViewController implements ModelEventL
 			break;
 			
 		default:
-			logger.warn("Unknown action event=" + e);
+			logger.warn("Unknown action event={}.", e);
 			break;
 		}
 	}

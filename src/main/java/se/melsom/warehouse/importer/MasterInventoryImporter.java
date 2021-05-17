@@ -1,9 +1,7 @@
 package se.melsom.warehouse.importer;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.InventoryAccounting;
 import se.melsom.warehouse.model.ItemMasterFile;
@@ -13,13 +11,12 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
-/**
- * The type Master inventory importer.
- */
+import java.util.Vector;
+
 public class MasterInventoryImporter extends Importer {
-	private static Logger logger = Logger.getLogger(MasterInventoryImporter.class);
-	private Vector<Item> importedItems = new Vector<>();
-	private Vector<MasterInventory> importedInventoryList = new Vector<>();
+	private static final Logger logger = LoggerFactory.getLogger(MasterInventoryImporter.class);
+	private final Vector<Item> importedItems = new Vector<>();
+	private final Vector<MasterInventory> importedInventoryList = new Vector<>();
 	private int itemNumberIndex = -1;
 	private int itemNameIndex = -1;
 	private int itemPackagingIndex = -1;
@@ -30,11 +27,6 @@ public class MasterInventoryImporter extends Importer {
 	private int inventoryAnnotationIndex = -1;
 
 
-    /**
-     * Instantiates a new Master inventory importer.
-     *
-     * @param tableModel the table model
-     */
     public MasterInventoryImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
@@ -59,7 +51,7 @@ public class MasterInventoryImporter extends Importer {
 				itemPackagingIndex = columnIndex;
 				break;
 				
-			case EntityName.INVENTORY_NOMINAL_QUANTIY:
+			case EntityName.INVENTORY_NOMINAL_QUANTITY:
 				inventoryQuantityIndex = columnIndex;
 				break;
 				
@@ -108,12 +100,8 @@ public class MasterInventoryImporter extends Importer {
 		if (inventoryIdentityIndex < 0) {
 			return false;
 		}
-		
-		if (inventoryAnnotationIndex < 0) {
-			return false;
-		}
-		
-		return true;
+
+		return inventoryAnnotationIndex >= 0;
 	}
 
 	@Override
@@ -338,12 +326,8 @@ public class MasterInventoryImporter extends Importer {
 		if (importedItems.size() > 0) {
 			return true;
 		}
-		
-		if (importedInventoryList.size() > 0) {
-			return true;
-		}
-		
-		return false;
+
+		return importedInventoryList.size() > 0;
 	}
 
 	@Override
@@ -354,11 +338,11 @@ public class MasterInventoryImporter extends Importer {
 		
 		for (Item anItem : importedItems) {
 			anItem.setId(nextItemId++);
-			logger.trace(anItem);
+			logger.trace("{}", anItem);
 			itemMasterFile.addItem(anItem);
 		}
 				
-		int nextInventoryId = inventoryAccounting.getNextMasterInventoryId();
+		int nextInventoryId = -1;//inventoryAccounting.getNextMasterInventoryId();
 		
 		for (MasterInventory anInventory : importedInventoryList) {
 			if (anInventory.getId() == EntityName.NULL_ID) {

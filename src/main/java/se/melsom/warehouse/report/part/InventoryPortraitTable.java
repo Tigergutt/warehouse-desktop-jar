@@ -1,10 +1,8 @@
 package se.melsom.warehouse.report.part;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.model.entity.inventory.ActualInventory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.report.component.Component;
 import se.melsom.warehouse.report.component.Table;
 import se.melsom.warehouse.report.component.TableRow;
@@ -13,11 +11,13 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Position;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 
+import java.util.Vector;
+
 /**
  * The type Inventory portrait table.
  */
 public class InventoryPortraitTable extends Table {
-	private static Logger logger = Logger.getLogger(InventoryLandscapeTable.class);
+	private static final Logger logger = LoggerFactory.getLogger(InventoryLandscapeTable.class);
 
 	private static final float FRAME_LINE_WIDTH = 0.3f;
 	private static final float INNER_FRAME_LINE_WIDTH = 0.1f;
@@ -80,13 +80,12 @@ public class InventoryPortraitTable extends Table {
 
     /**
      * Sets row values.
-     *
-     * @param rowIndex the row index
+     *  @param rowIndex the row index
      * @param item     the item
      */
-    public void setRowValues(int rowIndex, ActualInventory item) {
+    public void setRowValues(int rowIndex, ActualInventoryVO item) {
 		setRowValues(rowIndex, 
-				item.getLocation().getLocationLabel(),
+				item.getStockLocation().getLocationLabel(),
 				item.getItem().getNumber(), 
 				item.getItem().getName(), 
 				"" + item.getQuantity(),

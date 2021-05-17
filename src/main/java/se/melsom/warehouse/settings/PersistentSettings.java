@@ -1,298 +1,100 @@
 package se.melsom.warehouse.settings;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import javax.json.JsonWriter;
-import javax.json.JsonWriterFactory;
-import javax.json.stream.JsonGenerator;
+import java.io.*;
 
-import org.apache.log4j.Logger;
-
-/**
- * The type Persistent settings.
- */
 public class PersistentSettings {
-	private Logger logger = Logger.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(PersistentSettings.class);
 	
-	private static PersistentSettings singleton = new PersistentSettings();
-	
-	private Map<String, Property> propertyMap = new HashMap<>();
-	private Map<String, WindowSettings> windowSettingsMap = new HashMap<>();
-	
-	private boolean isDirty = false;
-	
-	private PersistentSettings() {		
+	private final SettingsBean settings = new SettingsBean();
+
+	public PersistentSettings() {
+		logger.debug("Execute constructor.");
 	}
 
-    /**
-     * Singleton persistent settings.
-     *
-     * @return the persistent settings
-     */
-    public static PersistentSettings singleton() {
-		return singleton;
-	}
-
-    /**
-     * Load data.
-     *
-     * @param path the path
-     */
-    public void loadData(String path) {
-		logger.debug("Load application settings from: " + path);
-		InputStream input = null;
-		
+	public void loadData(String path) {
+		logger.debug("Load application settings from: {}", path);
 		try {
-			input = new FileInputStream(path);
+			InputStream input = new FileInputStream(path);
+
+			loadData(input);
 		} catch (FileNotFoundException e) {
-			logger.warn("Failed to load application settings.", e);
-			return;
+			logger.warn("Failed to load application settings: {}.", e.getMessage());
 		}
-		
+	}
+
+	void loadData(InputStream input) {
 		InputStreamReader reader = new InputStreamReader(input);
-		JsonReader jsonReader = Json.createReader(reader);
-		
-		JsonObject root = jsonReader.readObject();
-		JsonObject propertiesObject = root.getJsonObject("properties");
-		
-		if (propertiesObject != null) {
-			for (String key : propertiesObject.keySet()) {
-				JsonValue value = propertiesObject.get(key);
-				
-				switch (value.getValueType()) {
-				case NUMBER: 
-					logger.debug(key + "=" + propertiesObject.getInt(key));					
-					propertyMap.put(key, new Property("INTEGER", key, "" + propertiesObject.getInt(key)));
-					break;
-					
-				case STRING: 
-					logger.debug(key + "=" + propertiesObject.getString(key, "default"));					
-					propertyMap.put(key, new Property("STRING", key, propertiesObject.getString(key)));
-					break;
-				
-				default: 
-					logger.warn("Unknown JSON type: " + value.getValueType());
-					break;
-				}				
-			}
-		}
-		
-		JsonObject windowsObject = root.getJsonObject("windows");
-		
-		if (windowsObject != null) {
-			for (String key : windowsObject.keySet()) {
-				JsonObject windowObject = windowsObject.getJsonObject(key);
-				
-				logger.debug(key + "=" + windowObject);
-				int x = windowObject.getInt("x", 0);
-				int y = windowObject.getInt("y", 0);
-				int width = windowObject.getInt("w", 400);
-				int height = windowObject.getInt("h", 400);
-				boolean isVisible = windowObject.getBoolean("v", false);
-				
-				windowSettingsMap.put(key, new WindowSettings(key, x, y, width, height, isVisible));
-			}
+	}
+
+    public String getProperty(String name) {
+		return settings.properties.get(name);
+	}
+
+	public String getProperty(String name, String defaultValue) {
+		String value = settings.properties.get(name);
+
+		if (value != null) {
+			return value;
 		}
 
-		setDirty(false);
+		settings.properties.add(name, defaultValue);
+
+		return defaultValue;
 	}
 
-    /**
-     * Gets property.
-     *
-     * @param name the name
-     * @return the property
-     */
-    public Property getProperty(String name) {
-		return propertyMap.get(name);
+	public void setProperty(String name, String value) {
+		settings.properties.add(name, value);
 	}
 
-
-    /**
-     * Gets property.
-     *
-     * @param name         the name
-     * @param defaultValue the default value
-     * @return the property
-     */
-    public Property getProperty(String name, String defaultValue) {
-		Property property = getProperty(name);
-		
-		if (property == null) {
-			property = new Property("STRING", name, defaultValue);
-			
-			addProperty(property);
-		}
-		
-		return property;
+    public WindowBean getWindowSettings(String name) {
+		return settings.windows.get(name);
 	}
 
-    /**
-     * Gets property.
-     *
-     * @param name         the name
-     * @param defaultValue the default value
-     * @return the property
-     */
-    public Property getProperty(String name, int defaultValue) {
-		Property property = getProperty(name);
-		
-		if (property == null) {
-			property = new Property("INTEGER", name, "" + defaultValue);
-			
-			addProperty(property);
-		}
-		
-		return property;
+    public void addWindowSettings(String name, WindowBean window) {
+		settings.windows.add(name, window);
 	}
 
-    /**
-     * Add property.
-     *
-     * @param property the property
-     */
-    public void addProperty(Property property) {
-		propertyMap.put(property.getName(), property);
-		property.setParent(this);
-		setDirty(true);
-	}
-
-    /**
-     * Gets window settings.
-     *
-     * @param name the name
-     * @return the window settings
-     */
-    public WindowSettings getWindowSettings(String name) {
-		return windowSettingsMap.get(name);
-	}
-
-    /**
-     * Add window settings.
-     *
-     * @param windowSettings the window settings
-     */
-    public void addWindowSettings(WindowSettings windowSettings) {
-		windowSettingsMap.put(windowSettings.getName(), windowSettings);
-		windowSettings.setParent(this);
-		setDirty(true);
-	}
-
-    /**
-     * Sets window location.
-     *
-     * @param name the name
-     * @param x    the x
-     * @param y    the y
-     */
     public void setWindowLocation(String name, int x, int y) {
-		if (windowSettingsMap.containsKey(name)) {
-			windowSettingsMap.get(name).setX(x);
-			windowSettingsMap.get(name).setY(y);
-		}
+		getWindow(name).setX(x);
+		getWindow(name).setY(y);
 	}
 
-    /**
-     * Sets window dimension.
-     *
-     * @param name   the name
-     * @param width  the width
-     * @param height the height
-     */
     public void setWindowDimension(String name, int width, int height) {
-		if (windowSettingsMap.containsKey(name)) {
-			windowSettingsMap.get(name).setWidth(width);
-			windowSettingsMap.get(name).setHeight(height);
-		}
+		getWindow(name).setWidth(width);
+		getWindow(name).setHeight(height);
 	}
 
-    /**
-     * Sets window visible.
-     *
-     * @param name      the name
-     * @param isVisible the is visible
-     */
     public void setWindowVisible(String name, boolean isVisible) {
-		if (windowSettingsMap.containsKey(name)) {
-			windowSettingsMap.get(name).setVisible(isVisible);
+		getWindow(name).setVisible(isVisible);
+	}
+
+	private WindowBean getWindow(String name) {
+		WindowBean window = settings.windows.get(name);
+		if (window == null) {
+			window = new WindowBean();
+			settings.windows.add(name, window);
 		}
+		return window;
 	}
 
-    /**
-     * Is dirty boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isDirty() {
-		return isDirty;
+	public void saveData(OutputStream output) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectWriter writer = mapper.writerFor(SettingsBean.class);
+		JsonGenerator generator = writer.createGenerator(output);
+		generator.setPrettyPrinter(new DefaultPrettyPrinter());
+		generator.writeObject(settings);
 	}
 
-    /**
-     * Sets dirty.
-     *
-     * @param dirty the dirty
-     */
-    public void setDirty(boolean dirty) {
-		this.isDirty = dirty;
-	}
-
-    /**
-     * Save data.
-     *
-     * @param path the path
-     * @throws FileNotFoundException the file not found exception
-     */
-    public void saveData(String path) throws FileNotFoundException {
+	public void saveData(String path) throws IOException {
 		logger.debug("Save application settings to: " + path);		
-		Map<String, Object> configs = new HashMap<>();
-        configs.put(JsonGenerator.PRETTY_PRINTING, true);
-        JsonBuilderFactory factory = Json.createBuilderFactory(configs);
-		JsonObjectBuilder objectBuilder = factory.createObjectBuilder();
-		
-		for (String name : propertyMap.keySet()) {
-			Property property = propertyMap.get(name);
-
-			objectBuilder.add(property.getName(), property.getValue());
-		}
-		
-        JsonObject propertiesObject = objectBuilder.build();
-
-		for (String name : windowSettingsMap.keySet()) {
-			WindowSettings window = windowSettingsMap.get(name);
-			JsonObjectBuilder windowObjectBuilder = factory.createObjectBuilder();
-
-			windowObjectBuilder.add("x", window.getX());
-			windowObjectBuilder.add("y", window.getY());
-			windowObjectBuilder.add("w", window.getWidth());
-			windowObjectBuilder.add("h", window.getHeight());
-			windowObjectBuilder.add("v", window.isVisible());
-	        objectBuilder.add(name, windowObjectBuilder.build());
-		}
-		
-        JsonObject windowsObject = objectBuilder.build();
-
-        objectBuilder.add("properties", propertiesObject);
-        objectBuilder.add("windows", windowsObject);
-        
         OutputStream output = new FileOutputStream(path);
-        JsonWriterFactory writerFactory = Json.createWriterFactory(configs);
-        JsonWriter outWriter = writerFactory.createWriter(output);
-
-        outWriter.writeObject(objectBuilder.build());
-        
-		isDirty = false;
+        saveData(output);
 	}
 }

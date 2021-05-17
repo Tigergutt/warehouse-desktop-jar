@@ -1,15 +1,6 @@
 package se.melsom.warehouse.report.component;
 
-/**
- * The type Table row.
- */
 public class TableRow extends Frame {
-    /**
-     * Instantiates a new Table row.
-     *
-     * @param x the x
-     * @param y the y
-     */
     public TableRow(float x, float y) {
 		super(x, y, 0, 0);
 	}

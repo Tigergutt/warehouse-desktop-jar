@@ -1,17 +1,14 @@
 package se.melsom.warehouse.report.inventory;
 
-import java.util.Vector;
-
-import se.melsom.warehouse.model.entity.inventory.ActualInventory;
+import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.report.component.Page;
 import se.melsom.warehouse.report.component.TextBox;
 import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 import se.melsom.warehouse.report.part.InventoryPortraitTable;
 
-/**
- * The type Inventory page.
- */
+import java.util.Vector;
+
 public class InventoryPage extends Page {
 	private static final float CALLSIGN_FIELD_X = 20;
 	private static final float CALLSIGN_FIELD_Y = 7;	
@@ -30,16 +27,9 @@ public class InventoryPage extends Page {
 	private static final float INVENTORY_TABLE_HAND_X = 20;
 	private static final float INVENTORY_TABLE_HAND_Y = 25;
 	
-	private TextBox pageNumberField;
-	private InventoryPortraitTable table;
+	private final TextBox pageNumberField;
+	private final InventoryPortraitTable table;
 
-    /**
-     * Instantiates a new Inventory page.
-     *
-     * @param reportName the report name
-     * @param callsign   the callsign
-     * @param date       the date
-     */
     public InventoryPage(String reportName, String callsign, String date) {
 		super(Orientation.PORTRAIT);
 		
@@ -70,48 +60,22 @@ public class InventoryPage extends Page {
 		addComponent(table);
 	}
 
-    /**
-     * Gets row capacity.
-     *
-     * @return the row capacity
-     */
     public int getRowCapacity() {
 		return INVENTORY_TABLE_ROW_COUNT;
 	}
 
-    /**
-     * Sets inventory row.
-     *
-     * @param rowIndex the row index
-     * @param item     the item
-     */
-    public void setInventoryRow(int rowIndex, ActualInventory item) {
+    public void setInventoryRow(int rowIndex, ActualInventoryVO item) {
 		table.setRowValues(rowIndex, item);
 	}
 
-    /**
-     * Sets inventory row.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
     public void setInventoryRow(int rowIndex, Vector<String> values) {
 		table.setRowValues(rowIndex, values);
 	}
 
-    /**
-     * Sets inventory row.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
     public void setInventoryRow(int rowIndex, String... values) {
 		table.setRowValues(rowIndex, values);
 	}
 
-    /**
-     * Update page number field.
-     */
     public void updatePageNumberField() {
 		pageNumberField.setText("Sida " + getPageNumber() + " (" + getPageCount() + ")");
 	}

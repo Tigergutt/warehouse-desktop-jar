@@ -1,5 +1,18 @@
 package se.melsom.warehouse.presentation.importer;
 
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.melsom.warehouse.importer.ImportType;
+import se.melsom.warehouse.importer.Importer;
+import se.melsom.warehouse.model.InventoryAccounting;
+import se.melsom.warehouse.presentation.ViewController;
+import se.melsom.warehouse.settings.PersistentSettings;
+import se.melsom.warehouse.settings.WindowBean;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.io.FileInputStream;
@@ -9,56 +22,26 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-
-import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import se.melsom.warehouse.importer.ImportType;
-import se.melsom.warehouse.importer.Importer;
-import se.melsom.warehouse.model.InventoryAccounting;
-import se.melsom.warehouse.presentation.ViewController;
-import se.melsom.warehouse.settings.PersistentSettings;
-import se.melsom.warehouse.settings.WindowSettings;
-
-/**
- * The type Import wizard controller.
- */
 public class ImportWizardController extends ViewController {
-	private static Logger logger = Logger.getLogger(ImportWizardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ImportWizardController.class);
 	
 	private static final String CANCEL_ACTION = "CancelAction";
 	private static final String CONTINUE_ACTION = "ContinueAction";
 	private static final String COMPLETE_ACTION = "CompleteAction";
 	
-	private InventoryAccounting inventoryAccounting;
+	private final InventoryAccounting inventoryAccounting;
 	private ImportWizardView view = null;
-	private InputTableModel tableModel = new InputTableModel();
+	private final InputTableModel tableModel = new InputTableModel();
 	private ImporterState state = ImporterState.PENDING;
 	private Importer importer = null;
 
-    /**
-     * Instantiates a new Import wizard controller.
-     *
-     * @param inventoryAccounting the inventory accounting
-     */
+	@Autowired
+	private PersistentSettings persistentSettings;
+
     public ImportWizardController(InventoryAccounting inventoryAccounting) {
 		this.inventoryAccounting = inventoryAccounting;
 	}
 
-    /**
-     * Import excel file boolean.
-     *
-     * @param path the path
-     * @return the boolean
-     */
     public boolean importExcelFile(String path) {
 		logger.debug("Load equipment type data from: '" + path + "'");
 		InputStream input = null;
@@ -165,21 +148,15 @@ public class ImportWizardController extends ViewController {
 		return true;
 	}
 
-    /**
-     * Show wizard view.
-     *
-     * @param type   the type
-     * @param parent the parent
-     */
     public void showWizardView(ImportType type, JFrame parent) {
 		this.view = new ImportWizardView(this, parent, tableModel, new InputTableCellRenderer(tableModel));
 		
-		WindowSettings settings = PersistentSettings.singleton().getWindowSettings(getWindowName());
+		WindowBean settings = persistentSettings.getWindowSettings(getWindowName());
 		
 		if (settings == null) {
-			settings = new WindowSettings(getWindowName(), 21, 33, 778, 264, false);
-			
-			PersistentSettings.singleton().addWindowSettings(settings);
+			settings = new WindowBean(21, 33, 778, 264, false);
+
+			persistentSettings.addWindowSettings(getWindowName(), settings);
 		}
 
 		view.setImportType(type);
@@ -313,7 +290,7 @@ public class ImportWizardController extends ViewController {
 		}
 		
 		JInternalFrame frame = (JInternalFrame) event.getSource();
-		PersistentSettings.singleton().setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());	
+		persistentSettings.setWindowDimension(getWindowName(), frame.getWidth(), frame.getHeight());
 	}
 
 	@Override
@@ -323,7 +300,7 @@ public class ImportWizardController extends ViewController {
 		}
 		
 		JInternalFrame frame = (JInternalFrame) event.getSource();
-		PersistentSettings.singleton().setWindowLocation(getWindowName(), frame.getX(), frame.getY());	
+		persistentSettings.setWindowLocation(getWindowName(), frame.getX(), frame.getY());
 	}
 	
 	private String getWindowName() {

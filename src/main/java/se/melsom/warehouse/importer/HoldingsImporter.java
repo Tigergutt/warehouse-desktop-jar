@@ -1,9 +1,7 @@
 package se.melsom.warehouse.importer;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.InventoryAccounting;
 import se.melsom.warehouse.model.LocationMasterFile;
@@ -14,21 +12,15 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
-/**
- * The type Holdings importer.
- */
+import java.util.Vector;
+
 public class HoldingsImporter extends Importer {
-	private static Logger logger = Logger.getLogger(HoldingsImporter.class);
-	private Vector<StockLocation> importedLocations = new Vector<>();
-	private Vector<Holding> importedHoldings = new Vector<>();
+	private static final Logger logger = LoggerFactory.getLogger(HoldingsImporter.class);
+	private final Vector<StockLocation> importedLocations = new Vector<>();
+	private final Vector<Holding> importedHoldings = new Vector<>();
 	private int locationIndex = -1;
 	private int unitIndex = -1;
 
-    /**
-     * Instantiates a new Holdings importer.
-     *
-     * @param tableModel the table model
-     */
     public HoldingsImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
@@ -54,13 +46,9 @@ public class HoldingsImporter extends Importer {
 		if (locationIndex < 0) {
 			return false;
 		}
-		
-		if (unitIndex < 0) {
-			return false;
-		}
-		
-		return true;
-	}
+
+        return unitIndex >= 0;
+    }
 
 	@Override
 	public void checkValidity(InventoryAccounting inventoryAccounting) {
@@ -133,12 +121,8 @@ public class HoldingsImporter extends Importer {
 			return true;
 		}
 
-		if (importedHoldings.size() > 0) {
-			return true;
-		}
-		
-		return false;
-	}
+        return importedHoldings.size() > 0;
+    }
 
 	@Override
 	public void storeData(InventoryAccounting inventoryAccounting) {
@@ -148,7 +132,7 @@ public class HoldingsImporter extends Importer {
 		
 		for (StockLocation aLocation : importedLocations) {
 			aLocation.setId(nextLocationId++);
-			logger.trace(aLocation);
+			logger.trace("{}", aLocation);
 			locationMasterFile.addLocation(aLocation);
 		}
 

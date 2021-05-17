@@ -1,30 +1,21 @@
 package se.melsom.warehouse.command.report;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.application.ApplicationController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.application.ApplicationPresentationModel;
+import se.melsom.warehouse.application.inventory.actual.ActualInventoryController;
 import se.melsom.warehouse.command.GenerateReportCommand;
-import se.melsom.warehouse.model.entity.inventory.ActualInventory;
-import se.melsom.warehouse.presentation.inventory.ActualInventoryController;
+import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.report.inventory.InventoryViewReport;
 
-/**
- * The Generate inventory view report command.
- */
-public class GenerateInventoryViewReport extends GenerateReportCommand {
-	private static Logger logger = Logger.getLogger(GenerateInventoryViewReport.class);
-	private ApplicationController controller;
-	private ActualInventoryController inventoryController;
+import java.util.Vector;
 
-    /**
-     * Instantiates a new Generate inventory view report.
-     *
-     * @param controller          the controller
-     * @param inventoryController the inventory controller
-     */
-    public GenerateInventoryViewReport(ApplicationController controller, ActualInventoryController inventoryController) {
+public class GenerateInventoryViewReport extends GenerateReportCommand {
+	private static final Logger logger = LoggerFactory.getLogger(GenerateInventoryViewReport.class);
+	private final ApplicationPresentationModel controller;
+	private final ActualInventoryController inventoryController;
+
+    public GenerateInventoryViewReport(ApplicationPresentationModel controller, ActualInventoryController inventoryController) {
 		this.controller = controller;
 		this.inventoryController = inventoryController;
 	}
@@ -35,7 +26,7 @@ public class GenerateInventoryViewReport extends GenerateReportCommand {
 		String section = inventoryController.getSelectedSection();
 		String slot = inventoryController.getSelectedSlot();
 		String location = section + slot;
-		Vector<ActualInventory> inventoryList = inventoryController.getInventory();
+		Vector<ActualInventoryVO> inventoryList = inventoryController.getInventory();
 		String[] columnNames = inventoryController.getTableColumnNames();
 		InventoryViewReport report = new InventoryViewReport(location, inventoryList, columnNames);
 		

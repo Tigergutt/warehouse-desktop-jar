@@ -1,39 +1,29 @@
 package se.melsom.warehouse.report.inventory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.data.vo.StockLocationVO;
+import se.melsom.warehouse.model.entity.Holding;
+import se.melsom.warehouse.report.Report;
+import se.melsom.warehouse.report.part.InventoryLandscapeTable;
+
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.database.inventory.StockLocationItem;
-import se.melsom.warehouse.model.entity.Holding;
-import se.melsom.warehouse.report.Report;
-import se.melsom.warehouse.report.part.InventoryLandscapeTable;
-
-/**
- * The type Stock location report.
- */
 public class StockLocationReport extends Report {
-	private static Logger logger = Logger.getLogger(StockLocationReport.class);
+	private static final Logger logger = LoggerFactory.getLogger(StockLocationReport.class);
 	private static final String REPORT_NAME = "Materiellista";
 
-    /**
-     * Instantiates a new Stock location report.
-     *
-     * @param tableHeader the table header
-     * @param data        the data
-     * @param holdings    the holdings
-     */
-    public StockLocationReport(Vector<String> tableHeader, Vector<StockLocationItem> data, Vector<Holding> holdings) {
+    public StockLocationReport(Vector<String> tableHeader, Vector<StockLocationVO> data, Vector<Holding> holdings) {
 		logger.debug("Generating report.");
-		Map<String, LinkedList<StockLocationItem>> locationInventory = new TreeMap<>();		
-		LinkedList<StockLocationItem> currentLocationInventory = null;
+		Map<String, LinkedList<StockLocationVO>> locationInventory = new TreeMap<>();
+		LinkedList<StockLocationVO> currentLocationInventory = null;
 		String currentStockLocationLabel = "";
 
 		logger.debug("Split data into locations.");
-		for (StockLocationItem dao : data) {
+		for (StockLocationVO dao : data) {
 			String stockLocationLabel = dao.getSection() + dao.getSlot();
 			
 			if (!currentStockLocationLabel.equals(stockLocationLabel)) {
@@ -60,7 +50,7 @@ public class StockLocationReport extends Report {
 				}
 			}
 			
-			LinkedList<StockLocationItem> inventory = locationInventory.get(location);
+			LinkedList<StockLocationVO> inventory = locationInventory.get(location);
 			Vector<StockLocationPage> locationPages = new Vector<>();
 			int rowIndex = 0;
 			
@@ -84,17 +74,17 @@ public class StockLocationReport extends Report {
 					locationPages.addElement(currentPage);
 				}
 				
-				StockLocationItem dao = inventory.removeFirst();
-				String col0 = dao.getNumber();
-				String col1 = dao.getName();
-				String col2 = dao.getIdentity().length() == 0 ? "" + dao.getQuantity() : "#" + dao.getIdentity();
+//				StockLocationItem dao = inventory.removeFirst();
+//				String col0 = dao.getNumber();
+//				String col1 = dao.getName();
+//				String col2 = dao.getIdentity().length() == 0 ? "" + dao.getQuantity() : "#" + dao.getIdentity();
+//
+//				if (oldestModificationDate.compareTo(dao.getDate()) > 0) {
+//					oldestModificationDate = dao.getDate();
+//				}
 				
-				if (oldestModificationDate.compareTo(dao.getDate()) > 0) {
-					oldestModificationDate = dao.getDate();
-				}
-				
-				logger.trace("table row=" + col0 + "|" + col1 + "|" + col2);
-				currentPage.getTable().setRowValues(rowIndex++, col0, col1, col2);				
+//				logger.trace("table row=" + col0 + "|" + col1 + "|" + col2);
+//				currentPage.getTable().setRowValues(rowIndex++, col0, col1, col2);
 			} while (!inventory.isEmpty());	
 			
 			logger.debug("Setting page header data.");

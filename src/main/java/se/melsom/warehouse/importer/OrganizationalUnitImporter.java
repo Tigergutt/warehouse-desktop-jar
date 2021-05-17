@@ -1,9 +1,7 @@
 package se.melsom.warehouse.importer;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.InventoryAccounting;
 import se.melsom.warehouse.model.UnitsMasterFile;
@@ -12,22 +10,16 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
-/**
- * The type Organizational unit importer.
- */
+import java.util.Vector;
+
 public class OrganizationalUnitImporter extends Importer {
-	private static Logger logger = Logger.getLogger(OrganizationalUnitImporter.class);
-	private Vector<OrganizationalUnit> importedUnits = new Vector<>();
+	private static final Logger logger = LoggerFactory.getLogger(OrganizationalUnitImporter.class);
+	private final Vector<OrganizationalUnit> importedUnits = new Vector<>();
 	private int callsignIndex = -1;
 	private int nameIndex = -1;
 	private int superiorCallsignIndex = -1;
 	private int levelIndex = -1;
 
-    /**
-     * Instantiates a new Organizational unit importer.
-     *
-     * @param tableModel the table model
-     */
     public OrganizationalUnitImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
@@ -70,12 +62,8 @@ public class OrganizationalUnitImporter extends Importer {
 		if (superiorCallsignIndex < 0) {
 			return false;
 		}
-		
-		if (levelIndex < 0) {
-			return false;
-		}
-		
-		return true;
+
+		return levelIndex >= 0;
 	}
 
 	@Override
@@ -122,7 +110,7 @@ public class OrganizationalUnitImporter extends Importer {
 				nameCell.setStatus(ImportStatus.OK);
 				OrganizationalUnit importedUnit = new OrganizationalUnit(EntityName.NULL_ID, callsign, name, null);
 				
-				logger.trace(importedUnit);
+				logger.trace("{}", importedUnit);
 				
 				importedUnits.addElement(importedUnit);
 			}
@@ -177,11 +165,7 @@ public class OrganizationalUnitImporter extends Importer {
 
 	@Override
 	public boolean anythingToStore() {
-		if (importedUnits.size() > 0) {
-			return true;
-		}
-		
-		return false;
+		return importedUnits.size() > 0;
 	}
 
 	@Override

@@ -1,38 +1,33 @@
 package se.melsom.warehouse.command.importer;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.application.ApplicationController;
-import se.melsom.warehouse.command.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.melsom.warehouse.application.ApplicationPresentationModel;
+import se.melsom.warehouse.application.Command;
 import se.melsom.warehouse.importer.ImportType;
 import se.melsom.warehouse.presentation.importer.ImportWizardController;
 import se.melsom.warehouse.settings.PersistentSettings;
-import se.melsom.warehouse.settings.Property;
 
-/**
- * The Import stock locations command.
- */
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public class ImportStockLocations extends Command {
-	private static Logger logger = Logger.getLogger(ImportStockLocations.class);
-	private ApplicationController controller;
+	private static final Logger logger = LoggerFactory.getLogger(ImportStockLocations.class);
+	private final ApplicationPresentationModel controller;
 
-    /**
-     * Instantiates a new Import stock locations.
-     *
-     * @param controller the controller
-     */
-    public ImportStockLocations(ApplicationController controller) {
+	@Autowired
+	private PersistentSettings persistentSettings;
+
+    public ImportStockLocations(ApplicationPresentationModel controller) {
 		this.controller = controller;
 	}
 
 	@Override
 	public void execute() {
 		logger.debug("Executing import command.");
-		Property property = PersistentSettings.singleton().getProperty("currentDirectory", ".");
-		JFileChooser chooser = new JFileChooser(property.getValue());
+		String directory = persistentSettings.getProperty("currentDirectory", ".");
+		JFileChooser chooser = new JFileChooser(directory);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Workbook", "xlsx");
 
 		chooser.setFileFilter(filter);
@@ -41,9 +36,9 @@ public class ImportStockLocations extends Command {
 			return;
 		}
 
-		property.setValue(chooser.getSelectedFile().getParent());
+		persistentSettings.setProperty("currentDirectory", chooser.getSelectedFile().getParent());
 
-		ImportWizardController importer = new ImportWizardController(controller.getInventoryAccounting());
+		ImportWizardController importer = new ImportWizardController(null /*controller.getInventoryAccounting()*/);
 		
 		if (importer.importExcelFile(chooser.getSelectedFile().getPath())) {
 			importer.showWizardView(ImportType.STOCK_LOCATIONS_AND_HOLDINGS, controller.getDesktopView());

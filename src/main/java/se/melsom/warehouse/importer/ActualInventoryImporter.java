@@ -1,9 +1,7 @@
 package se.melsom.warehouse.importer;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.model.InventoryAccounting;
 import se.melsom.warehouse.model.ItemMasterFile;
@@ -15,14 +13,13 @@ import se.melsom.warehouse.presentation.importer.ImportCell;
 import se.melsom.warehouse.presentation.importer.ImportStatus;
 import se.melsom.warehouse.presentation.importer.InputTableModel;
 
-/**
- * The type Actual inventory importer.
- */
+import java.util.Vector;
+
 public class ActualInventoryImporter extends Importer {
-	private static Logger logger = Logger.getLogger(ActualInventoryImporter.class);
-	private Vector<Item> importedItems = new Vector<>();
-	private Vector<StockLocation> importedLocations = new Vector<>();
-	private Vector<ActualInventory> importedInventoryList = new Vector<>();
+	private static final Logger logger = LoggerFactory.getLogger(ActualInventoryImporter.class);
+	private final Vector<Item> importedItems = new Vector<>();
+	private final Vector<StockLocation> importedLocations = new Vector<>();
+	private final Vector<ActualInventory> importedInventoryList = new Vector<>();
 	private int locationIndex = -1;
 	private int itemNumberIndex = -1;
 	private int itemNameIndex = -1;
@@ -31,11 +28,6 @@ public class ActualInventoryImporter extends Importer {
 	private int timestampIndex = -1;
 
 
-    /**
-     * Instantiates a new Actual inventory importer.
-     *
-     * @param tableModel the table model
-     */
     public ActualInventoryImporter(InputTableModel tableModel) {
 		super(tableModel);
 	}
@@ -93,12 +85,8 @@ public class ActualInventoryImporter extends Importer {
 		if (itemAnnotationIndex < 0) {
 			return false;
 		}
-		
-		if (timestampIndex < 0) {
-			return false;
-		}
-		
-		return true;
+
+		return timestampIndex >= 0;
 	}
 
 	@Override
@@ -172,7 +160,7 @@ public class ActualInventoryImporter extends Importer {
 						itemNameCell.setStatus(ImportStatus.WARNING);
 					}
 					
-					logger.trace(anItem);
+					logger.trace("{}", anItem);
 					importedItem = anItem;
 					break;					
 				}
@@ -191,7 +179,7 @@ public class ActualInventoryImporter extends Importer {
 				itemNumberCell.setStatus(ImportStatus.OK);
 				itemNameCell.setStatus(ImportStatus.OK);
 				importedItem = new Item(EntityName.NULL_ID, itemNumber, itemName, "");
-				logger.trace(importedItem);
+				logger.trace("{}", importedItem);
 				importedItems.addElement(importedItem);
 			}
 			
@@ -234,7 +222,7 @@ public class ActualInventoryImporter extends Importer {
 				}
 				
 				quantityCell.setStatus(isDefined ? ImportStatus.IGNORED : ImportStatus.OK);
-				isEqual = isDefined ? isEqual : false;
+				isEqual = isDefined && isEqual;
 			} else if (quantityCell.getValue() instanceof Integer) {
 				quantity = (Integer) quantityCell.getValue();
 				boolean isDefined = false;
@@ -246,7 +234,7 @@ public class ActualInventoryImporter extends Importer {
 					}
 				}
 				quantityCell.setStatus(isDefined ? ImportStatus.IGNORED : ImportStatus.OK);
-				isEqual = isDefined ? isEqual : false;
+				isEqual = isDefined && isEqual;
 			} else {				
 				quantityCell.setStatus(ImportStatus.ERROR);
 			}
@@ -266,7 +254,7 @@ public class ActualInventoryImporter extends Importer {
 			}
 			
 			annotationCell.setStatus(isDefined ? ImportStatus.IGNORED : ImportStatus.OK);
-			isEqual = isDefined ? isEqual : false;
+			isEqual = isDefined && isEqual;
 
 			importedInventory.setAnnotation(annotation);	
 			
@@ -281,7 +269,7 @@ public class ActualInventoryImporter extends Importer {
 				}
 			}
 			timestampCell.setStatus(isDefined ? ImportStatus.IGNORED : ImportStatus.OK);
-			isEqual = isDefined ? isEqual : false;
+			isEqual = isDefined && isEqual;
 			
 			importedInventory.setTimestamp(timestamp);				
 
@@ -301,11 +289,7 @@ public class ActualInventoryImporter extends Importer {
 			return true;
 		}
 
-		if (importedInventoryList.size() > 0) {
-			return true;
-		}
-		
-		return false;
+		return importedInventoryList.size() > 0;
 	}
 
 	@Override
@@ -316,7 +300,7 @@ public class ActualInventoryImporter extends Importer {
 		
 		for (Item anItem : importedItems) {
 			anItem.setId(nextItemId++);
-			logger.trace(anItem);
+			logger.trace("{}", anItem);
 			itemMasterFile.addItem(anItem);
 		}
 		
@@ -325,15 +309,15 @@ public class ActualInventoryImporter extends Importer {
 		
 		for (StockLocation aLocation : importedLocations) {
 			aLocation.setId(nextLocationId++);
-			logger.trace(aLocation);
+			logger.trace("{}", aLocation);
 			locationMasterFile.addLocation(aLocation);
 		}
 		
-		int nextInventoryId = inventoryAccounting.getNextActualInventoryId();
+		int nextInventoryId = -1; //inventoryAccounting.getNextActualInventoryId();
 
 		for (ActualInventory anInventory : importedInventoryList) {
 			anInventory.setId(nextInventoryId++);
-			logger.trace(anInventory);
+			logger.trace("{}", anInventory);
 			inventoryAccounting.addInventory(anInventory);
 		}
 	}

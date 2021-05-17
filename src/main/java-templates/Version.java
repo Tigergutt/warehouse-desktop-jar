@@ -1,36 +1,17 @@
-/**
- * The type Version.
- */
+package se.melsom.warhorse;
+
 public final class Version {
+    private Version() {}
 
-    private static final String VERSION = "${project.version}";
-    private static final String GROUPID = "${project.groupId}";
-    private static final String ARTIFACTID = "${project.artifactId}";
-
-    /**
-     * Gets version.
-     *
-     * @return the version
-     */
     public static String getVersion() {
-        return VERSION;
+        return "${project.version}";
     }
 
-    /**
-     * Gets group id.
-     *
-     * @return the group id
-     */
     public static String getGroupId() {
-        return GROUPID;
+        return "${project.groupId}";
     }
 
-    /**
-     * Gets artifact id.
-     *
-     * @return the artifact id
-     */
     public static String getArtifactId() {
-        return ARTIFACTID;
+        return "${project.artifactId}";
     }
 }

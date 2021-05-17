@@ -1,39 +1,28 @@
 package se.melsom.warehouse.presentation.stock;
 
-import java.util.Collections;
-import java.util.Comparator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.data.vo.StockOnHandVO;
+import se.melsom.warehouse.model.EntityName;
+
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+@Deprecated
+public class StockOnHandTableModel extends SortableTableModel {
+	private static final Logger logger = LoggerFactory.getLogger(StockOnHandTableModel.class);
 
-import se.melsom.warehouse.model.EntityName;
-import se.melsom.warehouse.model.entity.inventory.StockOnHand;
-import se.melsom.warehouse.presentation.common.table.SortedTableModel;
-
-/**
- * The type Stock on hand table model.
- */
-@SuppressWarnings("serial")
-public class StockOnHandTableModel extends SortedTableModel  {
-	private static Logger logger = Logger.getLogger(StockOnHandTableModel.class);
-
-    /**
-     * The constant columnNames.
-     */
-    public static final String[] columnNames = { 
+    public static final String[] columnNames = {
 			EntityName.ITEM_NUMBER, 
 			EntityName.ITEM_NAME,
 			EntityName.ITEM_PACKAGING,
-			EntityName.INVENTORY_NOMINAL_QUANTIY,
+			EntityName.INVENTORY_NOMINAL_QUANTITY,
 			EntityName.INVENTORY_ACTUAL_QUANTITY,
 			EntityName.INVENTORY_IDENTITY,
 			EntityName.INVENTORY_ANNOTATION 
 	};
 
-    /**
-     * The constant columnWidts.
-     */
-    public static final int[] columnWidts = { 
+    public static final int[] columnWidts = {
 			120, 
 			230, 
 			50,
@@ -43,10 +32,7 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			300
 	};
 
-    /**
-     * The constant isSortableArray.
-     */
-    public static final boolean[] isSortableArray = { 
+    public static final boolean[] isSortableArray = {
 			true, 
 			true, 
 			false, 
@@ -55,9 +41,6 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			true,
 			false};
 
-    /**
-     * The constant columnClass.
-     */
     public static final Class<?>[] columnClass = {
 			String.class, 
 			String.class, 
@@ -68,9 +51,6 @@ public class StockOnHandTableModel extends SortedTableModel  {
 			String.class
 	};
 
-    /**
-     * Instantiates a new Stock on hand table model.
-     */
     public StockOnHandTableModel() {
 		if (columnNames.length != columnWidts.length || 
 				columnNames.length != columnClass.length ||
@@ -79,39 +59,24 @@ public class StockOnHandTableModel extends SortedTableModel  {
 		}
 	}
 	
-	private Vector<StockOnHand> filteredList = new Vector<>();
-	private Vector<StockOnHand> originalList = new Vector<>();
+	private final Vector<StockOnHandVO> filteredList = new Vector<>();
+	private Vector<StockOnHandVO> originalList = new Vector<>();
 	private boolean shouldFilterShortfall = false;
 	private boolean shouldFilterBalances = false;
 	private boolean shouldFilterOverplus = false;
 
-    /**
-     * Gets stock on hand.
-     *
-     * @return the stock on hand
-     */
-    public Vector<StockOnHand> getStockOnHand() {
+    public Vector<StockOnHandVO> getStockOnHand() {
 		return filteredList;
 	}
 
-    /**
-     * Sets stock on hand.
-     *
-     * @param value the value
-     */
-    public void setStockOnHand(Vector<StockOnHand> value) {
-		originalList = value;
+    public void setStockOnHand(Vector<StockOnHandVO> stockOnHand) {
+		originalList = stockOnHand;
 		filterStockOnHand(originalList, filteredList);
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();
 		logger.debug("Inventory updated.");
 	}
 
-    /**
-     * Sets filter shortfall.
-     *
-     * @param shouldFilterShortfall the should filter shortfall
-     */
     public void setFilterShortfall(boolean shouldFilterShortfall) {
 		this.shouldFilterShortfall = shouldFilterShortfall;
 		filterStockOnHand(originalList, filteredList);
@@ -119,11 +84,6 @@ public class StockOnHandTableModel extends SortedTableModel  {
 		fireTableDataChanged();
 	}
 
-    /**
-     * Sets filter balances.
-     *
-     * @param shouldFilterBalances the should filter balances
-     */
     public void setFilterBalances(boolean shouldFilterBalances) {
 		this.shouldFilterBalances = shouldFilterBalances;
 		filterStockOnHand(originalList, filteredList);
@@ -131,22 +91,17 @@ public class StockOnHandTableModel extends SortedTableModel  {
 		fireTableDataChanged();
 	}
 
-    /**
-     * Sets filter overplus.
-     *
-     * @param shouldFilterOverplus the should filter overplus
-     */
-    public void setFilterOverplus(boolean shouldFilterOverplus) {
+   public void setFilterOverplus(boolean shouldFilterOverplus) {
 		this.shouldFilterOverplus = shouldFilterOverplus;
 		filterStockOnHand(originalList, filteredList);
 		orderByColumn(getActiveColumn());
 		fireTableDataChanged();
 	}
 	
-	private void filterStockOnHand(Vector<StockOnHand> original, Vector<StockOnHand> filtered) {
+	private void filterStockOnHand(Vector<StockOnHandVO> original, Vector<StockOnHandVO> filtered) {
 		filtered.clear();
 		
-		for (StockOnHand anElement : original) {
+		for (StockOnHandVO anElement : original) {
 			if (anElement.getActualQuantity() < anElement.getNominalQuantity()) {
 				if (!shouldFilterShortfall) {
 					filtered.addElement(anElement);
@@ -218,14 +173,14 @@ public class StockOnHandTableModel extends SortedTableModel  {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		StockOnHand element = filteredList.get(rowIndex);
+		StockOnHandVO element = filteredList.get(rowIndex);
 		
 		switch (columnIndex) {
 		case 0:
-			return element.getItemNumber();
+			return element.getNumber();
 			
 		case 1:
-			return element.getItemName();
+			return element.getName();
 			
 		case 2: 
 			return element.getPackaging();
@@ -246,63 +201,66 @@ public class StockOnHandTableModel extends SortedTableModel  {
 		return null;
 	}
 	
-	private void orderByNumber(Vector<StockOnHand> elements) {
-		Collections.sort(elements, new Comparator<StockOnHand>() {
-
-			@Override
-			public int compare(StockOnHand left, StockOnHand right) {
-				int result = left.compareByItemNumber(right);
-				
-				if (result == 0) {
-					result = left.compareByItemName(right);
-					
-					if (result == 0) {
-						return left.compareByIdentity(right);
-					}
-				}
-				
-				return result;
-			}
-		});
-	}
-
-	private void orderByName(Vector<StockOnHand> elements) {		
-		Collections.sort(elements, new Comparator<StockOnHand>() {
-
-			@Override
-			public int compare(StockOnHand left, StockOnHand right) {
-				int result = left.compareByItemName(right);
-				
-				if (result == 0) {
-					result = left.compareByItemNumber(right);
-					
-					if (result == 0) {
-						result = left.compareByIdentity(right);
-					}
-				}
-				
-				return result;
-			}
-		});
-	}
-	
-	private void orderByIdentity(Vector<StockOnHand> elements) {		
-		Collections.sort(elements, new Comparator<StockOnHand>() {
-
-			@Override
-			public int compare(StockOnHand left, StockOnHand right) {
-				int result = left.compareByIdentity(right);
-				
+	private void orderByNumber(Vector<StockOnHandVO> elements) {
+    	throw new IllegalArgumentException("Sluta använda denna!");
+//		Collections.sort(elements, new Comparator<StockOnHandVO>() {
+//
+//			@Override
+//			public int compare(StockOnHandVO left, StockOnHandVO right) {
+//				int result = left.compareByItemNumber(right);
+//
 //				if (result == 0) {
-//					result = left.compareByItemNumber(right);
-//					
+//					result = left.compareByItemName(right);
+//
 //					if (result == 0) {
-//						result = left.compareByItemName(right);
+//						return left.compareByIdentity(right);
 //					}
 //				}
-				
-				return result;
-			}
-		});
+//
+//				return result;
+//			}
+//		});
+	}
+
+	private void orderByName(Vector<StockOnHandVO> elements) {
+		throw new IllegalArgumentException("Sluta använda denna!");
+//		Collections.sort(elements, new Comparator<StockOnHandVO>() {
+//
+//			@Override
+//			public int compare(StockOnHandVO left, StockOnHandVO right) {
+//				int result = left.compareByItemName(right);
+//
+//				if (result == 0) {
+//					result = left.compareByItemNumber(right);
+//
+//					if (result == 0) {
+//						result = left.compareByIdentity(right);
+//					}
+//				}
+//
+//				return result;
+//			}
+//		});
+	}
+	
+	private void orderByIdentity(Vector<StockOnHandVO> elements) {
+		throw new IllegalArgumentException("Sluta använda denna!");
+//		Collections.sort(elements, new Comparator<StockOnHandVO>() {
+//
+//			@Override
+//			public int compare(StockOnHandVO left, StockOnHandVO right) {
+//				int result = left.compareByIdentity(right);
+//
+////				if (result == 0) {
+////					result = left.compareByItemNumber(right);
+////
+////					if (result == 0) {
+////						result = left.compareByItemName(right);
+////					}
+////				}
+//
+//				return result;
+//			}
+//		});
 	}
 }

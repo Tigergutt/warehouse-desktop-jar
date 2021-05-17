@@ -1,13 +1,5 @@
 package se.melsom.warehouse.report;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -15,51 +7,41 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.report.component.Component;
 import se.melsom.warehouse.report.component.Frame;
-import se.melsom.warehouse.report.component.Page;
-import se.melsom.warehouse.report.component.Table;
-import se.melsom.warehouse.report.component.TableRow;
-import se.melsom.warehouse.report.component.TextBox;
+import se.melsom.warehouse.report.component.*;
 import se.melsom.warehouse.report.component.property.Line;
 import se.melsom.warehouse.report.component.property.Point;
 import se.melsom.warehouse.report.component.property.Position;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 
-/**
- * The type Pdf report renderer.
- */
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+
 public class PdfReportRenderer {
-	private static Logger logger = Logger.getLogger(PdfReportRenderer.class);
-	private PDDocument document;
+	private static final Logger logger = LoggerFactory.getLogger(PdfReportRenderer.class);
+
+	private final PDDocument document;
 	private PDPage currentPage = null;
 	private float pageHeight;
-	private Map<TrueTypeFont, PDFont> fontsInUse = new HashMap<>();
+	private final Map<TrueTypeFont, PDFont> fontsInUse = new HashMap<>();
 
-    /**
-     * Instantiates a new Pdf report renderer.
-     */
+
     public PdfReportRenderer() {
 		document = new PDDocument();
 	}
 
-    /**
-     * Save.
-     *
-     * @param path the path
-     * @throws IOException the io exception
-     */
     public void save(String path) throws IOException {
 		document.save(path);
 		document.close();
 	}
 
-    /**
-     * Render.
-     *
-     * @param pages the pages
-     */
     public void render(Vector<Page> pages) {
 		logger.debug("Render pages count=" + pages.size());
 		
@@ -68,11 +50,6 @@ public class PdfReportRenderer {
 		}
 	}
 
-    /**
-     * Render.
-     *
-     * @param page the page
-     */
     public void render(Page page) {
 		logger.debug("Render page.");
 		pageHeight = page.getHeight();
@@ -206,7 +183,7 @@ public class PdfReportRenderer {
 				float width = getStringWidth(font, component.getText(), scaledFontSize);
 				contents.setLineWidth(1);
 
-				float aboveline = millimetersToPoints(pageHeight - component.getY()) - topInset;;
+				float aboveline = millimetersToPoints(pageHeight - component.getY()) - topInset;
 				float topline = aboveline - top;
 				contents.setStrokingColor(Color.MAGENTA);
 				contents.moveTo(x, topline);
@@ -296,25 +273,11 @@ public class PdfReportRenderer {
 		}
 	}
 
-    /**
-     * Create content stream pd page content stream.
-     *
-     * @return the pd page content stream
-     * @throws IOException the io exception
-     */
     PDPageContentStream createContentStream() throws IOException {
 		return new PDPageContentStream(document, currentPage, PDPageContentStream.AppendMode.APPEND, false);
 	}
 
 
-    /**
-     * Calculates the width of a string.
-     *
-     * @param font     the font
-     * @param text     the text
-     * @param fontSize fontSize in points.
-     * @return the calculated width in points.
-     */
     float getStringWidth(PDFont font, String text, float fontSize) {
 		float width = 0;
 		
@@ -327,13 +290,6 @@ public class PdfReportRenderer {
 		return width;
 	}
 
-    /**
-     * Calculates the total height acquired by a specific font.
-     *
-     * @param font     the font
-     * @param fontSize in points.
-     * @return the calculated height in points.
-     */
     float getFontTotalHeight(PDFont font, float fontSize) {
 		float height = 0;
 		
@@ -342,14 +298,6 @@ public class PdfReportRenderer {
 		return height / 1000f * fontSize;
 	}
 
-    /**
-     * Calculates acquired gap of a specific font.
-     * The gap is the distance between the base line and the max height.
-     *
-     * @param font     the font
-     * @param fontSize in points.
-     * @return gap in points.
-     */
     float getFontBaseGap(PDFont font, float fontSize) {
 		float height = 0;
 		
@@ -359,13 +307,6 @@ public class PdfReportRenderer {
 		return height / 1000f * fontSize;
 	}
 
-    /**
-     * Calculates the gap above the font ascent line.
-     *
-     * @param font     the font
-     * @param fontSize in points.
-     * @return the gap in points.
-     */
     float getFontMaxGap(PDFont font, float fontSize) {
 		float height = 0;
 		
@@ -376,13 +317,6 @@ public class PdfReportRenderer {
 		return height / 1000f * fontSize;
 	}
 
-    /**
-     * Calculates the font ascent gap.
-     *
-     * @param font     the font
-     * @param fontSize in points.
-     * @return the gap in points.
-     */
     float getFontAscentGap(PDFont font, float fontSize) {
 		float height = 0;
 		
@@ -392,13 +326,6 @@ public class PdfReportRenderer {
 		return height / 1000f * fontSize;
 	}
 
-    /**
-     * Calculates the font x-height (height, above base line, of lower case letters).
-     *
-     * @param font     the font
-     * @param fontSize in points.
-     * @return the height in points.
-     */
     float getFontXHeight(PDFont font, float fontSize) {
 		float height = 0;
 		
@@ -407,13 +334,6 @@ public class PdfReportRenderer {
 		return height / 1000f * fontSize;
 	}
 
-    /**
-     * Calculates the gap below the font base line.
-     *
-     * @param font     the font
-     * @param fontSize in points.
-     * @return the gap in points.
-     */
     float getFontDescentGap(PDFont font, float fontSize) {
 		float height = 0;
 		
@@ -422,22 +342,10 @@ public class PdfReportRenderer {
 		return height / 1000f * fontSize;
 	}
 
-    /**
-     * Converting milimeters to points.
-     *
-     * @param mm the mm
-     * @return float
-     */
     float millimetersToPoints(float mm) {
 		return mm * 72f / 25.4f;
 	}
 
-    /**
-     * Gets pd font.
-     *
-     * @param fontName the font name
-     * @return the pd font
-     */
     PDFont getPDFont(TrueTypeFont fontName) {
 		PDFont font = fontsInUse.get(fontName);
 		

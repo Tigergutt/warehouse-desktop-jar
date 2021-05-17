@@ -1,28 +1,18 @@
 package se.melsom.warehouse.report.inventory;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
-import se.melsom.warehouse.model.entity.inventory.ActualInventory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.report.Report;
 
-/**
- * The type Inventory view report.
- */
-public class InventoryViewReport extends Report {
-	private static Logger logger = Logger.getLogger(InventoryViewReport.class);
-	private static final String REPORT_NAME = "Materiellista";
-	private String location;
+import java.util.Vector;
 
-    /**
-     * Instantiates a new Inventory view report.
-     *
-     * @param location      the location
-     * @param inventoryList the inventory list
-     * @param columnHeaders the column headers
-     */
-    public InventoryViewReport(String location, Vector<ActualInventory> inventoryList, String... columnHeaders) {
+public class InventoryViewReport extends Report {
+	private static final Logger logger = LoggerFactory.getLogger(InventoryViewReport.class);
+	private static final String REPORT_NAME = "Materiellista";
+	private final String location;
+
+    public InventoryViewReport(String location, Vector<ActualInventoryVO> inventoryList, String... columnHeaders) {
 		logger.debug("Generating report.");
 		this.location = location;
 	}

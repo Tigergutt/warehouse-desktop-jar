@@ -1,9 +1,7 @@
 package se.melsom.warehouse.report.part;
 
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.melsom.warehouse.model.entity.inventory.ActualInventory;
 import se.melsom.warehouse.report.component.Component;
 import se.melsom.warehouse.report.component.Table;
@@ -13,11 +11,10 @@ import se.melsom.warehouse.report.component.property.Alignment;
 import se.melsom.warehouse.report.component.property.Position;
 import se.melsom.warehouse.report.component.property.TrueTypeFont;
 
-/**
- * The type Inventory landscape table.
- */
+import java.util.Vector;
+
 public class InventoryLandscapeTable extends Table {
-	private static Logger logger = Logger.getLogger(InventoryLandscapeTable.class);
+	private static final Logger logger = LoggerFactory.getLogger(InventoryLandscapeTable.class);
 	
 	private static final float FRAME_LINE_WIDTH = 0.5f;
 	private static final float INNER_FRAME_LINE_WIDTH = 0.1f;
@@ -26,13 +23,6 @@ public class InventoryLandscapeTable extends Table {
 	private static final float[] CELL_WIDTH = { 60, 150, 60 };
 	private static final Alignment[] CELL_ALIGNMENT = { Alignment.LEFT, Alignment.LEFT, Alignment.RIGHT };
 
-    /**
-     * Instantiates a new Inventory landscape table.
-     *
-     * @param x        the x
-     * @param y        the y
-     * @param rowCount the row count
-     */
     public InventoryLandscapeTable(float x, float y, int rowCount) {
 		super(x, y);
 		float rowY = y;
@@ -78,12 +68,6 @@ public class InventoryLandscapeTable extends Table {
 		setLines(FRAME_LINE_WIDTH);
 	}
 
-    /**
-     * Sets row values.
-     *
-     * @param rowIndex the row index
-     * @param item     the item
-     */
     public void setRowValues(int rowIndex, ActualInventory item) {
 		setRowValues(rowIndex, 
 				item.getItem().getNumber(), 
@@ -91,12 +75,6 @@ public class InventoryLandscapeTable extends Table {
 				"" + item.getQuantity());
 	}
 
-    /**
-     * Sets row values.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
     public void setRowValues(int rowIndex, String... values) {
 		Component row = getComponents().get(rowIndex);
 
@@ -112,12 +90,6 @@ public class InventoryLandscapeTable extends Table {
 		}
 	}
 
-    /**
-     * Sets row values.
-     *
-     * @param rowIndex the row index
-     * @param values   the values
-     */
     public void setRowValues(int rowIndex, Vector<String> values) {
 		Component row = getComponents().get(rowIndex);
 
