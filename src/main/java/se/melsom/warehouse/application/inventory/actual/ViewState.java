@@ -82,12 +82,28 @@ public class ViewState {
         slots.addAll(locationSlots);
     }
 
+    public String getCurrentSection() {
+        if (getCurrentSectionIndex() < 0) {
+            return null;
+        }
+
+        return sections.get(getCurrentSectionIndex());
+    }
+
     public int getCurrentSectionIndex() {
         return currentSectionIndex;
     }
 
     public void setCurrentSectionIndex(int currentSectionIndex) {
         this.currentSectionIndex = currentSectionIndex;
+    }
+
+    public String getCurrentSlot() {
+        if (getCurrentSlotIndex() < 0) {
+            return null;
+        }
+
+        return slots.get(getCurrentSlotIndex());
     }
 
     public int getCurrentSlotIndex() {

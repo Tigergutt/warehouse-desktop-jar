@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import se.melsom.warehouse.data.entity.ItemEntity;
 import se.melsom.warehouse.data.repository.ItemRepository;
 import se.melsom.warehouse.data.vo.ItemVO;
+import se.melsom.warehouse.model.enumeration.Packaging;
 
+import java.util.Collection;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
 
 @Service
@@ -70,5 +74,16 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return new ItemVO(entity);
+    }
+
+    @Override
+    public Collection<String> getPackaging() {
+        Set<String> packagings = new TreeSet<>();
+
+        for (Packaging packaging : Packaging.values()) {
+            packagings.add(packaging.getName());
+        }
+
+        return packagings;
     }
 }

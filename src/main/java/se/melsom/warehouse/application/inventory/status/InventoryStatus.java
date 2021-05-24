@@ -5,30 +5,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.melsom.warehouse.application.AbstractPresentationModel;
-import se.melsom.warehouse.application.main.DesktopPresentationModel;
+import se.melsom.warehouse.application.desktop.DesktopPresentationModel;
 import se.melsom.warehouse.data.service.InventoryService;
 import se.melsom.warehouse.data.vo.StockOnHandVO;
 
+import javax.annotation.PostConstruct;
 import java.util.Vector;
 
-/**
- * StatusPresentationModel (lagersaldo) realiserar all logik och hämtande av data
- * i presentationen av lagersaldo.
- */
 @Component
 public class InventoryStatus extends AbstractPresentationModel {
     private static final Logger logger = LoggerFactory.getLogger(InventoryStatus.class);
-
-    private final ContentModel contentModel = new ContentModel();
 
     @Autowired private AbstractInventoryStatusView inventoryStatusView;
     @Autowired private InventoryService inventoryService;
     @Autowired private DesktopPresentationModel desktopPresentationModel;
 
+    private final ContentModel contentModel = new ContentModel();
+
     public InventoryStatus() {
         logger.debug("Execute constructor.");
     }
 
+    @PostConstruct
     @Override
     public void initialize() {
         logger.debug("Execute initialize.");
@@ -77,12 +75,12 @@ public class InventoryStatus extends AbstractPresentationModel {
         contentModel.setShowingBalances(showingBalances);
     }
 
-    public boolean isShowingOverplus() {
+    public boolean isShowingOverPlus() {
         return contentModel.isShowingOverplus();
     }
 
-    public void setShowingOverplus(boolean showingOverplus) {
-        logger.debug("set show overplus={}.", showingOverplus);
-        contentModel.setShowingOverplus(showingOverplus);
+    public void setShowingOverplus(boolean showingOverPlus) {
+        logger.debug("set show over plus={}.", showingOverPlus);
+        contentModel.setShowingOverPlus(showingOverPlus);
     }
 }

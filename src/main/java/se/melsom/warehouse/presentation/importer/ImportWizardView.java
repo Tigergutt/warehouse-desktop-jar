@@ -1,6 +1,6 @@
 package se.melsom.warehouse.presentation.importer;
 
-import se.melsom.warehouse.importer.ImportType;
+import se.melsom.warehouse.maintenance.importer.ImportType;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

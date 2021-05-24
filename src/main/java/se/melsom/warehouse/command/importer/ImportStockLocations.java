@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.melsom.warehouse.application.ApplicationPresentationModel;
 import se.melsom.warehouse.application.Command;
-import se.melsom.warehouse.importer.ImportType;
+import se.melsom.warehouse.maintenance.importer.ImportType;
 import se.melsom.warehouse.presentation.importer.ImportWizardController;
 import se.melsom.warehouse.settings.PersistentSettings;
 

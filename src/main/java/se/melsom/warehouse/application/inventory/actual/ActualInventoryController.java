@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.melsom.warehouse.application.ApplicationPresentationModel;
 import se.melsom.warehouse.application.Command;
-import se.melsom.warehouse.application.edit.actual.EditActualInventory;
 import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.data.vo.StockLocationVO;
 import se.melsom.warehouse.event.ModelEvent;
@@ -290,21 +289,21 @@ public class ActualInventoryController extends ViewController implements ModelEv
 		}
 			
 		case INSERT_INVENTORY_ACTION: {
-			EditActualInventory instanceEditor = new EditActualInventory();
-			ActualInventoryVO instance = new ActualInventoryVO();
-//			instance.setId(inventoryAccounting.getNextActualInventoryId());
-			instance.setStockLocation(currentLocation);
-			ActualInventoryVO editedInstance = instanceEditor.editInventory(instance);
-			
-			logger.debug("Show edit dialog.");
-			
-			if (editedInstance != null) {
-				int rowIndex = tableModel.insert(editedInstance);
-				
-//				view.setSelectedTableRow(rowIndex);
-//				inventoryAccounting.addInventory(editedInstance);
-			}
-			return;
+//			EditActualInventory instanceEditor = new EditActualInventory(this, null);
+//			ActualInventoryVO instance = new ActualInventoryVO();
+////			instance.setId(inventoryAccounting.getNextActualInventoryId());
+//			instance.setStockLocation(currentLocation);
+//			instanceEditor.editInventory(instance);
+//
+//			logger.debug("Show edit dialog.");
+//
+////			if (editedInstance != null) {
+////				int rowIndex = tableModel.insert(editedInstance);
+////
+//////				view.setSelectedTableRow(rowIndex);
+//////				inventoryAccounting.addInventory(editedInstance);
+////			}
+//			return;
 		}
 		
 		case REMOVE_INVENTORY_ACTION:

@@ -27,8 +27,6 @@ public abstract class Component {
 	}
 
     public void addComponent(Component component) {
-//		component.setX(this.getX() + component.getX());
-//		component.setY(this.getY() + component.getY());
 		components.addElement(component);
 	}
 

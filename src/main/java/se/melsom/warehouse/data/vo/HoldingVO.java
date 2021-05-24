@@ -1,5 +1,7 @@
 package se.melsom.warehouse.data.vo;
 
+import se.melsom.warehouse.data.entity.HoldingEntity;
+
 public class HoldingVO {
     private UnitVO unit;
     private StockLocationVO location;

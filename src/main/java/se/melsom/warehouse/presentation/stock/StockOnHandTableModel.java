@@ -2,7 +2,7 @@ package se.melsom.warehouse.presentation.stock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.common.table.SortableTableModel;
 import se.melsom.warehouse.data.vo.StockOnHandVO;
 import se.melsom.warehouse.model.EntityName;
 

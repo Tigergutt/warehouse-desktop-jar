@@ -7,8 +7,4 @@ public interface AbstractActualInventoryView {
     void showView();
     void initialize(ContentModel tableModel);
     void updateState(ViewState state);
-
-//    void setSectionSelectorItems(Set<String> sections);
-//    void setSlotSelectorItems(Set<String> locationSlots);
-//    void setSelectedTableRow(int rowIndex);
 }

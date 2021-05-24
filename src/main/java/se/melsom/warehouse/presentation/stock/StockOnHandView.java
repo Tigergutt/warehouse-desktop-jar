@@ -1,7 +1,7 @@
 package se.melsom.warehouse.presentation.stock;
 
-import se.melsom.warehouse.application.common.table.SortableJTable;
-import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.common.table.SortableJTable;
+import se.melsom.warehouse.common.table.SortableTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

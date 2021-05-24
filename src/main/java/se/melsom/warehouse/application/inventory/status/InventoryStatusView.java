@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import se.melsom.warehouse.application.common.table.SortableJTable;
-import se.melsom.warehouse.application.main.DesktopPresentationModel;
+import se.melsom.warehouse.common.table.SortableJTable;
+import se.melsom.warehouse.application.desktop.DesktopPresentationModel;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowBean;
 
@@ -34,8 +34,8 @@ public class InventoryStatusView extends JInternalFrame implements AbstractInven
 
     private JCheckBox shortfallCheckBox;
     private JCheckBox balancesCheckBox;
-    private JCheckBox overplusCheckBox;
-    private SortableJTable stockOnHandtTable;
+    private JCheckBox overPlusCheckBox;
+    private SortableJTable stockOnHandTable;
 
     public InventoryStatusView(DesktopPresentationModel presenterModel) {
         logger.debug("Execute constructor.");
@@ -71,42 +71,11 @@ public class InventoryStatusView extends JInternalFrame implements AbstractInven
     @Override
     public void initialize(ContentModel tableModel) {
         logger.debug("Initialize.");
-        setClosable(true);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setResizable(true);
-        setTitle("Lagersaldo");
-
-        JPanel controlPanel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) controlPanel.getLayout();
-        flowLayout.setAlignment(FlowLayout.RIGHT);
-        getContentPane().add(controlPanel, BorderLayout.NORTH);
-
-        JLabel filterLabel = new JLabel("Dölj:");
-        controlPanel.add(filterLabel);
-
-        shortfallCheckBox = new JCheckBox("underskott");
-        controlPanel.add(shortfallCheckBox);
-        shortfallCheckBox.addActionListener(e -> presentationModel.setShowingShortfall(!shortfallCheckBox.isSelected()));
-
-        balancesCheckBox = new JCheckBox("balanser");
-        controlPanel.add(balancesCheckBox);
-        balancesCheckBox.addActionListener(e -> presentationModel.setShowingBalances(!balancesCheckBox.isSelected()));
-
-        overplusCheckBox = new JCheckBox("överskott");
-        controlPanel.add(overplusCheckBox);
-        overplusCheckBox.addActionListener(e -> presentationModel.setShowingOverplus(!overplusCheckBox.isSelected()));
-
-        JScrollPane scrollPane = new JScrollPane();
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-        stockOnHandtTable = new SortableJTable(tableModel);
-        scrollPane.setViewportView(stockOnHandtTable);
-        setCellRenderer(4, new QuantityCellRenderer(tableModel));
-        addComponentListener(this);
+        initializeView(tableModel);
     }
 
     public void setCellRenderer(int columnIndex, TableCellRenderer renderer) {
-        stockOnHandtTable.addCellRenderer(columnIndex, renderer);
+        stockOnHandTable.addCellRenderer(columnIndex, renderer);
     }
 
     public boolean getFilterShortfallChecked() {
@@ -136,16 +105,51 @@ public class InventoryStatusView extends JInternalFrame implements AbstractInven
     }
 
     public boolean getFilterOverplusChecked() {
-        return overplusCheckBox.isSelected();
+        return overPlusCheckBox.isSelected();
     }
 
     public void setFilterOverplusChecked(boolean checked) {
-        overplusCheckBox.setSelected(checked);
+        overPlusCheckBox.setSelected(checked);
     }
 
     public void setFilterOverplusAction(String name, ActionListener listener) {
-        overplusCheckBox.setActionCommand(name);
-        overplusCheckBox.addActionListener(listener);
+        overPlusCheckBox.setActionCommand(name);
+        overPlusCheckBox.addActionListener(listener);
+    }
+
+    private void initializeView(ContentModel tableModel) {
+        setClosable(true);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setResizable(true);
+        setTitle("Lagersaldo");
+
+        JPanel controlPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) controlPanel.getLayout();
+        flowLayout.setAlignment(FlowLayout.RIGHT);
+        getContentPane().add(controlPanel, BorderLayout.NORTH);
+
+        JLabel filterLabel = new JLabel("Dölj:");
+        controlPanel.add(filterLabel);
+
+        shortfallCheckBox = new JCheckBox("underskott");
+        controlPanel.add(shortfallCheckBox);
+        shortfallCheckBox.addActionListener(e -> presentationModel.setShowingShortfall(!shortfallCheckBox.isSelected()));
+
+        balancesCheckBox = new JCheckBox("balanser");
+        controlPanel.add(balancesCheckBox);
+        balancesCheckBox.addActionListener(e -> presentationModel.setShowingBalances(!balancesCheckBox.isSelected()));
+
+        overPlusCheckBox = new JCheckBox("överskott");
+        controlPanel.add(overPlusCheckBox);
+        overPlusCheckBox.addActionListener(e -> presentationModel.setShowingOverplus(!overPlusCheckBox.isSelected()));
+
+        JScrollPane scrollPane = new JScrollPane();
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        stockOnHandTable = new SortableJTable(tableModel);
+        scrollPane.setViewportView(stockOnHandTable);
+        setCellRenderer(4, new QuantityCellRenderer(tableModel));
+        addComponentListener(this);
     }
 
     @Override

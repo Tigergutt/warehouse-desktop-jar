@@ -37,6 +37,22 @@ public class ActualInventoryServiceImpl implements ActualInventoryService {
     }
 
     @Override
+    public Vector<ActualInventoryVO> getActualInventory(StockLocationVO location) {
+        Vector<ActualInventoryVO> inventoryVector = new Vector<>();
+
+        actualInventoryRepository.findAll().forEach((inventory) -> {
+            if (location.getId() == inventory.getStockLocation().getId()) {
+                ItemVO item = new ItemVO(inventory.getItem());
+                ActualInventoryVO inventoryVO = new ActualInventoryVO(item, location, inventory);
+
+                inventoryVector.add(inventoryVO);
+            }
+        });
+
+        return inventoryVector;
+    }
+
+    @Override
     public Vector<ActualInventoryVO> getActualInventory(String section, String slot) {
         Vector<ActualInventoryVO> inventoryVector = new Vector<>();
 

@@ -2,6 +2,7 @@ package se.melsom.warehouse.data.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.melsom.warehouse.data.entity.StockLocationEntity;
 import se.melsom.warehouse.data.repository.StockLocationRepository;
 import se.melsom.warehouse.data.vo.StockLocationVO;
 
@@ -22,5 +23,17 @@ public class StockLocationServiceImpl implements  StockLocationService {
         });
 
         return stockLocationVector;
+    }
+
+    @Override
+    public StockLocationVO getStockLocation(String section, String slot) {
+        StockLocationVO stockLocationVO = null;
+        StockLocationEntity entity = repository.findBySectionAndSlot(section, slot);
+
+        if (entity != null) {
+            stockLocationVO = new StockLocationVO(entity);
+        }
+
+        return stockLocationVO;
     }
 }

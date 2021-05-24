@@ -5,47 +5,35 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.melsom.warehouse.application.AbstractPresentationModel;
-import se.melsom.warehouse.application.ApplicationPresentationModel;
 import se.melsom.warehouse.application.Command;
-import se.melsom.warehouse.application.edit.actual.EditActualInventory;
-import se.melsom.warehouse.application.main.DesktopPresentationModel;
-import se.melsom.warehouse.data.service.ActualInventoryService;
-import se.melsom.warehouse.data.service.HoldingService;
-import se.melsom.warehouse.data.service.OrganizationService;
+import se.melsom.warehouse.application.desktop.DesktopPresentationModel;
+import se.melsom.warehouse.application.desktop.DesktopView;
+import se.melsom.warehouse.data.service.*;
 import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.data.vo.HoldingVO;
 import se.melsom.warehouse.data.vo.UnitVO;
-import se.melsom.warehouse.model.InventoryAccounting;
-import se.melsom.warehouse.model.UnitsMasterFile;
+import se.melsom.warehouse.edit.actual.EditActualInventory;
+import se.melsom.warehouse.edit.actual.EditActualInventoryListener;
+import se.melsom.warehouse.report.Report;
+import se.melsom.warehouse.report.inventory.holding.InventoryHoldingViewReport;
 
-import javax.swing.event.ListSelectionEvent;
+import javax.annotation.PostConstruct;
 import javax.swing.event.TableModelEvent;
 import java.util.*;
 
 @Component
-public class InventoryHolding extends AbstractPresentationModel {
+public class InventoryHolding extends AbstractPresentationModel implements EditActualInventoryListener {
 	private static final Logger logger = LoggerFactory.getLogger(InventoryHolding.class);
 
 	@Autowired private AbstractInventoryHoldingView inventoryHoldingView;
+	@Autowired private StockLocationService stockLocationService;
+	@Autowired private ItemService itemService;
 	@Autowired private OrganizationService organizationService;
 	@Autowired private HoldingService holdingService;
 	@Autowired private ActualInventoryService actualInventoryService;
 	@Autowired private DesktopPresentationModel desktopPresentationModel;
+	@Autowired private DesktopView desktopView;
 
-    public static final String SUPERIOR_UNIT_SELECTED_ACTION = "SupUSel";
-    public static final String UNIT_SELECTED_ACTION = "USel";
-    public static final String GENERATE_REPORT_ACTION = "GenerateReport";
-    public static final String EXTENDED_EDIT_ACTION = "ExtendedEdit";
-    public static final String TABLE_ROW_ACTION = "RowSelected";
-    public static final String EDIT_INVENTORY_ACTION = "EditInventory";
-    public static final String INSERT_INVENTORY_ACTION = "AddInventory";
-    public static final String REMOVE_INVENTORY_ACTION = "DeleteInventory";
-
-	private ApplicationPresentationModel controller;
-	
-	private InventoryAccounting inventoryAccounting;
-	private UnitsMasterFile unitsMasterFile;
-	
 	private final ContentModel tableModel = new ContentModel();
 	private final Map<String, Command> actionCommands = new HashMap<>();
 	private UnitVO selectedUnit = null;
@@ -54,6 +42,7 @@ public class InventoryHolding extends AbstractPresentationModel {
 
 	public InventoryHolding() {}
 
+	@PostConstruct
 	@Override
 	public void initialize() {
 		logger.debug("Execute initialize().");
@@ -78,6 +67,7 @@ public class InventoryHolding extends AbstractPresentationModel {
 		}
 
 		viewState.setSuperiors(superiorUnits);
+		checkEditButtons();
 		inventoryHoldingView.updateState(viewState);
 	}
 
@@ -95,6 +85,7 @@ public class InventoryHolding extends AbstractPresentationModel {
 		viewState.setUnits(units);
 		viewState.setSelectedUnitIndex(-1);
 		viewState.setSelectedSuperiorUnitIndex(index);
+		checkEditButtons();
 		inventoryHoldingView.updateState(viewState);
 	}
 
@@ -126,21 +117,20 @@ public class InventoryHolding extends AbstractPresentationModel {
 		}
 
 		tableModel.setInventory(inventory);
+		checkEditButtons();
+		inventoryHoldingView.updateState(viewState);
 	}
 
 	void setExtendedEditEnabled(boolean isEnabled) {
 		viewState.setExtendedEditSelected(isEnabled);
+		checkEditButtons();
+		inventoryHoldingView.updateState(viewState);
 	}
 
-	void generateReport()
-	{
-		Command command = actionCommands.get(GENERATE_REPORT_ACTION);
-		if (command == null) {
-			logger.warn("Action command for " + GENERATE_REPORT_ACTION);
-			return;
-		}
+	void generateReport() {
+		InventoryHoldingViewReport report = new InventoryHoldingViewReport(selectedUnit, tableModel.getInventory());
 
-		command.execute();
+		Report.save(report, desktopView.getFrame());
 	}
 
 	public void selectItem(int index) {
@@ -150,37 +140,50 @@ public class InventoryHolding extends AbstractPresentationModel {
 	}
 
 	public void insert() {
-		EditActualInventory instanceEditor = new EditActualInventory();
+		EditActualInventory instanceEditor = new EditActualInventory(this, stockLocationService, itemService, desktopView.getFrame());
 		ActualInventoryVO instance = new ActualInventoryVO();
-//			instance.setId(inventoryAccounting.getNextActualInventoryId());
-		ActualInventoryVO editedInstance = instanceEditor.editInventory(instance);
-
-		logger.debug("Show edit dialog.");
-
-		if (editedInstance != null) {
-			int rowIndex = tableModel.insert(editedInstance);
-
-			viewState.setSelectedItemIndex(rowIndex);
-//				inventoryAccounting.addInventory(editedInstance);
-//				inventoryAccounting.addHolding(new Holding(selectedUnit, editedInstance.getLocation()));
-			checkEditButtons();
-			inventoryHoldingView.updateState(viewState);
-		}
+		instanceEditor.editInventory(instance);
 	}
 
 	public void edit() {
-		EditActualInventory instanceEditor = new EditActualInventory();
+		EditActualInventory instanceEditor = new EditActualInventory(this, stockLocationService, itemService, desktopView.getFrame());
 		int rowIndex = viewState.getSelectedItemIndex();
 		ActualInventoryVO instance = tableModel.getInventory(rowIndex);
-		ActualInventoryVO editedInstance = instanceEditor.editInventory(instance);
+		instanceEditor.editInventory(instance);
 
 		logger.debug("Show edit dialog.");
-		if (editedInstance != null) {
-			rowIndex = tableModel.update(editedInstance, rowIndex);
-			viewState.setSelectedItemIndex(rowIndex);
-//				inventoryAccounting.updateInventory(editedInstance);
-			inventoryHoldingView.updateState(viewState);
+	}
+
+	@Override
+	public void save(ActualInventoryVO actualInventoryVO) {
+		logger.debug("Save actual inventory={}.", actualInventoryVO);
+		if (actualInventoryVO == null) {
+			return;
 		}
+
+		int rowIndex = tableModel.update(actualInventoryVO, -1);
+
+		viewState.setSelectedItemIndex(rowIndex);
+
+
+		// TODO: Handle added
+//		if (editedInstance != null) {
+//			int rowIndex = tableModel.insert(editedInstance);
+//
+//			viewState.setSelectedItemIndex(rowIndex);
+////				inventoryAccounting.addInventory(editedInstance);
+////				inventoryAccounting.addHolding(new Holding(selectedUnit, editedInstance.getLocation()));
+//			checkEditButtons();
+//			inventoryHoldingView.updateState(viewState);
+//		}
+		// TODO: Handle edited
+//		if (editedInstance != null) {
+//			rowIndex = tableModel.update(editedInstance, rowIndex);
+//			viewState.setSelectedItemIndex(rowIndex);
+////				inventoryAccounting.updateInventory(editedInstance);
+//		}
+		checkEditButtons();
+		inventoryHoldingView.updateState(viewState);
 	}
 
 	public void remove() {
@@ -193,7 +196,7 @@ public class InventoryHolding extends AbstractPresentationModel {
 		logger.debug("Delete row={}.", atIndex);
 
 		ActualInventoryVO inventory = tableModel.remove(atIndex);
-//		inventoryAccounting.removeInventory(inventory);
+		// TODO: Handle removal
 		inventoryHoldingView.updateState(viewState);
 	}
 
@@ -218,7 +221,7 @@ public class InventoryHolding extends AbstractPresentationModel {
 		case TableModelEvent.UPDATE:
 			ActualInventoryVO inventory = tableModel.getInventory(rowIndex);
 			logger.debug("Updating inventory=" + inventory);
-			
+			// TODO: persist update
 //			inventoryAccounting.updateInventory(inventory);
 			return;
 			
@@ -227,36 +230,6 @@ public class InventoryHolding extends AbstractPresentationModel {
 		}
 		
 		logger.warn("Unhandled event at row=" + e.getFirstRow() + ",column=" + e.getColumn());
-	}
-
-//	@Override
-//	public void handleEvent(ModelEvent event) {
-//		logger.debug("Model event=" + event);
-//
-//		switch (event.getType()) {
-//		case ORGANIZATIONAL_UNITS_RELOADED:
-//		case ORGANIZATIONAL_UNITS_UPDATED:
-//			updateUnits();
-//			break;
-//
-//		default:
-//			break;
-//		}
-//	}
-	
-    public void addActionCommand(String action, Command command) {
-		actionCommands.put(action, command);
-	} 
-	
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		if (e.getValueIsAdjusting()) {
-			return;
-		}
-		
-		logger.debug("List section first index=" + e.getFirstIndex() + ",last index=" + e.getLastIndex());
-
-		checkEditButtons();
 	}
 
 	private void checkEditButtons() {
@@ -268,7 +241,8 @@ public class InventoryHolding extends AbstractPresentationModel {
 		if (rowIndex >= 0) {
 			isRowSelected = true;
 		}
-		
+
+		viewState.setGenerateReportEnabled(tableModel.getInventory().size() > 0);
 		viewState.setInsertButtonEnabled(isEditEnabled);
 		viewState.setRemoveButtonEnabled(isRowSelected && isEditEnabled);
 		viewState.setEditButtonEnabled(isRowSelected && isEditEnabled);

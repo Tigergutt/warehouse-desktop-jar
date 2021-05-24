@@ -1,0 +1,40 @@
+{
+  "properties" : { },
+  "windows" : {
+    "InventoryStatusView" : {
+      "x" : 500,
+      "y" : 10,
+      "width" : 300,
+      "height" : 400,
+      "visible" : true
+    },
+    "SearchView" : {
+      "x" : 21,
+      "y" : 33,
+      "width" : 778,
+      "height" : 264,
+      "visible" : true
+    },
+    "DesktopView" : {
+      "x" : 100,
+      "y" : 100,
+      "width" : 1024,
+      "height" : 520,
+      "visible" : true
+    },
+    "InventoryHoldingView" : {
+      "x" : 21,
+      "y" : 33,
+      "width" : 778,
+      "height" : 264,
+      "visible" : true
+    },
+    "ActualInventoryView" : {
+      "x" : 21,
+      "y" : 33,
+      "width" : 778,
+      "height" : 264,
+      "visible" : true
+    }
+  }
+}

@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.melsom.warehouse.application.AbstractPresentationModel;
 import se.melsom.warehouse.application.Command;
-import se.melsom.warehouse.application.main.DesktopPresentationModel;
+import se.melsom.warehouse.application.desktop.DesktopPresentationModel;
+import se.melsom.warehouse.application.desktop.DesktopView;
 import se.melsom.warehouse.data.service.ActualInventoryService;
 import se.melsom.warehouse.data.vo.ActualInventoryVO;
+import se.melsom.warehouse.report.Report;
+import se.melsom.warehouse.report.search.SearchResultReport;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +26,7 @@ public class SearchPresentationModel extends AbstractPresentationModel {
 	@Autowired private SearchView view;
 	@Autowired private DesktopPresentationModel desktopPresentationModel;
 	@Autowired private ActualInventoryService actualInventoryService;
+	@Autowired private DesktopView desktopView;
 
 //	public static final String SEARCH_ACTION = "SearchAction";
     public static final String GENERATE_REPORT_ACTION = "GenerateReport";
@@ -33,6 +38,18 @@ public class SearchPresentationModel extends AbstractPresentationModel {
 
     public SearchPresentationModel() {
 		logger.debug("Execute constructor.");
+	}
+
+	@PostConstruct
+	@Override
+	public void initialize() {
+		view.initialize(contentModel);
+		desktopPresentationModel.addInternalFrame(view.getInternalFrame());
+	}
+
+	@Override
+	public void showView() {
+		view.showView();
 	}
 
     public String getSearchKey() {
@@ -51,17 +68,6 @@ public class SearchPresentationModel extends AbstractPresentationModel {
 		return view;
 	}
 
-	@Override
-	public void initialize() {
-    	view.initialize(contentModel);
-    	desktopPresentationModel.addInternalFrame(view.getInternalFrame());
-	}
-
-	@Override
-    public void showView() {
-		view.showView();
-	}
-
 	void searchEquipment(String searchKey) {
 		Vector<ActualInventoryVO> inventory = actualInventoryService.search(searchKey);
 
@@ -70,24 +76,9 @@ public class SearchPresentationModel extends AbstractPresentationModel {
 	}
 
     public void generateReport() {
-		Command command = actionCommands.get(GENERATE_REPORT_ACTION);
-		if (command == null) {
-			logger.warn("Action command for " + GENERATE_REPORT_ACTION);
-			return;
-		}
+		logger.debug("Generate inventory report.");
+		SearchResultReport report = new SearchResultReport(searchKey, getInventory());
 
-		Vector<String> header = new Vector<>();
-
-		for (String label : ContentModel.columnNames) {
-			header.addElement(label);
-		}
-
-		String reportName = "Materielsökning (" + searchKey + ")";
-
-		command.setParameter("reportNameString", reportName);
-		command.setParameter("headerVector", header);
-		command.setParameter("inventoryVector", contentModel.getInventory());
-
-		command.execute();
+		Report.save(report, desktopView.getFrame());
 	}
 }

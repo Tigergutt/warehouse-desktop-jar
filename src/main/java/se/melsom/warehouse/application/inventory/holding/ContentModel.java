@@ -2,7 +2,7 @@ package se.melsom.warehouse.application.inventory.holding;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.common.table.SortableTableModel;
 import se.melsom.warehouse.data.vo.ActualInventoryVO;
 import se.melsom.warehouse.model.EntityName;
 
@@ -21,7 +21,7 @@ public class ContentModel extends SortableTableModel {
 			EntityName.INVENTORY_ANNOTATION 
 	};
 
-    public static final int[] columnWidts = { 70, 120, 300, 50, 150, 100, 250};
+    public static final int[] columnWidths = { 70, 120, 300, 50, 150, 100, 250};
     public static final boolean[] isSortableArray = { true, true, true, false, false, false, false };
     public static final Class<?>[] columnClass = {
 			String.class, 
@@ -33,7 +33,7 @@ public class ContentModel extends SortableTableModel {
 			String.class};
 
     public ContentModel() {
-		if (columnNames.length != columnWidts.length || 
+		if (columnNames.length != columnWidths.length ||
 				columnNames.length != columnClass.length ||
 				columnNames.length != isSortableArray.length) {
 			logger.warn("Array dimension mismatch.");
@@ -122,7 +122,7 @@ public class ContentModel extends SortableTableModel {
 
 	@Override
 	public int getColumnWidth(int columnIndex) {
-		return columnWidts[columnIndex];
+		return columnWidths[columnIndex];
 	}
 
 	@Override

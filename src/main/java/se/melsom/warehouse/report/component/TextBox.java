@@ -18,10 +18,6 @@ public class TextBox extends Frame {
 		}
 	}
 	
-//	public TextBox(float width, float height) {
-//		super(0, 0, width, height);
-//	}
-
     public TrueTypeFont getFont() {
 		return font;
 	}

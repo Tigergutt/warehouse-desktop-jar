@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface HoldingRepository extends CrudRepository<HoldingEntity, HoldingId> {
     List<HoldingEntity> findByUnit(Integer unit);
+
+    HoldingEntity findByStockLocation(Integer stockLocation);
 }

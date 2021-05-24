@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import se.melsom.warehouse.application.common.table.SortableJTable;
-import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.common.table.SortableJTable;
+import se.melsom.warehouse.common.table.SortableTableModel;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowBean;
@@ -147,6 +147,7 @@ public class ActualInventoryView extends JInternalFrame implements AbstractActua
 	}
 
 	private void handleGenerateReportAction(ActionEvent e) {
+    	presentationModel.generateReport();
 	}
 
 	private void handleExtendedEditAction(ActionEvent e) {

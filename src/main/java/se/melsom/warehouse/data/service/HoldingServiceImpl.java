@@ -36,4 +36,19 @@ public class HoldingServiceImpl implements HoldingService {
 
         return holdings;
     }
+
+    @Override
+    public HoldingVO findByStockLocation(StockLocationVO stockLocation) {
+        HoldingEntity entity = holdingRepository.findByStockLocation(stockLocation.getId());
+
+        if (entity != null) {
+            Optional<OrganizationalUnitEntity> optionalUnit = unitRepository.findById(entity.getUnit());
+            assert optionalUnit.isPresent();
+            Optional<StockLocationEntity> optionalLocation = stockLocationRepository.findById(entity.getStockLocation());
+            assert optionalLocation.isPresent();
+            return new HoldingVO(new UnitVO(optionalUnit.get()), new StockLocationVO(optionalLocation.get()));
+        }
+
+        return null;
+    }
 }

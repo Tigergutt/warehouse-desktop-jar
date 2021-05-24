@@ -1,1 +1,0 @@
-package se.melsom.warehouse.application.holdings;

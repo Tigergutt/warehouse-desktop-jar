@@ -4,20 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import se.melsom.warehouse.application.common.table.SortableJTable;
-import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.common.table.SortableJTable;
+import se.melsom.warehouse.common.table.SortableTableModel;
 import se.melsom.warehouse.model.EntityName;
 import se.melsom.warehouse.settings.PersistentSettings;
 import se.melsom.warehouse.settings.WindowBean;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Collection;
@@ -42,10 +41,6 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 	private JButton editButton;
 
     public InventoryHoldingView() {
-	}
-
-	public String getWindowName() {
-		return this.getClass().getSimpleName();
 	}
 
 	@Override
@@ -76,14 +71,7 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		setTitle("Materiellista för vald enhet");
 
 		initializeView(tableModel);
-
-		extendedEditCheckBox.addActionListener(this::handleExtendedEditAction);
-		superiorUnitSelector.addActionListener(this::handleSuperiorUnitSelectedAction);
-		unitSelector.addActionListener(this::handleUnitSelectedAction);
-		generateReportButton.addActionListener(this::handleGenerateReportAction);
-		insertButton.addActionListener(this::handleInsertAction);
-		removeButton.addActionListener(this::handleRemoveAction);
-		editButton.addActionListener(this::handleEditAction);
+		initializeListeners();
 	}
 
 	@Override
@@ -95,10 +83,15 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		unitSelector.setSelectedIndex(state.getSelectedUnitIndex());
 		extendedEditCheckBox.setEnabled(state.isExtendedEditEnabled());
     	extendedEditCheckBox.setSelected(state.isExtendedEditSelected());
+    	generateReportButton.setEnabled(state.isGenerateReportEnabled());
     	insertButton.setEnabled(state.isInsertButtonEnabled());
     	removeButton.setEnabled(state.isRemoveButtonEnabled());
     	editButton.setEnabled(state.isEditButtonEnabled());
     	state.setUpdating(false);
+	}
+
+	public String getWindowName() {
+		return this.getClass().getSimpleName();
 	}
 
 	private void handleExtendedEditAction(ActionEvent actionEvent) {
@@ -128,6 +121,10 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
     	presentationModel.edit();
 	}
 
+	private void handleListSelectionEvent(ListSelectionEvent listSelectionEvent) {
+    	presentationModel.selectItem(inventoryTable.getSelectedRow());
+	}
+
 	private void handleInsertAction(ActionEvent actionEvent) {
 		presentationModel.insert();
 	}
@@ -154,11 +151,6 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		}
 	}
 
-    void setSuperiorUnitSelectedAction(String name, ActionListener listener) {
-		superiorUnitSelector.setActionCommand(name);
-		superiorUnitSelector.addActionListener(listener);
-	}
-
 	public void setUnitSelectorItems(Collection<String> slots) {
 		logger.trace("Set slot selector items.");
 		unitSelector.removeAllItems();
@@ -166,15 +158,6 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		for (String item : slots) {
 			unitSelector.addItem(item);
 		}
-	}
-
-    void setUnitSelectedAction(String name, ActionListener listener) {
-		unitSelector.setActionCommand(name);
-		unitSelector.addActionListener(listener);
-	}
-
-    public int getSelectedUnitIndex() {
-		return unitSelector.getSelectedIndex();
 	}
 
     public String getSelectedUnitItem() {
@@ -189,12 +172,6 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		inventoryTable.getSelectionModel().setSelectionInterval(rowIndex, rowIndex);
 	}
 
-    public void setSelectedInventoryAction(String name, ListSelectionListener listener) {
-		inventoryTable.setName(name);
-		ListSelectionModel selectionModel = inventoryTable.getSelectionModel();
-		selectionModel.addListSelectionListener(listener);
-	}
-
     public int getSelectedInventoryColumn() {
 		return inventoryTable.getSelectedColumn();
 	}
@@ -204,18 +181,6 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		TableColumn nameColumn = columnModel.getColumn(atColumnIndex);
 		
 		nameColumn.setCellEditor(editor);
-	}
-
-	public void setEditButtonEnabled(boolean isEnabled) {
-		editButton.setEnabled(isEnabled);
-	}
-
-	public void setInsertButtonEnabled(boolean isEnabled) {
-		insertButton.setEnabled(isEnabled);
-	}
-
-	public void setRemoveButtonEnabled(boolean isEnabled) {
-		removeButton.setEnabled(isEnabled);
 	}
 
 	private void initializeView(SortableTableModel tableModel) {
@@ -306,6 +271,17 @@ public class InventoryHoldingView extends JInternalFrame implements AbstractInve
 		
 		insertButton = new JButton("Lägg till...");
 		editPanel.add(insertButton);
+	}
+
+	private void initializeListeners() {
+		extendedEditCheckBox.addActionListener(this::handleExtendedEditAction);
+		superiorUnitSelector.addActionListener(this::handleSuperiorUnitSelectedAction);
+		unitSelector.addActionListener(this::handleUnitSelectedAction);
+		generateReportButton.addActionListener(this::handleGenerateReportAction);
+		inventoryTable.getSelectionModel().addListSelectionListener(this::handleListSelectionEvent);
+		insertButton.addActionListener(this::handleInsertAction);
+		removeButton.addActionListener(this::handleRemoveAction);
+		editButton.addActionListener(this::handleEditAction);
 	}
 
 	@Override

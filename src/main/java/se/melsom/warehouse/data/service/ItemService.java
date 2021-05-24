@@ -3,6 +3,7 @@ package se.melsom.warehouse.data.service;
 import org.springframework.stereotype.Component;
 import se.melsom.warehouse.data.vo.ItemVO;
 
+import java.util.Collection;
 import java.util.Vector;
 
 @Component
@@ -16,4 +17,6 @@ public interface ItemService {
     void removeItem(ItemVO item);
 
     ItemVO getItem(String number);
+
+    Collection<String> getPackaging();
 }

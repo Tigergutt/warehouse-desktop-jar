@@ -8,4 +8,5 @@ import java.util.Vector;
 @Component
 public interface StockLocationService {
     Vector<StockLocationVO> getStockLocations();
+    StockLocationVO getStockLocation(String section, String slot);
 }

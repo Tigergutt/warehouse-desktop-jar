@@ -2,7 +2,7 @@ package se.melsom.warehouse.application.inventory.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.melsom.warehouse.application.common.table.SortableTableModel;
+import se.melsom.warehouse.common.table.SortableTableModel;
 import se.melsom.warehouse.data.vo.StockOnHandVO;
 import se.melsom.warehouse.model.EntityName;
 
@@ -199,7 +199,7 @@ public class ContentModel extends SortableTableModel {
 		return isShowingOverplus;
 	}
 
-	public void setShowingOverplus(boolean showingOverplus) {
+	public void setShowingOverPlus(boolean showingOverplus) {
 		isShowingOverplus = showingOverplus;
 		updateView();
 	}

@@ -6,4 +6,5 @@ import se.melsom.warehouse.data.entity.StockLocationEntity;
 
 @Repository
 public interface StockLocationRepository extends CrudRepository<StockLocationEntity, Integer> {
+    StockLocationEntity findBySectionAndSlot(String section, String slot);
 }

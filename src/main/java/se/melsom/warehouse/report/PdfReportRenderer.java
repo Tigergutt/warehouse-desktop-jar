@@ -230,10 +230,6 @@ public class PdfReportRenderer {
 				continue;
 			}
 			
-//			if (position != Position.BOTTOM) {
-//				continue;
-//			}
-			
 			float pageTop = millimetersToPoints(pageHeight);
 			float width = millimetersToPoints(line.getWidth());
 
